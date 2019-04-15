@@ -16,7 +16,7 @@ LIB = libft/libft.a
 
 FLAGS = -Wall -Wextra -Werror
 
-BASE_SRC = printf.c
+BASE_SRC = init.c parsing.c usefull.c
 
 SRC = $(addprefix srcs/, $(BASE_SRC))
 
