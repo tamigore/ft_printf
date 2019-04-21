@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   printf.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/07 16:32:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/01/07 17:51:58 by tamigore         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
@@ -19,8 +8,8 @@ int		main(void)
     int i;
     int j;
 
-    i = printf("lol, pour %5.6d %s tu as combien de %c\n", -420, "kokonut", 'k');
-	j = ft_printf("lol, pour %5.6d %s tu as combien de %c\n", -420, "kokonut", 'k');
+    i = printf("lol, pour %5.6d %s tu as combien de %c, noix de coco ~ %f\n", -420, "kokonut", 'k', 324653.2375);
+	j = ft_printf("lol, pour %5.6d %s tu as combien de %c, noix de coco ~ %f\n", -420, "kokonut", 'k', 324653.2375);
     printf("i = %d ; j = %d", i, j);
     return (0);
 }

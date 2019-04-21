@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 18:31:48 by tamigore          #+#    #+#             */
-/*   Updated: 2018/11/19 16:54:40 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/04/21 19:22:33 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <stdlib.h>
 # include "libft.h"
 
-# define ABS(X) (x > 0) ? x : -x 
+# define ABS(X) (x > 0) ? x : -x
+# define UPORDOW(X) (x % 10 > 5) ? (x / 10 + 1) : (x / 10)
 
 typedef struct		s_form
 {
@@ -52,7 +53,8 @@ char    *ft_arg_int(t_env *env, va_list ap, int x);
 char    *ft_arg_float(t_env *env, va_list ap, int x);
 char    *ft_arg_point(t_env *env, va_list ap, int x);
 char    *ft_arg_str(t_env *env, va_list ap, int x);
-char    *ft_float_to_char(float x);
+char    *ft_float_to_char(double x);
 int     ft_count(char *str);
+char	*ft_strcat_float(char *integer, char *decimal);
 
 #endif

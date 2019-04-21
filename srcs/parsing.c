@@ -6,12 +6,12 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 16:32:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/01/07 17:51:58 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/04/21 19:25:27 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "stdio.h"
+#include <stdio.h>
 
 t_env   *ft_pars_arg(t_env *env, va_list ap)
 {
@@ -127,13 +127,57 @@ char    *ft_arg_float(t_env *env, va_list ap, int x)
     return (env->form->content);
 }
 
-char    *ft_float_to_char(float x)
+char    *ft_float_to_char(double nb)
 {
-    char    *str;
+    char			*integer;
+	char			*decimal;
+	double			count;
+	unsigned int	y;
+	unsigned int	x;
 
-    if (x == 0)
-        str = NULL;
-    else
-        str = NULL;
-    return (str);
+	count = 0;
+	x = 0;
+	y = (unsigned int)nb;
+    if (nb < 0)
+    {
+		integer = ft_itoa(-y);
+		nb = nb + y;
+	}
+	else
+	{
+		integer = ft_itoa(y);
+		nb = nb - y;
+	}
+	while (nb && count < 7)
+	{
+		nb *= 10;
+		x *= 10;
+		x += (unsigned int)nb;
+		nb = nb - (x % 10);
+		count++;
+	}
+	decimal = ft_itoa(UPORDOW(x));
+    return (ft_strcat_float(integer, decimal));
+}
+
+char	*ft_strcat_float(char *integer, char *decimal)
+{
+	char	*str;
+	int		x;
+	int		y;
+
+	x = 0;
+	y = 0;
+	if (!(str = (char *)malloc(ft_strlen(integer) + ft_strlen(decimal))))
+		return (NULL);
+	while (integer[x])
+	{
+		str[x] = integer[x];
+		x++;
+	}
+	str[x++] = '.';
+	while (decimal[y])
+		str[x++] = decimal[y++];
+	str[x] = '\0';
+	return (str);
 }

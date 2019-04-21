@@ -6,7 +6,7 @@
 #    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 00:20:03 by artprevo          #+#    #+#              #
-#    Updated: 2019/01/07 18:18:42 by artprevo         ###   ########.fr        #
+#    Updated: 2019/04/21 19:28:12 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(LIB) :
 .PHONY : clean lclean fclean
 
 clean :
-	rm -rdf obj/
+	rm -rf objs/*
 
 lclean:
 	(cd libft ; make clean)
