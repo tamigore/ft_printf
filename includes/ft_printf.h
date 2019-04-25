@@ -24,7 +24,8 @@
 typedef struct		s_form
 {
 	int             size;
-	char			*type;
+    int             preci;
+    int             width;
 	char			*content;
 	struct s_form	*next;
 	struct s_form	*prev;

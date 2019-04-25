@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   int.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/07 16:32:11 by tamigore          #+#    #+#             */
+/*   Updated: 2019/04/21 19:25:27 by tamigore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
@@ -87,8 +98,9 @@ t_form  *ft_init_form(char *str)
         size++;
     if (!(new = (t_form *)malloc(sizeof(t_form))))
         return (NULL);
-    new->type = NULL;
     new->size = size;
+    new->width = 0;
+    new->preci = 0;
     new->content = str;
     new->next = NULL;
     new->prev = NULL;
