@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/08 18:31:48 by tamigore          #+#    #+#             */
-/*   Updated: 2019/04/21 19:22:33 by tamigore         ###   ########.fr       */
+/*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
+/*   Updated: 2019/04/25 20:12:22 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF
-# define FT_PRINTF
+#ifndef _FT_PRINTF_
+# define _FT_PRINTF_
 
 # include <stdarg.h>
 # include <unistd.h>
@@ -23,39 +23,43 @@
 
 typedef struct		s_form
 {
-	int             size;
-    int             preci;
-    int             width;
+	int				size;
+	int				preci;
+	int				width;
 	char			*content;
 	struct s_form	*next;
 	struct s_form	*prev;
-}                   t_form;
+}					t_form;
 
-typedef struct      s_env
+typedef struct		s_env
 {
-    char            *str;
-    char            **subs;
-    struct  s_form  *form;
-}                   t_env;
+	char			*str;
+	char			**subs;
+	struct s_form	*form;
+}					t_env;
 
-int     ft_printf(char * format, ...);
-t_env   *ft_init_env(char *str);
-t_form  *ft_init_form(char *str);
-char    **ft_init_subs(char *str);
-char    **ft_fill_tab(char  **tab, char *str);
-int     ft_subs_len(char *str, int i);
-int     ft_print_all(t_env *env);
+int		ft_printf(char *format, ...);
+t_env	*ft_init_env(char *str);
+t_form	*ft_init_form(char *str, int i, int j);
+char	**ft_init_subs(char *str);
+char	**ft_fill_tab(char **tab, char *str);
+int		ft_subs_len(char *str, int i);
+int		ft_print_all(t_env *env);
 
+t_env	*ft_pars_arg(t_env *env, va_list ap);
+t_form	*ft_arg_char(t_env *env, va_list ap, int x);
+t_form	*ft_arg_int(t_env *env, va_list ap, int x);
+t_form	*ft_arg_float(t_env *env, va_list ap, int x);
+t_form	*ft_arg_point(t_env *env, va_list ap, int x);
+t_form	*ft_arg_str(t_env *env, va_list ap, int x);
 
-char    ft_pars_char(char *str);
-t_env   *ft_pars_arg(t_env *env, va_list ap);
-char    *ft_arg_char(t_env *env, va_list ap, int x);
-char    *ft_arg_int(t_env *env, va_list ap, int x);
-char    *ft_arg_float(t_env *env, va_list ap, int x);
-char    *ft_arg_point(t_env *env, va_list ap, int x);
-char    *ft_arg_str(t_env *env, va_list ap, int x);
-char    *ft_float_to_char(double x);
-int     ft_count(char *str);
+char	*ft_float_to_char(double x);
+int		ft_count(char *str);
 char	*ft_strcat_float(char *integer, char *decimal);
+char	*ft_itoa(int x);
+char	ft_pars_char(char *str);
+
+int		ft_find_preci(char *subs, va_list ap);
+int		ft_find_width(char *subs, va_list ap);
 
 #endif

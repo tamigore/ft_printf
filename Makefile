@@ -6,7 +6,7 @@
 #    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 00:20:03 by artprevo          #+#    #+#              #
-#    Updated: 2019/04/21 19:28:12 by tamigore         ###   ########.fr        #
+#    Updated: 2019/04/25 20:05:25 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIB = libft/libft.a
 
 FLAGS = -Wall -Wextra -Werror
 
-BASE_SRC = init.c parsing.c usefull.c
+BASE_SRC = init.c parsing.c usefull.c subs.c
 
 SRC = $(addprefix srcs/, $(BASE_SRC))
 

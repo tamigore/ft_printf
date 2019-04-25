@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 18:31:48 by tamigore          #+#    #+#             */
-/*   Updated: 2018/11/19 16:54:40 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:17:45 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
 void			ft_swap(char *s1, char *s2);
 void			ft_sorttab(char **tab);
-int             get_next_line(const int fd, char **line);
+int				get_next_line(const int fd, char **line);
 
 #endif
