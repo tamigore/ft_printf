@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/04/25 20:12:22 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/04/27 17:28:41 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		ft_print_all(t_env *env);
 
 t_env	*ft_pars_arg(t_env *env, va_list ap);
 t_form	*ft_arg_char(t_env *env, va_list ap, int x);
-t_form	*ft_arg_int(t_env *env, va_list ap, int x);
+t_form	*ft_arg_int(t_env *env, va_list ap, int x, char c);
 t_form	*ft_arg_float(t_env *env, va_list ap, int x);
 t_form	*ft_arg_point(t_env *env, va_list ap, int x);
 t_form	*ft_arg_str(t_env *env, va_list ap, int x);

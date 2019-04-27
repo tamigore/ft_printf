@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/04/25 20:23:32 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/04/27 17:28:46 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int		main(void)
 	int i;
 	int j;
 
-	i = printf("lol, pour %2.6d %s tu as combien de %c, noix de coco ~ %*.*f\n", -420, "kokonut", 'k', 5, 5,324653.2375);
-	j = ft_printf("lol, pour %2.6d %s tu as combien de %c, noix de coco ~ %*.*f\n", -420, "kokonut", 'k', 5, 5, 324653.2375);
+	i = printf("lol, pour %2.6d %s tu as combien de %c, total ~ %*.*f soit %u \n", -420, "kokonut", 'k', 5, 5,324653.2375, -324653);
+	j = ft_printf("lol, pour %2.6d %s tu as combien de %c, total ~ %*.*f soit %u \n", -420, "kokonut", 'k', 5, 5, 324653.2375, -324653);
 	printf("i = %d ; j = %d", i, j);
 	return (0);
 }

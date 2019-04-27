@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/04/25 20:24:06 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/04/27 17:28:50 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_itoa(int x)
 
 char	ft_pars_char(char *str)
 {
-	static const char	*cut = "diuoxXcsfeEgGpn";
+	static const char	*cut = "diuoxXcsfp";
 	int					x;
 	int					y;
 
@@ -66,7 +66,7 @@ char	ft_pars_char(char *str)
 
 int		ft_count(char *str)
 {
-	static const char	*cut = "diuoxXcsfeEgGpn";
+	static const char	*cut = "diuoxXcsfp";
 	int					x;
 	int					y;
 
