@@ -12,40 +12,52 @@
 
 #include "ft_printf.h"
 
-char	*ft_itoa(int x)
+char	*ft_itoa_conv(int x, char c)
 {
-	unsigned int	y;
-	char			*str;
-	int				neg;
-	int				count;
 
-	neg = 0;
-	count = 1;
-	if (x < 0)
-		neg = 1;
-	y = ABS(x);
-	while (y >= 10)
-	{
-		y /= 10;
-		count++;
-	}
-	if (!(str = (char *)malloc(count + 1 + neg)))
-		return (NULL);
-	str[neg + count--] = '\0';
-	y = ABS(x);
-	while (y > 0)
-	{
-		str[neg + count--] = (y % 10) + '0';
-		y /= 10;
-	}
-	if (neg == 1)
-		*str = '-';
+	char		*str;
+    char  *oct = "01234567";
+    char  *HEX = "0123456789ABCDEF";
+	char  *hex = "0123456789abcdef";
+
+    if (c == 'x')
+        str = ft_deci_conv(x, hex);
+	else if (c == 'X')
+        str = ft_deci_conv(x, HEX);
+    else if (c == 'o')
+        str = ft_deci_conv(x, oct);
+    else if (c == 'u')
+    {
+        if (x >= 0)
+            str = ft_itoa(x);
+        else
+            str = ft_itoa(-x);
+    }
+    else
+        str = ft_itoa(x);
 	return (str);
+}
+
+char    *ft_deci_conv(int nb, char *base)
+{
+    char    *str;
+    int     i;
+
+    i = 0;
+	if (!(str = (char *)malloc(sizeof(char))))
+		return (NULL);
+    while (nb > 0)
+	{
+		str[i++] = base[nb % ft_strlen(base)];
+		nb /= ft_strlen(base);
+	}
+	str[i] = '\0';
+	return (ft_strrev(str));
 }
 
 char	ft_pars_char(char *str)
 {
-	static const char	*cut = "diuoxXcsfp";
+	static const char	*cut = "diuoxXcsfp%";
 	int					x;
 	int					y;
 
@@ -66,7 +78,7 @@ char	ft_pars_char(char *str)
 
 int		ft_count(char *str)
 {
-	static const char	*cut = "diuoxXcsfp";
+	static const char	*cut = "diuoxXcsfp%";
 	int					x;
 	int					y;
 

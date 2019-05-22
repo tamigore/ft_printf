@@ -24,9 +24,12 @@
 typedef struct		s_form
 {
 	int				size;
+	char			indic;
 	int				preci;
 	int				width;
+	char			*modif;
 	char			*content;
+	char			*result;
 	struct s_form	*next;
 	struct s_form	*prev;
 }					t_form;
@@ -45,21 +48,26 @@ char	**ft_init_subs(char *str);
 char	**ft_fill_tab(char **tab, char *str);
 int		ft_subs_len(char *str, int i);
 int		ft_print_all(t_env *env);
+void	ft_freeall(t_env *env);
 
 t_env	*ft_pars_arg(t_env *env, va_list ap);
-t_form	*ft_arg_char(t_env *env, va_list ap, int x);
+t_form	*ft_arg_char(t_env *env, va_list ap, int x, char c);
 t_form	*ft_arg_int(t_env *env, va_list ap, int x, char c);
 t_form	*ft_arg_float(t_env *env, va_list ap, int x);
 t_form	*ft_arg_point(t_env *env, va_list ap, int x);
 t_form	*ft_arg_str(t_env *env, va_list ap, int x);
+t_form	*ft_init_fform(t_env *env, va_list ap);
 
 char	*ft_float_to_char(double x);
 int		ft_count(char *str);
 char	*ft_strcat_float(char *integer, char *decimal);
-char	*ft_itoa(int x);
+char	*ft_itoa_conv(int x, char c);
 char	ft_pars_char(char *str);
+char	*ft_deci_conv(int nb, char *base);
 
+char	ft_find_indic(char *subs);
 int		ft_find_preci(char *subs, va_list ap);
 int		ft_find_width(char *subs, va_list ap);
+char	*ft_find_modif(char *subs);
 
 #endif

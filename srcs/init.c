@@ -14,33 +14,47 @@
 #include "libft.h"
 #include <stdio.h>
 
-int		main(void)
-{
-	int i;
-	int j;
-
-	i = printf("lol, pour %2.6d %s tu as combien de %c, total ~ %*.*f soit %u \n", -420, "kokonut", 'k', 5, 5,324653.2375, -324653);
-	j = ft_printf("lol, pour %2.6d %s tu as combien de %c, total ~ %*.*f soit %u \n", -420, "kokonut", 'k', 5, 5, 324653.2375, -324653);
-	printf("i = %d ; j = %d", i, j);
-	return (0);
-}
-
 int		ft_printf(char *format, ...)
 {
 	int			count;
 	va_list		ap;
 	t_env		*env;
 
-	va_start(ap, format);
+	va_start(ap, format);	
 	if (!(env = ft_init_env(format)))
 		return (-1);
 	ft_puttab(env->subs);
 	if (!(env = ft_pars_arg(env, ap)))
-		return (-1);
-	if ((count = ft_print_all(env)) < 0)
-		return (count);
+	{
+		ft_putstr(format);
+		return (ft_strlen(format));
+	}
+	count = ft_print_all(env);
+	ft_freeall(env);
 	va_end(ap);
 	return (count);
+}
+
+void	ft_freeall(t_env *env)
+{
+	t_form	*tmp;
+	int	x;
+
+	if (env->form)
+	{
+		x = 0;
+		while (env->form)
+		{
+			free(env->form->content);
+			tmp = env->form->next;
+			free(env->form);
+			env->form = tmp;
+		}
+		free(env->str);
+		while (env->subs[x])
+			free(env->subs[x++]);
+		free(env);
+	}
 }
 
 int		ft_print_all(t_env *env)
@@ -65,7 +79,7 @@ int		ft_print_all(t_env *env)
 		{
 			ft_putchar('%');
 			x += 2;
-			count++;
+		    count++;
 		}
 		else
 		{
@@ -88,7 +102,7 @@ t_env	*ft_init_env(char *str)
 	return (new);
 }
 
-t_form	*ft_init_form(char *str, int i, int j)
+t_form	*ft_init_form(t_env *env, char *str, va_list ap, int x)
 {
 	t_form	*new;
 	int		size;
@@ -99,12 +113,17 @@ t_form	*ft_init_form(char *str, int i, int j)
 	if (!(new = (t_form *)malloc(sizeof(t_form))))
 		return (NULL);
 	new->size = size;
-	new->width = i;
-	new->preci = j;
+	new->indic = ft_find_indic(env->subs[x]);
+	new->width = ft_find_width(env->subs[x], ap);
+	new->preci = ft_find_preci(env->subs[x], ap);
+	new->modif = ft_find_modif(env->subs[x]);
 	printf("i : %d, j : %d\n", i, j);
 	new->content = str;
+	new->result = NULL;
 	new->next = NULL;
 	new->prev = NULL;
+	if (env->form)
+		new->prev = env->form;
 	return (new);
 }
 
@@ -119,11 +138,7 @@ char	**ft_init_subs(char *str)
 	while (str[x])
 	{
 		if (str[x] == '%')
-		{
-			x++;
-			if (str[x] != '%')
-				count++;
-		}
+			count++;
 		x++;
 	}
 	if (!(tab = (char **)malloc(sizeof(char *) * (count + 1))))
@@ -145,12 +160,10 @@ char	**ft_fill_tab(char **tab, char *str)
 		if (str[i] == '%')
 		{
 			i++;
-			if (str[i] != '%')
-			{
-				if (!(tab[x] = ft_strndup(&str[i], ft_subs_len(str, i))))
-					return (NULL);
-				x++;
-			}
+			if (!(tab[x] = ft_strndup(&str[i], ft_subs_len(str, i))))
+				return (NULL);
+			x++;
+			i += ft_subs_len(str, i) - 1;
 		}
 		i++;
 	}
@@ -160,7 +173,7 @@ char	**ft_fill_tab(char **tab, char *str)
 
 int		ft_subs_len(char *str, int i)
 {
-	static const char	*cut = "diuoxXcsfeEgGpn";
+	static const char	*cut = "diuoxXcsfp%";
 	int					count;
 	int					x;
 

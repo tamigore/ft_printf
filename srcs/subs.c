@@ -12,6 +12,26 @@
 
 #include "printf.h"
 
+char	*ft_find_preci(char *subs)
+{
+	char	*new;
+	int		i;
+
+	i = 0;
+	while (subs[i] == '-' || subs[i] == '+' || subs[i] == ' ' || subs[i] == '#')
+		i++;
+	if (!(new = (char *)malloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	i = 0;
+	while (subs[i] == '-' || subs[i] == '+' || subs[i] == ' ' || subs[i] == '#')
+	{
+		new[i] = 'subs[i];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
+}
+
 int		ft_find_preci(char *subs, va_list ap)
 {
 	int	i;
@@ -65,4 +85,25 @@ int		ft_find_width(char *subs, va_list ap)
 		i++;
 	}
 	return (x);
+}
+
+char	*ft_find_modif(char *subs)
+{
+	char	*new;
+	int		i;
+	int		x;
+
+	i = 0;
+	while (subs[i])
+	{
+		i++;
+	}
+	if (!(new = (char *)malloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	while (subs[i] == 'h' || subs[i] == 'l' || subs[i] == 'L' || subs[i] == '#')
+	{
+		new[i] = 'subs[i];
+	}
+	new = '\0';
+	return (new);
 }
