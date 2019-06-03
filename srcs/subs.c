@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
-char	*ft_find_preci(char *subs)
+char	*ft_find_indic(char *subs)
 {
 	char	*new;
 	int		i;
@@ -25,7 +25,7 @@ char	*ft_find_preci(char *subs)
 	i = 0;
 	while (subs[i] == '-' || subs[i] == '+' || subs[i] == ' ' || subs[i] == '#')
 	{
-		new[i] = 'subs[i];
+		new[i] = subs[i];
 		i++;
 	}
 	new[i] = '\0';
@@ -94,16 +94,33 @@ char	*ft_find_modif(char *subs)
 	int		x;
 
 	i = 0;
-	while (subs[i])
+	while (subs[i] && (subs[i] != 'h' || subs[i] != 'l' || subs[i] != 'L'))
+		i++;
+	if ((subs[i] == subs[i + 1]) && (subs[i] == 'h' || subs[i] == 'l'))
+		x = 2;
+	else if (subs[i] == 'h' || subs[i] == 'l')
+		x = 1;
+	else
+		x = 0;
+	if (!(new = ft_strndup(&subs[i], x)))
+		return (NULL);
+	return (new);
+}
+
+int		ft_err(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
 	{
+		if (str[i] == '%')
+		{
+			if (ft_find_type(&str[i + 1]) == 0)
+				return (0);
+			i += ft_count(&str[i + 1]) + 1;
+		}
 		i++;
 	}
-	if (!(new = (char *)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	while (subs[i] == 'h' || subs[i] == 'l' || subs[i] == 'L' || subs[i] == '#')
-	{
-		new[i] = 'subs[i];
-	}
-	new = '\0';
-	return (new);
+	return (1);
 }

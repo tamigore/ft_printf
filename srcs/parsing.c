@@ -12,144 +12,236 @@
 
 #include "ft_printf.h"
 
-t_env	*ft_pars_arg(t_env *env, va_list ap)
+char	*ft_find_result(t_env *env)
 {
-	int		x;
-	char	c;
-
-	x = 1;
-	if (!(env->form = ft_init_fform(env, ap)))
-		return (NULL);
-	while (env->subs[x])
-	{	
-		c = ft_pars_char(env->subs[x]);
-		if (c == 'd' || c == 'i' || c == 'o' || c == 'u' || c == 'x' || c == 'X')
-			env->form->next = ft_arg_int(env, ap, x, c);
-		else if (c == 'f')
-			env->form->next = ft_arg_float(env, ap, x);
-		else if (c == 'c')
-			env->form->next = ft_arg_char(env, ap, x, 0);
-		else if (c == 's')
-			env->form->next = ft_arg_str(env, ap, x);
-		else if (c == 'p')
-			env->form->next = ft_arg_point(env, ap, x);
-		else if (c == '%')
-			env->form->next = ft_arg_char(env, ap, x, '%');
-		x++;
-		env->form->next->prev = env->form;
-		env->form = env->form->next;
-		ft_putstr(env->form->content);
-		ft_putchar('\n');
-	}
-	while (env->form->prev)
-		env->form = env->form->prev;
-	return (env);
-}
-
-t_form	*ft_init_fform(t_env *env, va_list ap)
-{
-	char	c;
-
-	if (env->subs[0])
-	{
-		c = ft_pars_char(env->subs[0]);
-		if (c == 'd' || c == 'i' || c == 'o' || c == 'u' || c == 'x' || c == 'X')
-			env->form = ft_arg_int(env, ap, 0, c);
-		else if (c == 'f')
-			env->form = ft_arg_float(env, ap, 0);
-		else if (c == 'c')
-			env->form = ft_arg_char(env, ap, 0, 0);
-		else if (c == 's')
-			env->form = ft_arg_str(env, ap, 0);
-		else if (c == 'p')
-			env->form = ft_arg_point(env, ap, 0);
-		else if (c == '%')
-			env->form = ft_arg_char(env, ap, 0, '%');
-		ft_putstr(env->form->content);
-		ft_putchar('\n');
-		return (env->form);
-	}
+	if (ft_strsearch("diouxX", TYPE) == 1)
+		return (ft_arg_int(env));
+	else if (TYPE == 'f')
+		return (ft_arg_float(env));
+	else if (TYPE == 'c' || TYPE == '%')
+		return (ft_arg_char(env));
+	else if (TYPE == 's')
+		return (ft_arg_str(env));
+	else if (TYPE == 'p')
+		return (ft_arg_point(env));
 	return (NULL);
 }
 
-t_form	*ft_arg_char(t_env *env, va_list ap, int x, char c)
+char	*ft_init_content(t_form *new, va_list ap)
+{
+	char	*str;
+
+	if (ft_strsearch("diouxX", new->type) == 1)
+	{
+		if (ft_strcmp(new->modif, "l"))
+			str = ft_itoa_conv(va_arg(ap, long int), new->type);
+		else if (ft_strcmp(new->modif, "ll"))
+			str = ft_itoa_conv(va_arg(ap, long long int), new->type);
+		else if (ft_strcmp(new->modif, "h"))
+			str = ft_itoa_conv(va_arg(ap, /*short*/ int), new->type);
+		else if (ft_strcmp(new->modif, "hh"))
+			str = ft_itoa_conv(va_arg(ap, /*char*/int), new->type);
+		else
+			str = ft_itoa_conv((int)va_arg(ap, int), new->type);
+	}
+	else if (new->type == 'f')
+		str = ft_float_to_char(va_arg(ap, double));
+	else if (new->type == 'c' || new->type == '%')
+	{
+		if (!(str = (char *)malloc(sizeof(char) * 2)))
+			return (NULL);
+		if (new->type == 'c')
+			str[0] = (char)va_arg(ap, int);
+		else
+			str[0] = '%';
+		str[1] = '\0';
+	}
+	else if (new->type == 's')
+		str = va_arg(ap, char *);
+	else if (new->type == 'p')
+		str = ft_itoa_conv(va_arg(ap, int), 'x');
+	else
+		str = NULL;
+	return (str);
+}
+
+char	*ft_arg_char(t_env *env)
 {
 	char	*str;
 	int		count;
-	int		i;
 
 	count = 2;
-	i = ft_find_width(env->subs[x], ap);
-	ft_find_preci(env->subs[x], ap);
-	if (c == 0)
-		c = (char)va_arg(ap, int);
-	if (i > 0)
-		count = i + 1;
+	if (WIDTH > 0)
+		count = WIDTH + 1;
 	if (!(str = (char *)malloc(sizeof(char) * count)))
 		return (NULL);
 	count = 0;
-	if (env->subs[x][0] == '-')
+	if (ft_strsearch(INDIC, '-'))
 	{
-		str[count++] = c;
-		while (count < i)
+		str[count++] = CONTENT[0];
+		while (count < WIDTH)
 			str[count++] = ' ';
 	}
 	else
 	{
-		while (count < i - 1)
+		while (count < WIDTH - 1)
 			str[count++] = ' ';
-		str[count++] = c;
+		str[count++] = CONTENT[0];
 	}
 	str[count] = '\0';
-	return (ft_init_form(str, i, 0));
+	return (str);
 }
 
-t_form	*ft_arg_int(t_env *env, va_list ap, int x, char c)
+char	*ft_arg_int(t_env *env)
 {
 	char	*str;
-	char	*cpy;
-	int		tab[2];
 	int		count;
+	int		i;
+	char	c;
 
-	tab[0] = ft_find_width(env->subs[x], ap);
-	tab[1] = ft_find_preci(env->subs[x], ap);
-	cpy = ft_itoa_conv(va_arg(ap, int), c);
-	if (ft_strlen(cpy) >= tab[0] && ft_strlen(cpy) >= tab[1])
-		count = ft_strlen(cpy);
-	else if (tab [0] >= tab[1] && tab[0] >= ft_strlen(cpy))
-		count = tab[0];
-	else if (tab [0] >= tab[1] && tab[0] >= ft_strlen(cpy))
-		count = tab[1];
-	if (count == ft_strlen(cpy) && env->subs[x][0] == )
-	return (ft_init_form(cpy, tab[0], tab[1]));
+	count = 0;
+	c = ' ';
+	if (ft_strsearch(INDIC, '0') == 1 && ft_strsearch(INDIC, '-') == 0 &&
+				PRECI == 0 )
+		c = '0';
+	if (SIZE >= WIDTH && SIZE >= PRECI)
+		count = SIZE;
+	else if (WIDTH >= PRECI && WIDTH >= SIZE)
+		count = WIDTH;
+	else if (PRECI >= WIDTH && PRECI >= SIZE)
+		count = PRECI;
+	if (count == SIZE)
+	{
+		if (CONTENT[0] != '-' && (ft_strsearch(INDIC, '+') == 1 ||
+					ft_strsearch(INDIC, ' ') == 1))
+			count++;
+		if (TYPE == 'o' && ft_strsearch(INDIC, '#') == 1)
+			count++;
+	}
+	else
+		if (CONTENT[0] == '-')
+			count++;
+	if (!(str = (char *)malloc(sizeof(char) * (count + 1))))
+		return (NULL);
+	i = 0;
+	count = 0;
+	if (ft_strsearch(INDIC, '-'))
+	{
+		while (CONTENT[i])
+			str[count++] = CONTENT[i++];
+	}
+	while (WIDTH > PRECI + count)
+	{
+		if (WIDTH > SIZE + count)
+			str[count++] = c;
+		else
+			break ;
+	}
+	while (PRECI > SIZE + i)
+		str[count + i++] = '0';
+	if (!ft_strsearch(INDIC, '-'))
+	{
+		while (CONTENT[i])
+			str[count++] = CONTENT[i++];
+	}
+	str[count] = '\0';
+	return (str);
 }
 
-t_form	*ft_arg_str(t_env *env, va_list ap, int x)
+char	*ft_arg_str(t_env *env)
 {
+	char	*str;
+	int		count;
 	int		i;
-	int		j;
 
-	i = ft_find_width(env->subs[x], ap);
-	j = ft_find_preci(env->subs[x], ap);
-	return (ft_init_form(va_arg(ap, char *), i, j));
+	count = SIZE + 1;
+	if (WIDTH > SIZE)
+		count = WIDTH + 1;
+	if (!(str = (char *)malloc(sizeof(char) * count)))
+		return (NULL);
+	count = 0;
+	i = 0;
+	if (ft_strsearch(INDIC, '-'))
+	{
+		while (CONTENT[i++])
+			str[count++] = CONTENT[i++];
+		while (count < WIDTH)
+			str[count++] = ' ';
+	}
+	else
+	{
+		while (count < WIDTH - SIZE)
+			str[count++] = ' ';
+		while (CONTENT[i])
+			str[count++] = CONTENT[i++];
+	}
+	str[count] = '\0';
+	return (str);
 }
 
-t_form	*ft_arg_point(t_env *env, va_list ap, int x)
+char	*ft_arg_point(t_env *env)
 {
+	char	*str;
+	int		count;
 	int		i;
-	int		j;
 
-	i = ft_find_width(env->subs[x], ap);
-	j = ft_find_preci(env->subs[x], ap);
-	return (ft_init_form(ft_itoa_conv(va_arg(ap, int), 'x'), i, j));
+	count = SIZE + 1;
+	if (WIDTH > SIZE)
+		count = WIDTH + 1;
+	if (!(str = (char *)malloc(sizeof(char) * count)))
+		return (NULL);
+	count = 0;
+	i = 0;
+	if (ft_strsearch(INDIC, '-'))
+	{
+		while (CONTENT[i++])
+			str[count++] = CONTENT[i++];
+		while (count < WIDTH)
+			str[count++] = ' ';
+	}
+	else
+	{
+		while (count < WIDTH - SIZE)
+			str[count++] = ' ';
+		while (CONTENT[i])
+			str[count++] = CONTENT[i++];
+	}
+	str[count] = '\0';
+	return (str);
 }
 
-t_form	*ft_arg_float(t_env *env, va_list ap, int x)
+char	*ft_arg_float(t_env *env)
 {
+	char	*str;
+	int		count;
 	int		i;
-	int		j;
 
-	i = ft_find_width(env->subs[x], ap);
-	j = ft_find_preci(env->subs[x], ap);
-	return (ft_init_form(ft_float_to_char(va_arg(ap, double)), i, j));
+	count = SIZE + 1;
+	if (WIDTH > SIZE)
+		count = WIDTH + 1;
+	else
+	{
+		if (CONTENT[0] != '-' && ft_strsearch(INDIC, '+') == 1)
+			count++;
+	}
+	if (!(str = (char *)malloc(sizeof(char) * count)))
+		return (NULL);
+	count = 0;
+	i = 0;
+	if (ft_strsearch(INDIC, '-'))
+	{
+		while (CONTENT[i++])
+			str[count++] = CONTENT[i++];
+		while (count < WIDTH)
+			str[count++] = ' ';
+	}
+	else
+	{
+		while (count < WIDTH - SIZE)
+			str[count++] = ' ';
+		while (CONTENT[i])
+			str[count++] = CONTENT[i++];
+	}
+	str[count] = '\0';
+	return (str);
 }

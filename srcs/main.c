@@ -18,8 +18,8 @@ int		main()
 	int i;
 	int j;
 
-	i = printf("lol, pour %2.6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5,324653.2375);
-	j = ft_printf("lol, pour %2.6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5, 324653.2375);
+	i = printf("lol, pour %6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5,324653.2375);
+	j = ft_printf("lol, pour %6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5, 324653.2375);
 	printf("i = %d ; j = %d", i, j);
 
 	ft_printf("-------------------------------\n");

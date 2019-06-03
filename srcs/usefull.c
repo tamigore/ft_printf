@@ -40,22 +40,32 @@ char	*ft_itoa_conv(int x, char c)
 
 char    *ft_deci_conv(int nb, char *base)
 {
-    char    *str;
-    int     i;
+    char			*str;
+    int				i;
+	unsigned int	x;
 
     i = 0;
 	if (!(str = (char *)malloc(sizeof(char))))
 		return (NULL);
-    while (nb > 0)
+	if (nb < 0)
+		x = 4294967296 + nb;
+	else
+		x = nb;
+	if (x == 0)
+		str[i++] = '0';
+	else
 	{
-		str[i++] = base[nb % ft_strlen(base)];
-		nb /= ft_strlen(base);
+    	while (x > 0)
+		{
+			str[i++] = base[x % ft_strlen(base)];
+			x /= ft_strlen(base);
+		}
 	}
 	str[i] = '\0';
 	return (ft_strrev(str));
 }
 
-char	ft_pars_char(char *str)
+char	ft_find_type(char *str)
 {
 	static const char	*cut = "diuoxXcsfp%";
 	int					x;
