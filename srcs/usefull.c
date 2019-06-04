@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/04/27 17:28:50 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/06/04 19:04:14 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,7 @@ char    *ft_deci_conv(int nb, char *base)
 	return (ft_strrev(str));
 }
 
-char	ft_find_type(char *str)
-{
-	static const char	*cut = "diuoxXcsfp%";
-	int					x;
-	int					y;
-
-	x = 0;
-	while (str[x])
-	{
-		y = 0;
-		while (cut[y])
-		{
-			if (cut[y] == str[x])
-				return (cut[y]);
-			y++;
-		}
-		x++;
-	}
-	return (0);
-}
-
-int		ft_count(char *str)
+int		ft_count_type(char *str)
 {
 	static const char	*cut = "diuoxXcsfp%";
 	int					x;

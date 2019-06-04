@@ -6,99 +6,11 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/04/27 17:28:46 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/06/04 19:04:06 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
-#include <stdio.h>
-
-int		ft_printf(char *format, ...)
-{
-	int			count;
-	va_list		ap;
-	t_env		*env;
-
-	va_start(ap, format);
-	if ((ft_err(format) == 0) ||!(env = ft_init_env(format, ap)))
-		return (-1);
-	if (!env->form)
-		return (ft_strlen(format));
-	while (env->form)
-	{
-		if (!env->form->next)
-			break ;
-		env->form = env->form->next;
-	}
-	while (env->form->prev)
-		env->form = env->form->prev;	
-	while (env->form)
-	{
-		if (!(RESULT = ft_find_result(env)))
-			return (-1);
-		SIZE = ft_strlen(RESULT);
-		if (!env->form->next)
-			break ;
-		env->form = env->form->next;
-	}
-	while (env->form->prev)
-		env->form = env->form->prev;
-	count = ft_print_all(env);
-	ft_freeall(env);
-	va_end(ap);
-	return (count);
-}
-
-void	ft_freeall(t_env *env)
-{
-	t_form	*tmp;
-	int	x;
-
-	if (env->form)
-	{
-		x = 0;
-		while (env->form)
-		{
-			free(INDIC);
-			free(MODIF);
-			free(CONTENT);
-			free(RESULT);
-			tmp = env->form->next;
-			free(env->form);
-			env->form = tmp;
-		}
-		free(env->str);
-		while (env->subs[x])
-			free(env->subs[x++]);
-		free(env);
-	}
-}
-
-int		ft_print_all(t_env *env)
-{
-	int count;
-	int x;
-
-	x = 0;
-	count = 0;
-	while (env->str[x])
-	{
-		if (env->str[x] == '%')
-		{
-			ft_putstr(RESULT);
-			count += SIZE;
-			env->form = env->form->next;
-			x += ft_count(&(env->str[x + 1])) + 2;
-		}
-		else
-		{
-			ft_putchar(env->str[x++]);
-			count++;
-		}
-	}
-	return (count);
-}
 
 t_env	*ft_init_env(char *str, va_list ap)
 {
@@ -173,47 +85,55 @@ char	**ft_init_subs(char *str)
 	return (tab);
 }
 
-char	**ft_fill_tab(char **tab, char *str)
+char	*ft_init_content(t_form *new, va_list ap)
 {
-	int x;
-	int i;
+	char	*str;
 
-	x = 0;
-	i = 0;
-	while (str[i])
+	if (ft_strsearch("diouxX", new->type) == 1)
 	{
-		if (str[i] == '%')
-		{
-			i++;
-			if (!(tab[x] = ft_strndup(&str[i], ft_subs_len(str, i))))
-				return (NULL);
-			x++;
-			i += ft_subs_len(str, i) - 1;
-		}
-		i++;
+		if (ft_strcmp(new->modif, "l"))
+			str = ft_itoa_conv(va_arg(ap, long int), new->type);
+		else if (ft_strcmp(new->modif, "ll"))
+			str = ft_itoa_conv(va_arg(ap, long long int), new->type);
+		else if (ft_strcmp(new->modif, "h"))
+			str = ft_itoa_conv(va_arg(ap, /*short*/ int), new->type);
+		else if (ft_strcmp(new->modif, "hh"))
+			str = ft_itoa_conv(va_arg(ap, /*char*/int), new->type);
+		else
+			str = ft_itoa_conv((int)va_arg(ap, int), new->type);
 	}
-	tab[x] = NULL;
-	return (tab);
+	else if (new->type == 'f')
+		str = ft_float_to_char(va_arg(ap, double));
+	else if (new->type == 'c' || new->type == '%')
+	{
+		if (!(str = (char *)malloc(sizeof(char) * 2)))
+			return (NULL);
+		if (new->type == 'c')
+			str[0] = (char)va_arg(ap, int);
+		else
+			str[0] = '%';
+		str[1] = '\0';
+	}
+	else if (new->type == 's')
+		str = va_arg(ap, char *);
+	else if (new->type == 'p')
+		str = ft_itoa_conv(va_arg(ap, int), 'x');
+	else
+		str = NULL;
+	return (str);
 }
 
-int		ft_subs_len(char *str, int i)
+char	*ft_init_result(t_env *env)
 {
-	static const char	*cut = "diuoxXcsfp%";
-	int					count;
-	int					x;
-
-	count = 1;
-	while (str[i])
-	{
-		x = 0;
-		while (cut[x])
-		{
-			if (cut[x] == str[i])
-				return (count);
-			x++;
-		}
-		count++;
-		i++;
-	}
-	return (-1);
+	if (ft_strsearch("diouxX", TYPE) == 1)
+		return (ft_arg_int(env));
+	else if (TYPE == 'f')
+		return (ft_arg_float(env));
+	else if (TYPE == 'c' || TYPE == '%')
+		return (ft_arg_char(env));
+	else if (TYPE == 's')
+		return (ft_arg_str(env));
+	else if (TYPE == 'p')
+		return (ft_arg_point(env));
+	return (NULL);
 }

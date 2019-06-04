@@ -6,64 +6,11 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/04/27 17:28:48 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/06/04 19:04:12 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-char	*ft_find_result(t_env *env)
-{
-	if (ft_strsearch("diouxX", TYPE) == 1)
-		return (ft_arg_int(env));
-	else if (TYPE == 'f')
-		return (ft_arg_float(env));
-	else if (TYPE == 'c' || TYPE == '%')
-		return (ft_arg_char(env));
-	else if (TYPE == 's')
-		return (ft_arg_str(env));
-	else if (TYPE == 'p')
-		return (ft_arg_point(env));
-	return (NULL);
-}
-
-char	*ft_init_content(t_form *new, va_list ap)
-{
-	char	*str;
-
-	if (ft_strsearch("diouxX", new->type) == 1)
-	{
-		if (ft_strcmp(new->modif, "l"))
-			str = ft_itoa_conv(va_arg(ap, long int), new->type);
-		else if (ft_strcmp(new->modif, "ll"))
-			str = ft_itoa_conv(va_arg(ap, long long int), new->type);
-		else if (ft_strcmp(new->modif, "h"))
-			str = ft_itoa_conv(va_arg(ap, /*short*/ int), new->type);
-		else if (ft_strcmp(new->modif, "hh"))
-			str = ft_itoa_conv(va_arg(ap, /*char*/int), new->type);
-		else
-			str = ft_itoa_conv((int)va_arg(ap, int), new->type);
-	}
-	else if (new->type == 'f')
-		str = ft_float_to_char(va_arg(ap, double));
-	else if (new->type == 'c' || new->type == '%')
-	{
-		if (!(str = (char *)malloc(sizeof(char) * 2)))
-			return (NULL);
-		if (new->type == 'c')
-			str[0] = (char)va_arg(ap, int);
-		else
-			str[0] = '%';
-		str[1] = '\0';
-	}
-	else if (new->type == 's')
-		str = va_arg(ap, char *);
-	else if (new->type == 'p')
-		str = ft_itoa_conv(va_arg(ap, int), 'x');
-	else
-		str = NULL;
-	return (str);
-}
 
 char	*ft_arg_char(t_env *env)
 {

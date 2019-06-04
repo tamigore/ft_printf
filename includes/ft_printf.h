@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/04/27 17:28:41 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/06/04 18:12:28 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,60 @@ typedef struct		s_env
 	struct s_form	*form;
 }					t_env;
 
+/*
+** printf.c
+*/
+
 int		ft_printf(char *format, ...);
+int		ft_print_all(t_env *env);
+void	ft_freeall(t_env *env);
+int		ft_err(char *str);
+
+/*
+** subs.c
+*/
+
+char	**ft_fill_tab(char **tab, char *str);
+int		ft_subs_len(char *str, int i);
+
+/*
+** init.c
+*/
+
 t_env	*ft_init_env(char *str, va_list ap);
 t_form	*ft_init_form(t_env *env, va_list ap, int x);
 char	**ft_init_subs(char *str);
-char	**ft_fill_tab(char **tab, char *str);
-int		ft_subs_len(char *str, int i);
-int		ft_print_all(t_env *env);
-void	ft_freeall(t_env *env);
+char	*ft_init_content(t_form *new, va_list ap);
+char	*ft_init_result(t_env *env);
 
-char	*ft_find_result(t_env *env);
+/*
+** parsing.c
+*/
+
 char	*ft_arg_char(t_env *env);
 char	*ft_arg_int(t_env *env);
 char	*ft_arg_float(t_env *env);
 char	*ft_arg_point(t_env *env);
 char	*ft_arg_str(t_env *env);
-char	*ft_init_content(t_form *new, va_list ap);
 
-char	*ft_float_to_char(double x);
-int		ft_count(char *str);
-char	*ft_strcat_float(char *integer, char *decimal);
+/*
+** usefull.c
+*/
+
 char	*ft_itoa_conv(int x, char c);
-char	ft_find_type(char *str);
 char	*ft_deci_conv(int nb, char *base);
+int		ft_count_type(char *str);
+char	*ft_float_to_char(double x);
+char	*ft_strcat_float(char *integer, char *decimal);
+
+/*
+** find.c
+*/
 
 char	*ft_find_indic(char *subs);
 int		ft_find_preci(char *subs, va_list ap);
 int		ft_find_width(char *subs, va_list ap);
 char	*ft_find_modif(char *subs);
-int		ft_err(char *str);
+char	ft_find_type(char *str);
 
 #endif
