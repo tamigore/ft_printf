@@ -58,7 +58,7 @@ t_form	*ft_init_form(t_env *env, va_list ap, int x)
 	if (!(new->content = ft_init_content(new, ap)))
 		return (NULL);
 	new->size = (int)ft_strlen(new->content);
-	new->result = NULL;
+	new->result = new->content;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);

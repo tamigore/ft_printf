@@ -18,9 +18,10 @@ char	*ft_modif_width(t_env *env, char *str)
 	int		i;
 	int		j;
 
+	tmp = NULL;
 	i = 0;
 	j = 0;
-	if (WIDTH > ft_strlen(str))
+	if (WIDTH > (int)ft_strlen(str))
 	{
 		if (!(tmp = ft_strnew(WIDTH + 1)))
 			return (NULL);
@@ -33,18 +34,37 @@ char	*ft_modif_width(t_env *env, char *str)
 		}
 		else
 		{
-			while (i < (WIDTH - ft_strlen(str)))
+			while (i < (WIDTH - (int)ft_strlen(str)))
 				tmp[i++] = ' ';
 			while (str[j])
 				tmp[i++] = str[j++];
 		}
-		free(str);
 	}
 	return (tmp);
 }
 
 char	*ft_modif_str_preci(t_env *env, char *str)
 {
+	char	*tmp;
+	int		i;
+	int		j;
+
+	tmp = NULL;
+	i = 0;
+	j = 0;
+	if (!(tmp = ft_strnew(PRECI)))
+		return (NULL);
+	if (PRECI > (int)ft_strlen(str))
+	{
+		while (str[j])
+			tmp[i++] = str[j++];
+	}
+	else
+	{
+		while (i < PRECI)
+			tmp[i++] = str[j++];
+	}
+	return (tmp);
 }
 
 char	*ft_modif_preci(t_env *env, char *str)
@@ -54,16 +74,17 @@ char	*ft_modif_preci(t_env *env, char *str)
 	int		j;
 	char	*tmp;
 
+	tmp = NULL;
 	i = 0;
 	j = 0;
-	k = ft_strlen(str) - POSI - SPACE;
+	k = (int)(ft_strlen(str) - ft_strsearch(INDIC, '+') - ft_strsearch(INDIC, ' '));
 	if (str[0] == '-')
 		PRECI = PRECI + 2;
-	if (!(tmp = ft_strnew(PRECI + POSI + SPACE)))
+	if (!(tmp = ft_strnew(PRECI + (int)(ft_strsearch(INDIC, '+') + ft_strsearch(INDIC, ' ')))))
 		return (NULL);
-	if (POSI != 0)
+	if (ft_strsearch(INDIC, '+'))
 		tmp[i++] = '+';
-	if (ft_strsearch(INDIC, '0') == 0)
+	if (!ft_strsearch(INDIC, '0'))
 		tmp[i++] = ' ';
 	if (str[0] == '-')
 	{
@@ -74,7 +95,6 @@ char	*ft_modif_preci(t_env *env, char *str)
 		tmp[i++] = '0';
 	while (str[j])
 		tmp[i++] = str[j++];
-	free(str);
 	return(tmp);
 }
 
@@ -82,20 +102,29 @@ int		ft_modif(t_env *env)
 {
 	while (env->form)
 	{
-		if (PRECI > 0 && CONV != 'c' && CONV != 'f')
+		if (PRECI > 0 && TYPE != 'c' && TYPE != 'f')
 		{
 			if (TYPE == 's')
-				ft_modif_str_preci(form, RESULT);
-			else if (PRECI > ft_strlen(RESULT))
-				ft_modif_preci(form, RESULT);
+			{
+				if (!(ft_modif_str_preci(env, RESULT)))
+					return (0);
+			}
+			else if (PRECI > (int)ft_strlen(RESULT))
+				if (!(ft_modif_preci(env, RESULT)))
+					return (0);
 		}
 		if (WIDTH != 0 && WIDTH > PRECI)
-			if (!(RESULT = ft_modif_width(env->form, RESULT)))
+			if (!(RESULT = ft_modif_width(env, RESULT)))
 				return (0);
 		if (WIDTH != 0 && TYPE == 's' && WIDTH < PRECI)
-			if (!(RESULT = ft_modif_width(env->form, RESULT)))
+			if (!(RESULT = ft_modif_width(env, RESULT)))
 				return (0);
+		SIZE = (int)ft_strlen(RESULT);
+		if (env->form->next == NULL)
+			break ;
 		env->form = NEXT;
 	}
+	while (env->form->prev)
+		env->form = env->form->prev;
 	return (1);
 }

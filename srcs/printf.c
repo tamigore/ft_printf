@@ -19,29 +19,15 @@ int		ft_printf(char *format, ...)
 	t_env		*env;
 
 	va_start(ap, format);
-	if ((ft_err(format) == 0) ||!(env = ft_init_env(format, ap)))
+	if ((ft_strlen(format) == 0 || ft_err(format) == 0))
+		return (0);
+	if (!(env = ft_init_env(format, ap)))
 		return (-1);
 	if (!env->form)
 		return (ft_strlen(format));
-	while (env->form)
-	{
-		if (!env->form->next)
-			break ;
-		env->form = env->form->next;
-	}
-	while (env->form->prev)
-		env->form = env->form->prev;	
-	while (env->form)
-	{
-		if (!(RESULT = ft_init_result(env)))
-			return (-1);
-		SIZE = ft_strlen(RESULT);
-		if (!env->form->next)
-			break ;
-		env->form = env->form->next;
-	}
-	while (env->form->prev)
-		env->form = env->form->prev;
+	option(env);
+	if (!ft_modif(env))
+		return (-1);
 	count = ft_print_all(env);
 	ft_freeall(env);
 	va_end(ap);

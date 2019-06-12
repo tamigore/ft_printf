@@ -108,4 +108,38 @@ int		ft_find_width(char *subs, va_list ap);
 char	*ft_find_modif(char *subs);
 char	ft_find_type(char *str);
 
+/*
+** modif.c
+*/
+
+char	*ft_modif_width(t_env *env, char *str);
+char	*ft_modif_str_preci(t_env *env, char *str);
+char	*ft_modif_preci(t_env *env, char *str);
+int		ft_modif(t_env *env);
+
+/*
+** option.c
+*/
+
+void	option(t_env *env);
+
+/*
+** option_one.c
+*/
+
+void	oposi(t_env *env, int width);
+void	ohash(t_env *env, int width);
+void	olzero(t_env *env, int width);
+void	ospace(t_env *env, int width);
+void	olalign(t_env *env, int width);
+
+/*
+** option_one.c
+*/
+
+void	oposineg(t_env *env, int width);
+void	oposizero(t_env *env, int width);
+void	onegspace(t_env *env, int width);
+void	ozerospace(t_env *env, int width);
+
 #endif
