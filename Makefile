@@ -10,45 +10,64 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = exec
+C = clang
 
-LIB = libft/libft.a
+NAME = libftprintf.a
 
 FLAGS = -Wall -Wextra -Werror
 
-BASE_SRC = main.c init.c parsing.c usefull.c subs.c printf.c find.c modif.c \
-		   option.c	option_one.c option_duo.c
+LIBFT = libft
 
-SRC = $(addprefix srcs/, $(BASE_SRC))
+DIR_S = srcs
 
-BASE_OBJ = $(BASE_SRC:.c=.o)
+DIR_O = objs
 
-OBJ = $(addprefix objs/, $(BASE_OBJ))
+HEADER = includes
 
-HEADERS = includes/
+SOURCES = conv_nb.c		\
+		  double.c		\
+		  find.c		\
+		  init.c		\
+		  itoa.c		\
+		  modif.c		\
+		  option.c		\
+		  option_one.c	\
+		  option_duo.c	\
+		  parsing.c		\
+		  printf.c		\
+		  subs.c		\
+		  usefull.c
 
-all : $(NAME)
+SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
-$(NAME) : $(OBJ) $(LIB)
-	gcc $(FLAGS) $(OBJ) $(LIB) -o $(NAME) -I$(HEADERS)
+OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
-$(OBJ) : $(SRC)
-	gcc $(FLAGS) -c $(SRC) -I$(HEADERS)
-	@test -d objs || mkdir objs
-	@mv $(BASE_OBJ) objs/
+all: $(NAME)
 
-$(LIB) :
-	@test -e $(LIB) || (cd libft ; make)
+$(NAME): $(OBJS)
+	make -C $(LIBFT)
+	cp libft/libft.a ./$(NAME)
+	ar rc $(NAME) $(OBJS)
+	ranlib $(NAME)
 
-.PHONY : clean lclean fclean
+$(DIR_O)/%.o: $(DIR_S)/%.c $(HEADER)/ft_printf.h
+	mkdir -p objs
+	$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
 
-clean :
-	rm -rf objs/*
+norme:
+	norminette ./libft/
+	@echo
+	norminette ./$(HEADER)/
+	@echo
+	norminette ./$(DIR_S)/
 
-lclean:
-	(cd libft ; make clean)
+clean:
+	@rm -f $(OBJS)
+	@rm -rf $(DIR_O)
+	@make clean -C $(LIBFT)
 
-fclean : clean lclean
-	rm -f $(NAME)
+fclean: clean
+	@rm -f $(NAME)
+	@make fclean -C $(LIBFT)
 
 re: fclean all

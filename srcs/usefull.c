@@ -12,75 +12,15 @@
 
 #include "ft_printf.h"
 
-char	*ft_itoa_conv(int x, char c)
-{
-
-	char		*str;
-    char  *oct = "01234567";
-    char  *HEX = "0123456789ABCDEF";
-	char  *hex = "0123456789abcdef";
-
-    if (c == 'x')
-        str = ft_deci_conv(x, hex);
-	else if (c == 'X')
-        str = ft_deci_conv(x, HEX);
-    else if (c == 'o')
-        str = ft_deci_conv(x, oct);
-    else if (c == 'u')
-    {
-        if (x >= 0)
-            str = ft_itoa(x);
-        else
-            str = ft_itoa(-x);
-    }
-    else
-        str = ft_itoa(x);
-	return (str);
-}
-
-char    *ft_deci_conv(int nb, char *base)
-{
-    char			*str;
-    int				i;
-	unsigned int	x;
-
-    i = 0;
-	if (!(str = (char *)malloc(sizeof(char))))
-		return (NULL);
-	if (nb < 0)
-		x = 4294967296 + nb;
-	else
-		x = nb;
-	if (x == 0)
-		str[i++] = '0';
-	else
-	{
-    	while (x > 0)
-		{
-			str[i++] = base[x % ft_strlen(base)];
-			x /= ft_strlen(base);
-		}
-	}
-	str[i] = '\0';
-	return (ft_strrev(str));
-}
-
 int		ft_count_type(char *str)
 {
-	static const char	*cut = "diuoxXcsfp%";
 	int					x;
-	int					y;
 
 	x = 0;
-	while (str[x])
+	while (ft_strsearch(" -+#0123456789diuoxXcsfphl.*%", str[x]) == 1)
 	{
-		y = 0;
-		while (cut[y])
-		{
-			if (cut[y] == str[x])
-				return (x);
-			y++;
-		}
+		if (ft_strsearch("diuoxXcsfp%", str[x]) == 1)
+			return (x + 1);
 		x++;
 	}
 	return (0);

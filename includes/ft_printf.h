@@ -16,7 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include "libft.h"
+# include "../libft/libft.h"
 
 # define ABS(X) 	(x > 0) ? x : -x
 # define UPORDOW(X)	(x % 10 > 5) ? (x / 10 + 1) : (x / 10)
@@ -76,7 +76,7 @@ t_env	*ft_init_env(char *str, va_list ap);
 t_form	*ft_init_form(t_env *env, va_list ap, int x);
 char	**ft_init_subs(char *str);
 char	*ft_init_content(t_form *new, va_list ap);
-char	*ft_init_result(t_env *env);
+int		ft_erorrcheck(t_env *env);
 
 /*
 ** parsing.c
@@ -92,8 +92,6 @@ char	*ft_arg_str(t_env *env);
 ** usefull.c
 */
 
-char	*ft_itoa_conv(int x, char c);
-char	*ft_deci_conv(int nb, char *base);
 int		ft_count_type(char *str);
 char	*ft_float_to_char(double x);
 char	*ft_strcat_float(char *integer, char *decimal);
@@ -121,7 +119,7 @@ int		ft_modif(t_env *env);
 ** option.c
 */
 
-void	option(t_env *env);
+void	option(t_env *env, int x);
 
 /*
 ** option_one.c
@@ -141,5 +139,29 @@ void	oposineg(t_env *env, int width);
 void	oposizero(t_env *env, int width);
 void	onegspace(t_env *env, int width);
 void	ozerospace(t_env *env, int width);
+
+/*
+** conv_nb.c
+*/
+
+int		ft_find_base(char c);
+char	*ft_conv_type_d(t_form *new, va_list ap);
+char	*ft_conv_type(t_form *new, va_list ap);
+
+/*
+** itoa.c
+*/
+
+double				ft_unit(double nb, int len);
+unsigned long long	ft_doubleunit(unsigned long long nb, int unit);
+char				*ft_superitoa(int n);
+char				*ft_itoa_base(unsigned long long int nb, int base);
+char				*ft_itoa_long(long long val, int base);
+
+/*
+** double.c
+*/
+
+char		*double_to_str(double f, int len);
 
 #endif

@@ -18,12 +18,12 @@ char	*ft_find_indic(char *subs)
 	int		i;
 
 	i = 0;
-	while (subs[i] == '-' || subs[i] == '+' || subs[i] == ' ' || subs[i] == '#')
+	while (ft_strsearch("- #+0", subs[i]) == 1)
 		i++;
 	if (!(new = (char *)malloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	i = 0;
-	while (subs[i] == '-' || subs[i] == '+' || subs[i] == ' ' || subs[i] == '#')
+	while (ft_strsearch("- #+0", subs[i]) == 1)
 	{
 		new[i] = subs[i];
 		i++;
@@ -54,6 +54,8 @@ int		ft_find_preci(char *subs, va_list ap)
 			}
 			else if (subs[i + 1] == '*')
 				return (va_arg(ap, int));
+			else
+				return (-1);
 		}
 		i++;
 	}
@@ -94,11 +96,11 @@ char	*ft_find_modif(char *subs)
 	int		x;
 
 	i = 0;
-	while (subs[i] && (subs[i] != 'h' || subs[i] != 'l' || subs[i] != 'L'))
+	while (subs[i] && subs[i] != 'h' && subs[i] != 'l' && subs[i] != 'L')
 		i++;
 	if ((subs[i] == subs[i + 1]) && (subs[i] == 'h' || subs[i] == 'l'))
 		x = 2;
-	else if (subs[i] == 'h' || subs[i] == 'l')
+	else if (subs[i] == 'h' || subs[i] == 'l' || subs[i] == 'L')
 		x = 1;
 	else
 		x = 0;
@@ -109,21 +111,14 @@ char	*ft_find_modif(char *subs)
 
 char	ft_find_type(char *str)
 {
-	static const char	*cut = "diuoxXcsfp%";
-	int					x;
-	int					y;
+	int		x;
 
 	x = 0;
-	while (str[x])
+	while (ft_strsearch(" -+#0123456789diuoxXcsfphl.*%", str[x]) == 1)
 	{
-		y = 0;
-		while (cut[y])
-		{
-			if (cut[y] == str[x])
-				return (cut[y]);
-			y++;
-		}
+		if (ft_strsearch("diuoxXcsfp%", str[x]) == 1)
+				return (str[x]);
 		x++;
 	}
-	return (0);
+	return (x);
 }

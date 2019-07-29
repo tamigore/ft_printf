@@ -120,5 +120,6 @@ void			ft_swap(char *s1, char *s2);
 void			ft_sorttab(char **tab);
 int				get_next_line(const int fd, char **line);
 int				ft_strsearch(char *str, char c);
+char			*ft_rmstr(char *str, int i, int j);
 
 #endif

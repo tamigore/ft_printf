@@ -21,11 +21,12 @@ char	*ft_modif_width(t_env *env, char *str)
 	tmp = NULL;
 	i = 0;
 	j = 0;
+	WIDTH += (ft_strcmp(CONTENT, "^@") == 0 ? 1 : 0);
 	if (WIDTH > (int)ft_strlen(str))
 	{
 		if (!(tmp = ft_strnew(WIDTH + 1)))
 			return (NULL);
-		if (ft_strsearch(INDIC, '-') == '1')
+		if (ft_strsearch(INDIC, '-') == 1)
 		{
 			while (str[j])
 				tmp[i++] = str[j++];
@@ -40,6 +41,8 @@ char	*ft_modif_width(t_env *env, char *str)
 				tmp[i++] = str[j++];
 		}
 	}
+	else
+		return (str);
 	return (tmp);
 }
 
@@ -82,9 +85,9 @@ char	*ft_modif_preci(t_env *env, char *str)
 		PRECI = PRECI + 2;
 	if (!(tmp = ft_strnew(PRECI + (int)(ft_strsearch(INDIC, '+') + ft_strsearch(INDIC, ' ')))))
 		return (NULL);
-	if (ft_strsearch(INDIC, '+'))
+	if (ft_strsearch(INDIC, '+') == 1)
 		tmp[i++] = '+';
-	if (!ft_strsearch(INDIC, '0'))
+	if (ft_strsearch(INDIC, ' ') == 1)
 		tmp[i++] = ' ';
 	if (str[0] == '-')
 	{
@@ -106,13 +109,14 @@ int		ft_modif(t_env *env)
 		{
 			if (TYPE == 's')
 			{
-				if (!(ft_modif_str_preci(env, RESULT)))
+				if (!(RESULT = ft_modif_str_preci(env, RESULT)))
 					return (0);
 			}
 			else if (PRECI > (int)ft_strlen(RESULT))
-				if (!(ft_modif_preci(env, RESULT)))
+				if (!(RESULT = ft_modif_preci(env, RESULT)))
 					return (0);
 		}
+		SIZE = (int)ft_strlen(RESULT);
 		if (WIDTH != 0 && WIDTH > PRECI)
 			if (!(RESULT = ft_modif_width(env, RESULT)))
 				return (0);

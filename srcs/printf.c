@@ -19,15 +19,20 @@ int		ft_printf(char *format, ...)
 	t_env		*env;
 
 	va_start(ap, format);
-	if ((ft_strlen(format) == 0 || ft_err(format) == 0))
+	if (ft_strlen(format) == 0)
 		return (0);
 	if (!(env = ft_init_env(format, ap)))
 		return (-1);
-	if (!env->form)
+	if (!env->form || ft_erorrcheck(env) < 0)
 		return (ft_strlen(format));
-	option(env);
+	option(env, 1);
+	while (env->form->prev)
+		env->form = env->form->prev;
 	if (!ft_modif(env))
 		return (-1);
+	option(env, 2);
+	while (env->form->prev)
+		env->form = env->form->prev;
 	count = ft_print_all(env);
 	ft_freeall(env);
 	va_end(ap);
@@ -68,12 +73,14 @@ int		ft_print_all(t_env *env)
 	count = 0;
 	while (env->str[x])
 	{
-		if (env->str[x] == '%')
+		if (env->str[x] == '%' && ft_strsearch("diouxXcspf%", ft_find_type(&env->str[x + 1])) == 1)
 		{
 			ft_putstr(RESULT);
 			count += SIZE;
+			if (ft_strcmp(CONTENT, "^@") == 0 && TYPE == 'c')
+				count--;
 			env->form = env->form->next;
-			x += ft_count_type(&(env->str[x + 1])) + 2;
+			x += ft_count_type(&(env->str[x + 1])) + 1;
 		}
 		else
 		{
@@ -93,8 +100,8 @@ int		ft_err(char *str)
 	{
 		if (str[i] == '%')
 		{
-			if (ft_find_type(&str[i + 1]) == 0)
-				return (0);
+			if (ft_strsearch("diouxXcpsf%", ft_find_type(&str[i + 1])) == 0)
+				return (ft_find_type(&str[i + 1]));
 			i += ft_count_type(&str[i + 1]) + 1;
 		}
 		i++;

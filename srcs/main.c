@@ -15,12 +15,12 @@
 
 int		main()
 {
-	int i;
-	int j;
 
-	i = printf("lol, pour %6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5,324653.2375);
-	j = ft_printf("lol, pour %6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5, 324653.2375);
-	printf("i = %d ; j = %d", i, j);
+	printf("lol, pour %6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5,324653.2375);
+	ft_printf("lol, pour %6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5, 324653.2375);
+
+	ft_printf("test :%#.o %#.0o\n", 0, 0);
+	printf("test :%#.o %#.0o\n", 0, 0);
 
 	ft_printf("-------------------------------\n");
 	ft_printf("EASY\n");
@@ -184,14 +184,14 @@ int		main()
 	ft_printf("%d\n", 2147483648);
 	ft_printf("%d\n", -2147483648);
 	ft_printf("%d\n", -2147483649);
-
+	ft_printf("\n");
 	ft_printf("% d\n", 42);
 	ft_printf("% d\n", -42);
 	ft_printf("%0 d\n", 42);
 	ft_printf("%0 d\n", -42);
 	ft_printf("% 0d\n", 42);
 	ft_printf("% 0d\n", -42);
-
+	ft_printf("\n");
 	ft_printf("%+d\n", 42);
 	ft_printf("%+d\n", -42);
 	ft_printf("%+d\n", 0);
@@ -207,10 +207,10 @@ int		main()
 	ft_printf("% ++d\n", -42);
 	ft_printf("%++ d\n", 42);
 	ft_printf("%++ d\n", -42);
-
+	ft_printf("\n");
 	ft_printf("%0d\n", -42);
 	ft_printf("%00d\n", -42);
-
+	ft_printf("\n");
 	ft_printf("%5d\n", 42);
 	ft_printf("%5+d\n", 42);
 	ft_printf("%05d\n", 42);
@@ -219,7 +219,7 @@ int		main()
 	ft_printf("%5+d\n", -42);
 	ft_printf("%05d\n", -42);
 	ft_printf("%0+5d\n", -42);
-
+	ft_printf("\n");
 	ft_printf("%-5d\n", 42);
 	ft_printf("%-5+d\n", 42);
 	ft_printf("%-05d\n", 42);
@@ -323,4 +323,6 @@ int		main()
 	ft_printf("@moulitest: %.5u\n", 42);
 
 	ft_printf("-------------------------------\n");
+
+	return (0);
 }

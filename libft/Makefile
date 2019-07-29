@@ -30,8 +30,8 @@ SRC/O = ft_atoi.c		\
 		ft_itoa.c		\
 		ft_swap.c		\
 		ft_sorttab.c    \
-        get_next_line.c \
-		ft_strsearch.c
+        get_next_line.c	\
+		ft_rmstr.c
 
 SRC/I = ft_isalnum.c	\
 		ft_isalpha.c	\
@@ -76,7 +76,8 @@ SRC/S = ft_strlen.c		\
 		ft_strjoin.c	\
 		ft_strtrim.c	\
 		ft_strsplit.c	\
-		ft_strrev.c
+		ft_strrev.c		\
+		ft_strsearch.c
 
 SRC/L = ft_lstnew.c		\
 		ft_lstdelone.c	\

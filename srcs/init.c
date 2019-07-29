@@ -74,8 +74,11 @@ char	**ft_init_subs(char *str)
 	count = 0;
 	while (str[x])
 	{
-		if (str[x] == '%')
+		if (str[x] == '%' && ft_strsearch("diouxXcspf%", ft_find_type(&str[x + 1])) == 1)
+		{
 			count++;
+			x += ft_count_type(&str[x + 1]);
+		}
 		x++;
 	}
 	if (!(tab = (char **)malloc(sizeof(char *) * (count + 1))))
@@ -88,52 +91,84 @@ char	**ft_init_subs(char *str)
 char	*ft_init_content(t_form *new, va_list ap)
 {
 	char	*str;
+	char	c;
 
-	if (ft_strsearch("diouxX", new->type) == 1)
+	if (new->type == 'd' || new->type == 'i')
 	{
-		if (ft_strcmp(new->modif, "l"))
-			str = ft_itoa_conv(va_arg(ap, long int), new->type);
-		else if (ft_strcmp(new->modif, "ll"))
-			str = ft_itoa_conv(va_arg(ap, long long int), new->type);
-		else if (ft_strcmp(new->modif, "h"))
-			str = ft_itoa_conv(va_arg(ap, /*short*/ int), new->type);
-		else if (ft_strcmp(new->modif, "hh"))
-			str = ft_itoa_conv(va_arg(ap, /*char*/int), new->type);
-		else
-			str = ft_itoa_conv((int)va_arg(ap, int), new->type);
+		str = ft_conv_type_d(new, ap);
+		if (new->preci == -1 && str[0] == '0')
+			return (ft_strnew(0));
+	}
+	else if (ft_strsearch("ouxX", new->type) == 1)
+	{
+		str = ft_conv_type(new, ap);
+		if (new->preci == -1 && str[0] == '0')
+			return (ft_strnew(0));
 	}
 	else if (new->type == 'f')
-		str = ft_float_to_char(va_arg(ap, double));
+		str = double_to_str((double)va_arg(ap, double), new->preci);
 	else if (new->type == 'c' || new->type == '%')
 	{
+		if (new->type == 'c')
+			c = (char)va_arg(ap, int);
+		else
+			c = '%';
+		if (c == 0)
+			return (ft_strdup("^@"));
 		if (!(str = (char *)malloc(sizeof(char) * 2)))
 			return (NULL);
-		if (new->type == 'c')
-			str[0] = (char)va_arg(ap, int);
-		else
-			str[0] = '%';
+		str[0] = c;
 		str[1] = '\0';
 	}
 	else if (new->type == 's')
+	{
 		str = va_arg(ap, char *);
+		if (str == NULL)
+			str = "(null)";
+	}
 	else if (new->type == 'p')
-		str = ft_itoa_conv(va_arg(ap, int), 'x');
+		str = ft_itoa_base(va_arg(ap, unsigned int), 16);
 	else
 		str = NULL;
 	return (str);
 }
 
-char	*ft_init_result(t_env *env)
+int		ft_erorrcheck(t_env *env)
 {
-	if (ft_strsearch("diouxX", TYPE) == 1)
-		return (ft_arg_int(env));
-	else if (TYPE == 'f')
-		return (ft_arg_float(env));
-	else if (TYPE == 'c' || TYPE == '%')
-		return (ft_arg_char(env));
-	else if (TYPE == 's')
-		return (ft_arg_str(env));
-	else if (TYPE == 'p')
-		return (ft_arg_point(env));
-	return (NULL);
+	int		i;
+	int		j;
+	char	*tmp;
+
+	while (env->form)
+	{
+		i = 0;
+		j = 0;
+		if (ft_strsearch(INDIC, '0') == 1 && ft_strsearch(INDIC, '-') == 1)
+		{
+			if (!(tmp = (char *)malloc(sizeof(char) * (ft_strlen(INDIC) - 1))))
+				return (-1);
+			while (INDIC[i])
+			{
+				if (INDIC[i] == '0')
+					i++;
+				tmp[j++] = INDIC[i++];
+			}
+			tmp[j] = INDIC[i];
+			INDIC = tmp;
+		}
+		if (ft_strsearch(INDIC, '#') == 1 && TYPE == 'o' && CONTENT[0] == '\0')
+		{
+			if (!(tmp = (char *)malloc(sizeof(char) * 2)))
+				return (-1);
+			tmp[0] = '0';
+			tmp[1] = '\0';
+			RESULT = tmp;
+		}
+		if (!env->form->next)
+			break;
+		env->form = NEXT;
+	}
+	while (env->form->prev)
+		env->form = env->form->prev;
+	return (0);
 }
