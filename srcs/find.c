@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/06/04 19:04:10 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:10:32 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,25 @@
 char	*ft_find_indic(char *subs)
 {
 	char	*new;
+	int		x;
 	int		i;
 
 	i = 0;
-	while (ft_strsearch("- #+0", subs[i]) == 1)
-		i++;
-	if (!(new = (char *)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = 0;
-	while (ft_strsearch("- #+0", subs[i]) == 1)
+	x = 0;
+	new = ft_strnew(5);
+	while (subs[i])
 	{
-		new[i] = subs[i];
+		if (ft_strsearch("- #+", subs[i]) == 1 && ft_strsearch(new, subs[i]) == 0)
+			new[x++] = subs[i];
+		if (subs[i] == '0' && ft_strsearch(new, subs[i]) == 0)
+		{
+			if (i > 0 && ft_strsearch("1234567890.", subs[i - 1]) == 0)
+				new[x++] = subs[i];
+		}
 		i++;
 	}
-	new[i] = '\0';
+	if (!(new = ft_pars_indic(new, ft_find_type(subs))))
+		return (NULL);
 	return (new);
 }
 

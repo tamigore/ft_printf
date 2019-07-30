@@ -7,30 +7,27 @@ static int		checkoptionerror(t_env *env)
 	return (1);
 }
 
-static void		applyoption_str(t_env *env, int x)
+static void		applyoption_str(t_env *env)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	if (RESULT)
+	if (ft_strsearch(INDIC, '-') == 1)
 	{
-		if (ft_strsearch(INDIC, '-') == 1 && x == 1)
+		while (RESULT[i] == ' ')
+			i++;
+		if (RESULT[i] != '\0')
 		{
-			while (RESULT[i] == ' ')
-				i++;
-			if (RESULT[i] != '\0')
-			{
-				while(RESULT[i])
-					ft_swap(&RESULT[i++],&RESULT[j++]);
-			}
+			while(RESULT[i])
+				ft_swap(&RESULT[i++],&RESULT[j++]);
 		}
-		if (ft_strsearch(INDIC, '0') == 1 && x == 2)
-		{
-			while (RESULT[i] == ' ')
-				RESULT[i++] = '0';
-		}
+	}
+	if (ft_strsearch(INDIC, '0') == 1)
+	{
+		while (RESULT[i] == ' ')
+			RESULT[i++] = '0';
 	}
 }
 
@@ -84,6 +81,8 @@ static void		applyoption(t_env *env)
 
 void			option(t_env *env, int x)
 {
+	ft_putstr(INDIC);
+	ft_putstr(": option\n");
 	while (env->form)
 	{
 		if (ft_strsearch("csp%", TYPE) == 0 && x == 1)
@@ -97,7 +96,7 @@ void			option(t_env *env, int x)
 		if (ft_strsearch("csp%", TYPE) == 1 && x == 2)
 		{
 			if (checkoptionerror(env) == 1 && PRECI <= (int)ft_strlen(RESULT))
-				applyoption_str(env, 1);
+				applyoption_str(env);
 		}
 		SIZE = (int)ft_strlen(RESULT);
 		if (!NEXT)

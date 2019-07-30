@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/06/04 19:04:06 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:00:54 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ t_env	*ft_init_env(char *str, va_list ap)
 
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
-	new->str = str;
-	if (!(new->subs = ft_init_subs(str)))
+	new->str = ft_check_str(str);
+	if (!(new->subs = ft_init_subs(new->str)))
 		return (NULL);
 	new->form = NULL;
 	if (new->subs[0] == NULL)
 	{
-		ft_putstr(str);
+		ft_putstr(new->str);
 		return (new);
 	}
 	x = 0;
@@ -74,10 +74,13 @@ char	**ft_init_subs(char *str)
 	count = 0;
 	while (str[x])
 	{
-		if (str[x] == '%' && ft_strsearch("diouxXcspf%", ft_find_type(&str[x + 1])) == 1)
+		if (str[x] == '%')
 		{
-			count++;
-			x += ft_count_type(&str[x + 1]);
+			if (ft_strsearch("diouxXcspf%", ft_find_type(&str[x + 1])) == 1)
+			{
+				count++;
+				x += ft_count_type(&str[x + 1]);
+			}
 		}
 		x++;
 	}

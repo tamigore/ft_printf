@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/06/04 19:04:04 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:09:19 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,19 @@ int		ft_printf(char *format, ...)
 	if (!(env = ft_init_env(format, ap)))
 		return (-1);
 	if (!env->form || ft_erorrcheck(env) < 0)
-		return (ft_strlen(format));
+		return (ft_strlen(env->str));
 	option(env, 1);
+//	ft_putstr(RESULT);
+//	ft_putstr(": opt1\n");
 	while (env->form->prev)
 		env->form = env->form->prev;
 	if (!ft_modif(env))
 		return (-1);
+//	ft_putstr(RESULT);
+//	ft_putstr(": modif\n");
 	option(env, 2);
+//	ft_putstr(RESULT);
+//	ft_putstr(": opt2\n");
 	while (env->form->prev)
 		env->form = env->form->prev;
 	count = ft_print_all(env);

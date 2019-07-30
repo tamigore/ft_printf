@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/06/04 18:12:28 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/07/30 19:48:34 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ char	*ft_arg_str(t_env *env);
 int		ft_count_type(char *str);
 char	*ft_float_to_char(double x);
 char	*ft_strcat_float(char *integer, char *decimal);
+char	*ft_check_str(char *str);
+char	*ft_pars_indic(char *str, char type);
 
 /*
 ** find.c

@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 14:14:16 by tamigore          #+#    #+#             */
-/*   Updated: 2018/12/05 14:56:12 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:55:55 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
 
 static t_list	*ft_file(t_list **file, int fd)
 {
