@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/07/30 20:10:32 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/01 11:56:20 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ char	*ft_find_indic(char *subs)
 		{
 			if (i > 0 && ft_strsearch("1234567890.", subs[i - 1]) == 0)
 				new[x++] = subs[i];
+			else if (i == 0)
+				new[x++] = subs[i];
 		}
 		i++;
 	}
-	if (!(new = ft_pars_indic(new, ft_find_type(subs))))
+	if (!(new = ft_pars_indic(new)))
 		return (NULL);
 	return (new);
 }
@@ -50,6 +52,8 @@ int		ft_find_preci(char *subs, va_list ap)
 		{
 			if (subs[i + 1] >= '1' && subs[i + 1] <= '9')
 			{
+				if (x < 0)
+					x = 0;
 				while (subs[i + 1] >= '0' && subs[i + 1] <= '9')
 				{
 					x *= 10;
@@ -60,7 +64,7 @@ int		ft_find_preci(char *subs, va_list ap)
 			else if (subs[i + 1] == '*')
 				return (va_arg(ap, int));
 			else
-				return (-1);
+				x = -1;
 		}
 		i++;
 	}

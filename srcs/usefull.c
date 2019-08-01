@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/07/30 20:15:59 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/01 10:53:33 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,15 @@ char	*ft_strcat_float(char *integer, char *decimal)
 	return (str);
 }
 
-char	*ft_pars_indic(char *str, char type)
+char	*ft_pars_indic(char *str)
 {
 	int	x;
 
 	x = 0;
-	if (type == 'd' && ft_strsearch(str, '0') == 1 && ft_strsearch(str, ' ') == 1)
-		return (ft_strdup("0"));
-	if (type == 'd' && ft_strsearch(str, '0') == 1 && ft_strsearch(str, '-') == 1 && ft_strsearch(str, '+') == 1)
-		return (ft_strdup("0-"));
-	if (type == 'd' && ft_strsearch(str, '0') == 1)
-	{
-		while (str[x])
-		{
-			if (str[x] == '.' && str[x + 1] >= '1' && str[x + 1] >= '9')
-				return (ft_rmchar(str, '0'));
-			x++;
-		}
-	}
+	if (ft_strsearch(str, '0') == 1 && ft_strsearch(str, '-') == 1)
+		return (ft_rmchar(str, '0'));
+	if (ft_strsearch(str, '+') == 1 && ft_strsearch(str, ' ') == 1)
+		return (ft_rmchar(str, ' '));
 	return (str);
 }
 

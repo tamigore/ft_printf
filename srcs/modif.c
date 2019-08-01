@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:55:01 by tamigore          #+#    #+#             */
-/*   Updated: 2019/06/04 19:04:02 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/01 12:16:06 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		ft_modif(t_env *env)
 				if (!(RESULT = ft_modif_str_preci(env, RESULT)))
 					return (0);
 			}
-			else if (PRECI > (int)ft_strlen(RESULT))
+			else if (PRECI > (int)ft_strlen(RESULT) - ft_strsearch(RESULT, '-'))
 				if (!(RESULT = ft_modif_preci(env, RESULT)))
 					return (0);
 		}

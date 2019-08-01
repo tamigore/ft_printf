@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 21:23:26 by artprevo          #+#    #+#             */
-/*   Updated: 2019/07/30 20:09:09 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/01 12:59:53 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,13 @@
 
 int		main()
 {
-
-	ft_printf("@main_ftprintf: %####0000 33..1..#00d\n", 256);
-	ft_printf("@main_ftprintf:                               256\n");
-	ft_printf("@main_ftprintf: %####0000 33..1d\n", 256);
-	ft_printf("@main_ftprintf:                               256\n");
-/*
+	ft_printf("%-5+d", -42);
+	printf("%-5+d", -42);
+	ft_printf("%-0+5d", -42);
+	printf("%-0+5d", -42);
+	/*
 	printf("lol, pour %6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5,324653.2375);
 	ft_printf("lol, pour %6d %s tu as combien de %-4c %c total ~%*.*f soit \n", -420, "kokonut", 'k', '=', 5, 5, 324653.2375);
-	ft_printf("test :%#.o %#.0o\n", 0, 0);
-	printf("test :%#.o %#.0o\n", 0, 0);
 
 	ft_printf("-------------------------------\n");
 	ft_printf("EASY\n");
@@ -327,6 +324,6 @@ int		main()
 	ft_printf("@moulitest: %.5u\n", 42);
 
 	ft_printf("-------------------------------\n");
-*/
+	*/
 	return (0);
 }

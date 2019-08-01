@@ -81,8 +81,8 @@ static void		applyoption(t_env *env)
 
 void			option(t_env *env, int x)
 {
-	ft_putstr(INDIC);
-	ft_putstr(": option\n");
+//	ft_putstr(INDIC);
+//	ft_putstr(": option.c\n");
 	while (env->form)
 	{
 		if (ft_strsearch("csp%", TYPE) == 0 && x == 1)
