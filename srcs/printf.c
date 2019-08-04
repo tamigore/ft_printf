@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/01 12:44:30 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/04 13:31:41 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,16 @@ int		ft_printf(char *format, ...)
 	va_start(ap, format);
 	if (ft_strlen(format) == 0)
 		return (0);
-	if (!(env = ft_init_env(format, ap)))
+	if (!(env = ft_init_env(format, ap, 0)))
 		return (-1);
 	if (!env->form || ft_erorrcheck(env) < 0)
 		return (ft_strlen(env->str));
-//	ft_putnbr(PRECI);
-//	ft_putstr(": preci\n");
 	option(env, 1);
-//	ft_putstr(RESULT);
-//	ft_putstr(": opt1\n");
-	while (env->form->prev)
-		env->form = env->form->prev;
 	if (!ft_modif(env))
 		return (-1);
-//	ft_putstr(RESULT);
-//	ft_putstr(": modif\n");
-	option(env, 2);
-//	ft_putstr(RESULT);
-//	ft_putstr(": opt2\n");
 	while (env->form->prev)
 		env->form = env->form->prev;
+	option(env, 2);
 	count = ft_print_all(env);
 	ft_freeall(env);
 	va_end(ap);
@@ -50,7 +40,7 @@ int		ft_printf(char *format, ...)
 void	ft_freeall(t_env *env)
 {
 	t_form	*tmp;
-	int	x;
+	int		x;
 
 	if (env->form)
 	{
@@ -60,7 +50,7 @@ void	ft_freeall(t_env *env)
 			free(INDIC);
 			free(MODIF);
 			free(CONTENT);
-			free(RESULT);
+			free(RES);
 			tmp = env->form->next;
 			free(env->form);
 			env->form = tmp;
@@ -81,9 +71,10 @@ int		ft_print_all(t_env *env)
 	count = 0;
 	while (env->str[x])
 	{
-		if (env->str[x] == '%' && ft_strsearch("diouxXcspf%", ft_find_type(&env->str[x + 1])) == 1)
+		if (env->str[x] == '%' && ft_strsearch("diouxXcspf%",
+					ft_find_type(&env->str[x + 1])) == 1)
 		{
-			ft_putstr(RESULT);
+			ft_putstr(RES);
 			count += SIZE;
 			if (ft_strcmp(CONTENT, "^@") == 0 && TYPE == 'c')
 				count--;

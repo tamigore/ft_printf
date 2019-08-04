@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/01 10:54:53 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/04 13:49:06 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define MODIF		(env->form->modif)
 # define TYPE		(env->form->type)
 # define CONTENT	(env->form->content)
-# define RESULT		(env->form->result)
+# define RES		(env->form->result)
 # define NEXT		(env->form->next)
 # define PREV		(env->form->prev)
 
@@ -72,7 +72,7 @@ int		ft_subs_len(char *str, int i);
 ** init.c
 */
 
-t_env	*ft_init_env(char *str, va_list ap);
+t_env	*ft_init_env(char *str, va_list ap, int x);
 t_form	*ft_init_form(t_env *env, va_list ap, int x);
 char	**ft_init_subs(char *str);
 char	*ft_init_content(t_form *new, va_list ap);
@@ -83,7 +83,7 @@ int		ft_erorrcheck(t_env *env);
 */
 
 char	*ft_arg_char(t_env *env);
-char	*ft_arg_int(t_env *env);
+char	*ft_arg_int(t_env *env, int i, char c, int count);
 char	*ft_arg_float(t_env *env);
 char	*ft_arg_point(t_env *env);
 char	*ft_arg_str(t_env *env);
@@ -93,17 +93,17 @@ char	*ft_arg_str(t_env *env);
 */
 
 int		ft_count_type(char *str);
-char	*ft_float_to_char(double x);
+char	*ft_float_to_char(double x, double count, unsigned int y);
 char	*ft_strcat_float(char *integer, char *decimal);
 char	*ft_check_str(char *str);
-char	*ft_pars_indic(char *str);
+char	*ft_pars_indic(char *str, char *subs);
 
 /*
 ** find.c
 */
 
 char	*ft_find_indic(char *subs);
-int		ft_find_preci(char *subs, va_list ap);
+int		ft_find_preci(char *subs, va_list ap, int i, int x);
 int		ft_find_width(char *subs, va_list ap);
 char	*ft_find_modif(char *subs);
 char	ft_find_type(char *str);
@@ -112,9 +112,9 @@ char	ft_find_type(char *str);
 ** modif.c
 */
 
-char	*ft_modif_width(t_env *env, char *str);
+char	*ft_modif_width(t_env *env, char *str, int i, int j);
 char	*ft_modif_str_preci(t_env *env, char *str);
-char	*ft_modif_preci(t_env *env, char *str);
+char	*ft_modif_preci(t_env *env, char *str, int i, int j);
 int		ft_modif(t_env *env);
 
 /*
@@ -149,6 +149,7 @@ void	ozerospace(t_env *env, int width);
 int		ft_find_base(char c);
 char	*ft_conv_type_d(t_form *new, va_list ap);
 char	*ft_conv_type(t_form *new, va_list ap);
+char	*ft_conv_char(t_form *new, va_list ap);
 
 /*
 ** itoa.c
@@ -156,7 +157,7 @@ char	*ft_conv_type(t_form *new, va_list ap);
 
 double				ft_unit(double nb, int len);
 unsigned long long	ft_doubleunit(unsigned long long nb, int unit);
-char				*ft_superitoa(int n);
+char				*ft_superitoa(int n, int neg, int len, int i);
 char				*ft_itoa_base(unsigned long long int nb, int base);
 char				*ft_itoa_long(long long val, int base);
 

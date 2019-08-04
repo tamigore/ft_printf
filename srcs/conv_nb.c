@@ -1,47 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   conv_nb.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/04 10:47:15 by tamigore          #+#    #+#             */
+/*   Updated: 2019/08/04 12:59:45 by tamigore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int		ft_find_base(char c)
+int			ft_find_base(char c)
 {
 	if (c == 'o')
-		return 8;
+		return (8);
 	else if (c == 'x' || c == 'X')
-		return 16;
+		return (16);
 	else
-		return 10;
+		return (10);
 }
 
-char	*ft_conv_type_d(t_form *new, va_list ap)
+char		*ft_conv_type_d(t_form *new, va_list ap)
 {
 	if (ft_strcmp(new->modif, "l") == 0)
 		return (ft_itoa_long((long)va_arg(ap, long int), 10));
 	else if (ft_strcmp(new->modif, "ll") == 0)
 		return (ft_itoa_long((long long)va_arg(ap, long long int), 10));
 	else if (ft_strcmp(new->modif, "h") == 0)
-		return (ft_superitoa((short)va_arg(ap, int)));
+		return (ft_superitoa((short)va_arg(ap, int), 0, 2, 0));
 	else if (ft_strcmp(new->modif, "hh") == 0)
-		return (ft_superitoa((char)va_arg(ap, int)));
+		return (ft_superitoa((char)va_arg(ap, int), 0, 2, 0));
 	else
-		return (ft_superitoa((int)va_arg(ap, int)));
+		return (ft_superitoa((int)va_arg(ap, int), 0, 2, 0));
 }
 
-char	*ft_conv_type(t_form *new, va_list ap)
+static char	*ft_conv(char *str, t_form *new)
 {
-	char	*str;
-	int		i;
+	int	i;
 
-	if (ft_strcmp(new->modif, "l") == 0)
-		str = (ft_itoa_base((unsigned long int)va_arg(ap, unsigned long int), ft_find_base(new->type)));
-	else if (ft_strcmp(new->modif, "ll") == 0)
-		str = (ft_itoa_base((unsigned long long int)va_arg(ap, unsigned long long int), ft_find_base(new->type)));
-	else if (ft_strcmp(new->modif, "h") == 0)
-		str = (ft_itoa_base((unsigned short int)va_arg(ap, unsigned int), ft_find_base(new->type)));
-	else if (ft_strcmp(new->modif, "hh") == 0)
-		str = (ft_itoa_base((unsigned char)va_arg(ap, unsigned int), ft_find_base(new->type)));
-	else
-		str = (ft_itoa_base((unsigned int)va_arg(ap, unsigned int), ft_find_base(new->type)));
+	i = 0;
 	if (str && new->type == 'X')
 	{
-		i = 0;
 		while (str[i])
 		{
 			if (str[i] >= 'a' && str[i] <= 'f')
@@ -51,7 +52,6 @@ char	*ft_conv_type(t_form *new, va_list ap)
 	}
 	else if (str)
 	{
-		i = 0;
 		while (str[i])
 		{
 			if (str[i] >= 'A' && str[i] <= 'F')
@@ -59,5 +59,46 @@ char	*ft_conv_type(t_form *new, va_list ap)
 			i++;
 		}
 	}
+	return (str);
+}
+
+char		*ft_conv_type(t_form *new, va_list ap)
+{
+	char	*str;
+
+	if (ft_strcmp(new->modif, "l") == 0)
+		str = (ft_itoa_base((unsigned long int)va_arg(ap, unsigned long int),
+					ft_find_base(new->type)));
+	else if (ft_strcmp(new->modif, "ll") == 0)
+		str = (ft_itoa_base((unsigned long long int)va_arg(ap,
+						unsigned long long int), ft_find_base(new->type)));
+	else if (ft_strcmp(new->modif, "h") == 0)
+		str = (ft_itoa_base((unsigned short int)va_arg(ap, unsigned int),
+					ft_find_base(new->type)));
+	else if (ft_strcmp(new->modif, "hh") == 0)
+		str = (ft_itoa_base((unsigned char)va_arg(ap, unsigned int),
+					ft_find_base(new->type)));
+	else
+		str = (ft_itoa_base((unsigned int)va_arg(ap, unsigned int),
+					ft_find_base(new->type)));
+	str = ft_conv(str, new);
+	return (str);
+}
+
+char		*ft_conv_char(t_form *new, va_list ap)
+{
+	char	*str;
+	char	c;
+
+	if (new->type == 'c')
+		c = (char)va_arg(ap, int);
+	else
+		c = '%';
+	if (c == 0)
+		return (ft_strdup("^@"));
+	if (!(str = (char *)malloc(sizeof(char) * 2)))
+		return (NULL);
+	str[0] = c;
+	str[1] = '\0';
 	return (str);
 }

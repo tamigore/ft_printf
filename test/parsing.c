@@ -6,13 +6,13 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/06/04 19:04:12 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/04 14:11:14 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-char	*ft_arg_char(t_env *env)
+/*
+char		*ft_arg_char(t_env *env)
 {
 	char	*str;
 	int		count;
@@ -39,18 +39,12 @@ char	*ft_arg_char(t_env *env)
 	return (str);
 }
 
-char	*ft_arg_int(t_env *env)
+static char	*ft_count_arg_int(t_env *env)
 {
 	char	*str;
 	int		count;
-	int		i;
-	char	c;
 
 	count = 0;
-	c = ' ';
-	if (ft_strsearch(INDIC, '0') == 1 && ft_strsearch(INDIC, '-') == 0 &&
-				PRECI == 0 )
-		c = '0';
 	if (SIZE >= WIDTH && SIZE >= PRECI)
 		count = SIZE;
 	else if (WIDTH >= PRECI && WIDTH >= SIZE)
@@ -70,8 +64,16 @@ char	*ft_arg_int(t_env *env)
 			count++;
 	if (!(str = (char *)malloc(sizeof(char) * (count + 1))))
 		return (NULL);
-	i = 0;
-	count = 0;
+	return(str);
+}
+
+char		*ft_arg_int(t_env *env, int i, char c, int count)
+{
+	char	*str;
+
+	c = (ft_strsearch(INDIC, '0') == 1 ? '0' : ' ');
+	if (!(str = ft_count_arg_int(env)))
+		return (NULL);
 	if (ft_strsearch(INDIC, '-'))
 	{
 		while (CONTENT[i])
@@ -95,7 +97,7 @@ char	*ft_arg_int(t_env *env)
 	return (str);
 }
 
-char	*ft_arg_str(t_env *env)
+char		*ft_arg_str(t_env *env)
 {
 	char	*str;
 	int		count;
@@ -126,7 +128,7 @@ char	*ft_arg_str(t_env *env)
 	return (str);
 }
 
-char	*ft_arg_point(t_env *env)
+char		*ft_arg_point(t_env *env)
 {
 	char	*str;
 	int		count;
@@ -157,7 +159,7 @@ char	*ft_arg_point(t_env *env)
 	return (str);
 }
 
-char	*ft_arg_float(t_env *env)
+char		*ft_arg_float(t_env *env)
 {
 	char	*str;
 	int		count;
@@ -192,3 +194,4 @@ char	*ft_arg_float(t_env *env)
 	str[count] = '\0';
 	return (str);
 }
+*/

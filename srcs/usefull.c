@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/01 10:53:33 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/04 13:39:01 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,37 @@ int		ft_count_type(char *str)
 	return (x);
 }
 
-char	*ft_float_to_char(double nb)
-{
-	char			*integer;
-	char			*decimal;
-	double			count;
-	unsigned int	y;
-	unsigned int	x;
-
-	count = 0;
-	x = 0;
-	y = (unsigned int)nb;
-	if (nb < 0)
-	{
-		integer = ft_itoa(-y);
-		nb = nb + y;
-	}
-	else
-	{
-		integer = ft_itoa(y);
-		nb = nb - y;
-	}
-	while (nb && count < 7)
-	{
-		nb *= 10;
-		x *= 10;
-		x += (unsigned int)nb;
-		nb = nb - (x % 10);
-		count++;
-	}
-	decimal = ft_itoa(UPORDOW(x));
-	return (ft_strcat_float(integer, decimal));
-}
+/*
+**char	*ft_float_to_char(double nb, double count, unsigned int x)
+**{
+**	char			*integer;
+**	char			*decimal;
+**	unsigned int	y;
+**
+**	x = 0;
+**	y = (unsigned int)nb;
+**	if (nb < 0)
+**	{
+**		integer = ft_itoa(-y);
+**		nb = nb + y;
+**	}
+**	else
+**	{
+**		integer = ft_itoa(y);
+**		nb = nb - y;
+**	}
+**	while (nb && count < 7)
+**	{
+**		nb *= 10;
+**		x *= 10;
+**		x += (unsigned int)nb;
+**		nb = nb - (x % 10);
+**		count++;
+**	}
+**	decimal = ft_itoa(UPORDOW(x));
+**	return (ft_strcat_float(integer, decimal));
+**}
+*/
 
 char	*ft_strcat_float(char *integer, char *decimal)
 {
@@ -81,15 +80,18 @@ char	*ft_strcat_float(char *integer, char *decimal)
 	return (str);
 }
 
-char	*ft_pars_indic(char *str)
+char	*ft_pars_indic(char *str, char *subs)
 {
 	int	x;
 
 	x = 0;
-	if (ft_strsearch(str, '0') == 1 && ft_strsearch(str, '-') == 1)
-		return (ft_rmchar(str, '0'));
 	if (ft_strsearch(str, '+') == 1 && ft_strsearch(str, ' ') == 1)
-		return (ft_rmchar(str, ' '));
+		str = ft_rmchar(str, ' ');
+	if (ft_strsearch(str, '0') == 1 && ft_strsearch(str, '-') == 1)
+		str = ft_rmchar(str, '0');
+	if (ft_strsearch("diucsp%", ft_find_type(subs)) == 1 &&
+			ft_strsearch(str, '#') == 1)
+		str = ft_rmchar(str, '#');
 	return (str);
 }
 

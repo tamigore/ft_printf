@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 18:31:48 by tamigore          #+#    #+#             */
-/*   Updated: 2019/07/30 17:53:49 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/04 13:23:18 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 **	FT_STR
 */
 
-size_t			ft_strlen(const char *s);
+int				ft_strlen(const char *s);
 char			*ft_strdup(const char *src);
 char			*ft_strndup(const char *src, int n);
 char			*ft_strcpy(char *dst, const char *src);

@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/01 11:56:20 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/04 12:35:52 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*ft_find_indic(char *subs)
 	new = ft_strnew(5);
 	while (subs[i])
 	{
-		if (ft_strsearch("- #+", subs[i]) == 1 && ft_strsearch(new, subs[i]) == 0)
+		if (ft_strsearch("- #+", subs[i]) == 1 &&
+				ft_strsearch(new, subs[i]) == 0)
 			new[x++] = subs[i];
 		if (subs[i] == '0' && ft_strsearch(new, subs[i]) == 0)
 		{
@@ -34,18 +35,13 @@ char	*ft_find_indic(char *subs)
 		}
 		i++;
 	}
-	if (!(new = ft_pars_indic(new)))
+	if (!(new = ft_pars_indic(new, subs)))
 		return (NULL);
 	return (new);
 }
 
-int		ft_find_preci(char *subs, va_list ap)
+int		ft_find_preci(char *subs, va_list ap, int i, int x)
 {
-	int	i;
-	int	x;
-
-	i = 0;
-	x = 0;
 	while (subs[i])
 	{
 		if (subs[i] == '.')
@@ -126,7 +122,7 @@ char	ft_find_type(char *str)
 	while (ft_strsearch(" -+#0123456789diuoxXcsfphl.*%", str[x]) == 1)
 	{
 		if (ft_strsearch("diuoxXcsfp%", str[x]) == 1)
-				return (str[x]);
+			return (str[x]);
 		x++;
 	}
 	return (x);

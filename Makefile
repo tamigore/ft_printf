@@ -6,7 +6,7 @@
 #    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 00:20:03 by artprevo          #+#    #+#              #
-#    Updated: 2019/06/04 17:20:59 by tamigore         ###   ########.fr        #
+#    Updated: 2019/08/04 14:12:08 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ SOURCES = conv_nb.c		\
 		  option.c		\
 		  option_one.c	\
 		  option_duo.c	\
-		  parsing.c		\
 		  printf.c		\
 		  subs.c		\
 		  usefull.c
