@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/04 13:39:01 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/05 18:05:15 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,6 @@ int		ft_count_type(char *str)
 	}
 	return (x);
 }
-
-/*
-**char	*ft_float_to_char(double nb, double count, unsigned int x)
-**{
-**	char			*integer;
-**	char			*decimal;
-**	unsigned int	y;
-**
-**	x = 0;
-**	y = (unsigned int)nb;
-**	if (nb < 0)
-**	{
-**		integer = ft_itoa(-y);
-**		nb = nb + y;
-**	}
-**	else
-**	{
-**		integer = ft_itoa(y);
-**		nb = nb - y;
-**	}
-**	while (nb && count < 7)
-**	{
-**		nb *= 10;
-**		x *= 10;
-**		x += (unsigned int)nb;
-**		nb = nb - (x % 10);
-**		count++;
-**	}
-**	decimal = ft_itoa(UPORDOW(x));
-**	return (ft_strcat_float(integer, decimal));
-**}
-*/
 
 char	*ft_strcat_float(char *integer, char *decimal)
 {
@@ -110,6 +78,22 @@ char	*ft_check_str(char *str)
 				x += ft_count_type(&str[x + 1]);
 		}
 		x++;
+	}
+	return (str);
+}
+
+char	*ft_arg_point(va_list ap)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	str = ft_strjoin("0x", ft_itoa_base(va_arg(ap, unsigned long long int), 16));
+	while (str[i])
+	{
+		if (str[i] >= 'A' && str[i] <= 'Z')
+			str[i] += 32;
+		i++;
 	}
 	return (str);
 }

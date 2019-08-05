@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/04 14:26:42 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/05 20:04:25 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_env	*ft_init_env(char *str, va_list ap, int x)
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
 	new->str = ft_check_str(str);
+	new->form = NULL;
 	if (!(new->subs = ft_init_subs(new->str)))
 		return (NULL);
 	if (new->subs[0] == NULL)
@@ -36,25 +37,25 @@ t_env	*ft_init_env(char *str, va_list ap, int x)
 		new->form = new->form->next;
 		x++;
 	}
-	while (new->form->prev)
-		new->form = new->form->prev;
 	return (new);
 }
 
 t_form	*ft_init_form(t_env *env, va_list ap, int x)
 {
 	t_form	*new;
+	int		i;
 
 	if (!(new = (t_form *)malloc(sizeof(t_form))) ||
 		!(new->indic = ft_find_indic(env->subs[x])) ||
 		!(new->modif = ft_find_modif(env->subs[x])))
 		return (NULL);
-	new->width = ft_find_width(env->subs[x], ap);
+	i = ft_find_width(env->subs[x], ap);
+	new->width = (i < -1 ? -i : i);
 	new->preci = ft_find_preci(env->subs[x], ap, 0, 0);
 	new->type = ft_find_type(env->subs[x]);
 	if (!(new->content = ft_init_content(new, ap)))
 		return (NULL);
-	new->size = (int)ft_strlen(new->content);
+	new->size = ft_strlen(new->content);
 	new->result = new->content;
 	new->next = NULL;
 	new->prev = NULL;
@@ -111,18 +112,18 @@ char	*ft_init_content(t_form *new, va_list ap)
 				return (NULL);
 	}
 	if (new->type == 'p')
-		str = ft_itoa_base(va_arg(ap, unsigned int), 16);
+		str = ft_arg_point(ap);
 	if (new->preci == -1 && str[0] == '0')
-			return (ft_strnew(0));
+	{
+		str = ft_strdup("");
+		if (new->type == 'p')
+			return (ft_strdup("0x"));
+	}
 	return (str);
 }
 
-int		ft_erorrcheck(t_env *env)
+int		ft_erorrcheck(t_env *env, int j, int i)
 {
-	int		i;
-	int		j;
-	char	*tmp;
-
 	while (env->form)
 	{
 		i = 0;
@@ -134,19 +135,9 @@ int		ft_erorrcheck(t_env *env)
 			RES = ft_strdup("\0");
 		if (ft_strsearch("diucsp%", TYPE) == 1 && ft_strsearch(INDIC, '#') == 1)
 			INDIC = ft_rmchar(INDIC, '#');
-		if (ft_strsearch(INDIC, '#') == 1 && TYPE == 'o' && RES[0] == '\0')
-		{
-			if (!(tmp = (char *)malloc(sizeof(char) * 2)))
-				return (-1);
-			tmp[0] = '0';
-			tmp[1] = '\0';
-			RES = tmp;
-		}
-		if (!env->form->next)
+		if (!NEXT)
 			break ;
 		env->form = NEXT;
 	}
-	while (env->form->prev)
-		env->form = env->form->prev;
 	return (0);
 }

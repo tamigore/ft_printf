@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:55:01 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/04 13:25:49 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/05 20:04:31 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*ft_modif_str_preci(t_env *env, char *str)
 	tmp = NULL;
 	i = 0;
 	j = 0;
+	if (PRECI == -1)
+		return (ft_strdup(""));
 	if (!(tmp = ft_strnew(PRECI)))
 		return (NULL);
 	if (PRECI > (int)ft_strlen(str))
@@ -98,10 +100,10 @@ int		ft_modif(t_env *env)
 {
 	while (env->form)
 	{
-		if (PRECI > 0 && TYPE != 'c' && TYPE != 'f')
+		if ((PRECI > 0 || PRECI == -1) && TYPE != 'c' && TYPE != 'f')
 		{
 			if ((TYPE == 's') && !(RES = ft_modif_str_preci(env, RES)))
-				return (0);
+					return (0);
 			if (TYPE != 's' && PRECI > ft_strlen(RES) - ft_strsearch(RES, '-'))
 				if (!(RES = ft_modif_preci(env, RES, 0, 0)))
 					return (0);

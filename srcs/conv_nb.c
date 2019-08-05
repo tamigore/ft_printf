@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:47:15 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/04 12:59:45 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/05 20:04:33 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int			ft_find_base(char c)
 char		*ft_conv_type_d(t_form *new, va_list ap)
 {
 	if (ft_strcmp(new->modif, "l") == 0)
-		return (ft_itoa_long((long)va_arg(ap, long int), 10));
+		return (ft_itoa_long((long)va_arg(ap, long int), 10, 1));
 	else if (ft_strcmp(new->modif, "ll") == 0)
-		return (ft_itoa_long((long long)va_arg(ap, long long int), 10));
+		return (ft_itoa_long((long long)va_arg(ap, long long int), 10, 1));
 	else if (ft_strcmp(new->modif, "h") == 0)
 		return (ft_superitoa((short)va_arg(ap, int), 0, 2, 0));
 	else if (ft_strcmp(new->modif, "hh") == 0)

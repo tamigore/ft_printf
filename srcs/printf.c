@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/04 13:31:41 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/05 20:04:23 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ int		ft_printf(char *format, ...)
 		return (0);
 	if (!(env = ft_init_env(format, ap, 0)))
 		return (-1);
-	if (!env->form || ft_erorrcheck(env) < 0)
+	if (!env->form || ft_erorrcheck(env, 0, 0) < 0)
 		return (ft_strlen(env->str));
+	while (env->form->prev)
+		env->form = env->form->prev;
 	option(env, 1);
 	if (!ft_modif(env))
 		return (-1);
 	while (env->form->prev)
 		env->form = env->form->prev;
-	option(env, 2);
 	count = ft_print_all(env);
 	ft_freeall(env);
 	va_end(ap);

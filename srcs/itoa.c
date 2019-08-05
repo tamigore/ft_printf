@@ -6,11 +6,12 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:57:18 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/04 11:08:41 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/05 14:00:12 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <limits.h>
 
 double				ft_unit(double nb, int len)
 {
@@ -81,14 +82,14 @@ char				*ft_itoa_base(unsigned long long int nb, int base)
 	return (res);
 }
 
-char				*ft_itoa_long(long long val, int base)
+char				*ft_itoa_long(long long val, int base, int len)
 {
 	char		*str;
-	int			len;
 	int			sign;
 	long long	n;
 
-	len = 1;
+	if (val == LLONG_MIN)
+		return (ft_strdup("-9223372036854775808"));
 	sign = (val < 0) ? 1 : 0;
 	if (sign == 1)
 		val = -val;

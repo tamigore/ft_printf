@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:13:23 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/04 13:31:18 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/05 13:01:37 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ void	oposineg(t_env *env, int width)
 	char	*tmp;
 
 	if (width == 0)
-		width = ft_strlen(RES) + 1;
+		width = ft_strlen(RES) + (RES[0] == '-' ? 0 : 1);
 	i = 0;
 	j = 0;
 	tmp = ft_strnew(width);
-	tmp[i++] = '+';
+	if (RES[0] != '-')
+		tmp[i++] = '+';
 	while (RES[j])
 		tmp[i++] = RES[j++];
 	while (i < width)
