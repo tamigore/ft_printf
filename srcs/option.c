@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:11:54 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 20:04:28 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 16:53:38 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,8 @@ static void		applyoption_str(t_env *env)
 	{
 		while (RES[i] == ' ')
 			i++;
-		if (RES[i] != '\0')
-		{
-			while (RES[i])
-				ft_swap(&RES[i++], &RES[j++]);
-		}
+		while (RES[i])
+			ft_swap(&RES[i++], &RES[j++]);
 	}
 	if (ft_strsearch(INDIC, '0') == 1)
 	{
@@ -47,60 +44,78 @@ static int		applydoubleoption(t_env *env)
 {
 	if (ft_strsearch(INDIC, '+') == 1 && ft_strsearch(INDIC, '-') == 1)
 	{
-		oposineg(env, WIDTH);
-		return (1);
+		if (!oposineg(env, WIDTH))
+			return (-1);
 	}
-	if (ft_strsearch(INDIC, '+') == 1 && ft_strsearch(INDIC, '0') == 1)
+	else if (ft_strsearch(INDIC, '+') == 1 && ft_strsearch(INDIC, '0') == 1)
 	{
-		oposizero(env, WIDTH);
-		return (1);
+		if (!oposizero(env, WIDTH))
+			return (-1);
 	}
-	if (ft_strsearch(INDIC, '-') == 1 && ft_strsearch(INDIC, ' ') == 1)
+	else if (ft_strsearch(INDIC, '-') == 1 && ft_strsearch(INDIC, ' ') == 1)
 	{
-		onegspace(env, WIDTH);
-		return (1);
+		if (!onegspace(env, WIDTH))
+			return (-1);
 	}
-	if (ft_strsearch(INDIC, '0') == 1 && ft_strsearch(INDIC, ' ') == 1)
+	else if (ft_strsearch(INDIC, '0') == 1 && ft_strsearch(INDIC, ' ') == 1)
 	{
-		ozerospace(env, WIDTH);
-		return (1);
+		if (!ozerospace(env, WIDTH))
+			return (-1);
 	}
-	return (0);
+	else
+		return (0);
+	return (1);
 }
 
-static void		applyoption(t_env *env)
+static int		applyoption(t_env *env)
 {
 	if (ft_strsearch(INDIC, '+') == 1 && TYPE != 'u')
 	{
 		if (RES[0] != '-')
-			oposi(env, WIDTH);
+			if (!oposi(env, WIDTH))
+				return (0);
 	}
 	else if (ft_strsearch(INDIC, '#') == 1)
 	{
 		if (RES[0] != '0')
-			ohash(env, WIDTH);
+			if (!ohash(env, WIDTH))
+				return (0);
 	}
 	else if (ft_strsearch(INDIC, '0') == 1)
-		olzero(env, WIDTH);
+	{
+		if (!olzero(env, WIDTH))
+			return (0);
+	}
 	else if (ft_strsearch(INDIC, ' ') == 1 && TYPE != 'u')
 	{
 		if (RES[0] != '-')
-			ospace(env, WIDTH);
+			if (!ospace(env, WIDTH))
+				return (0);
 	}
 	else if (ft_strsearch(INDIC, '-') == 1)
-		olalign(env, WIDTH);
+	{
+		if (!olalign(env, WIDTH))
+			return (0);
+	}
+	return (1);
 }
 
-void			option(t_env *env, int x)
+int				option(t_env *env, int x)
 {
+	int	err;
+
 	while (env->form)
 	{
 		if (ft_strsearch("csp%", TYPE) == 0 && x == 1)
 		{
 			if (checkoptionerror(env) == 1 && PRECI <= ft_strlen(RES))
 			{
-				if (applydoubleoption(env) == 0)
-					applyoption(env);
+				err = applydoubleoption(env);
+				if (err == -1)
+					return (0);
+				else if (err == 0)
+					if (!applyoption(env))
+						return (0);
 			}
 		}
 		if (ft_strsearch("csp%", TYPE) == 1 && x == 2)
@@ -108,15 +123,9 @@ void			option(t_env *env, int x)
 			if (checkoptionerror(env) == 1 && PRECI <= ft_strlen(RES))
 				applyoption_str(env);
 		}
-		if (x == 2 && ft_strsearch(INDIC, '#') == 1 && PRECI >= ft_strlen(RES))
-		{
-			if (TYPE == 'x')
-				RES = ft_strjoin("0x", RES);
-			else if (TYPE == 'X')
-				RES = ft_strjoin("0X", RES);
-			else if (TYPE == 'o')
-				RES = ft_strjoin("0", RES);
-		}
+		if (x == 2 && ft_strsearch(INDIC, '#') == 1 && (TYPE == 'x' || TYPE == 'X') && PRECI == ft_strlen(RES))
+			if (!(RES = ft_strjoin("0", ft_free_join(&TYPE, RES, 2))))
+				return (0);
 		SIZE = ft_strlen(RES);
 		if (!NEXT)
 			break ;
@@ -124,4 +133,5 @@ void			option(t_env *env, int x)
 	}
 	while (PREV)
 		env->form = PREV;
+	return (1);
 }

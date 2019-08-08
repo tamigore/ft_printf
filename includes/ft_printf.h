@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 18:18:39 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 16:31:04 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include "../libft/libft.h"
 
 # define ABS(X) 	(x > 0) ? x : -x
@@ -67,6 +68,7 @@ int					ft_err(char *str);
 
 char				**ft_fill_tab(char **tab, char *str);
 int					ft_subs_len(char *str, int i);
+char				*ft_free_join(char *s1, char *s2, int x);
 
 /*
 ** init.c
@@ -86,7 +88,7 @@ int					ft_count_type(char *str);
 char				*ft_strcat_float(char *integer, char *decimal);
 char				*ft_pars_indic(char *str, char *subs);
 char				*ft_check_str(char *str);
-char				*ft_arg_point(va_list ap);
+char				*ft_arg_point(va_list ap, int x);
 
 /*
 ** find.c
@@ -104,6 +106,7 @@ char				ft_find_type(char *str);
 
 char				*ft_modif_width(t_env *env, char *str, int i, int j);
 char				*ft_modif_str_preci(t_env *env, char *str);
+char				*ft_modif_p_preci(t_env *env, char *str);
 char				*ft_modif_preci(t_env *env, char *str, int i, int j);
 int					ft_modif(t_env *env);
 
@@ -111,26 +114,26 @@ int					ft_modif(t_env *env);
 ** option.c
 */
 
-void				option(t_env *env, int x);
+int				option(t_env *env, int x);
 
 /*
 ** option_one.c
 */
 
-void				oposi(t_env *env, int width);
-void				ohash(t_env *env, int width);
-void				olzero(t_env *env, int width);
-void				ospace(t_env *env, int width);
-void				olalign(t_env *env, int width);
+int					oposi(t_env *env, int width);
+int					ohash(t_env *env, int width);
+int					olzero(t_env *env, int width);
+int					ospace(t_env *env, int width);
+int					olalign(t_env *env, int width);
 
 /*
-** option_one.c
+** option_duo.c
 */
 
-void				oposineg(t_env *env, int width);
-void				oposizero(t_env *env, int width);
-void				onegspace(t_env *env, int width);
-void				ozerospace(t_env *env, int width);
+int					oposineg(t_env *env, int width);
+int					oposizero(t_env *env, int width);
+int					onegspace(t_env *env, int width);
+int					ozerospace(t_env *env, int width);
 
 /*
 ** conv_nb.c

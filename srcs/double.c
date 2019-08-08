@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/04 13:35:22 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 18:23:00 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char		*double_to_str(double f, int len)
 
 	fractional = f - (int)f;
 	str_integer = ft_superitoa((int)f, 0, 2, 0);
-	if (!(res = malloc(sizeof(char) * (ft_strlen(str_integer) + len + 2))))
+	if (!(res = malloc(sizeof(char) * (ft_strlen(str_integer) + len + 1))))
 		return (NULL);
 	ft_bzero(res, (int)ft_strlen(str_integer) + len + 1);
 	fractional = fractional * ft_unit(10, len);

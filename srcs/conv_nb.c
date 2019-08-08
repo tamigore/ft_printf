@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:47:15 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 20:04:33 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 17:43:59 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ char		*ft_conv_type(t_form *new, va_list ap)
 	else
 		str = (ft_itoa_base((unsigned int)va_arg(ap, unsigned int),
 					ft_find_base(new->type)));
-	str = ft_conv(str, new);
+	if (!str)
+		return (NULL);
+	if (!(str = ft_conv(str, new)))
+		return (NULL);
 	return (str);
 }
 
@@ -95,7 +98,7 @@ char		*ft_conv_char(t_form *new, va_list ap)
 	else
 		c = '%';
 	if (c == 0)
-		return (ft_strdup("^@"));
+		return (ft_strnew(1));
 	if (!(str = (char *)malloc(sizeof(char) * 2)))
 		return (NULL);
 	str[0] = c;

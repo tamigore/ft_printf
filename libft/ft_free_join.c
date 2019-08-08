@@ -1,42 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rmchar.c                                        :+:      :+:    :+:   */
+/*   ft_free_join.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/30 17:37:13 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 14:39:36 by tamigore         ###   ########.fr       */
+/*   Created: 2019/08/08 15:24:26 by tamigore          #+#    #+#             */
+/*   Updated: 2019/08/08 15:29:33 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-char	*ft_rmchar(char *str, char c)
+static void	ft_free(int x)
 {
-	char	*new;
+	if (x == 1)
+		free(s1);
+	else if (x == 2)
+		free(s2);
+	else if (x == 3)
+	{
+		free(s1);
+		free(s2);
+	}
+}
+
+char		*ft_free_join(char const *s1, char const *s2, int x)
+{
+	char	*p;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (str[i + j])
-	{
-		if (str[i + j] == c)
-			j++;
-		i++;
-	}
-	if (!(new = ft_strnew(i)))
+	if (!s1 || !s2)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i])
+	if (!(p = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
+		return (NULL);
+	if (s1)
 	{
-		if (str[i] == c)
+		while (s1[i])
+		{
+			p[i] = s1[i];
 			i++;
-		else
-			new[j++] = str[i++];
+		}
 	}
-	return (new);
+	if (s2)
+		while (s2[j])
+			p[i++] = s2[j++];
+	p[i] = '\0';
+	ft_free(x);
+	return (p);
 }

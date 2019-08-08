@@ -6,7 +6,7 @@
 #    By: tamigore <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 15:04:29 by tamigore          #+#    #+#              #
-#    Updated: 2019/07/30 17:54:14 by tamigore         ###   ########.fr        #
+#    Updated: 2019/08/08 14:54:11 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,9 @@ SRC/O = ft_atoi.c		\
 		ft_sorttab.c    \
         get_next_line.c	\
 		ft_rmstr.c		\
-		ft_rmchar.c
+		ft_rmchar.c		\
+		ft_free_rmstr.c	\
+		ft_free_rmchar.c
 
 SRC/I = ft_isalnum.c	\
 		ft_isalpha.c	\

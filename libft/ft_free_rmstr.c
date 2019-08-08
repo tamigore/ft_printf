@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rmstr.c                                         :+:      :+:    :+:   */
+/*   ft_free_rmstr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/08 15:02:21 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 15:02:37 by tamigore         ###   ########.fr       */
+/*   Created: 2019/08/08 14:40:19 by tamigore          #+#    #+#             */
+/*   Updated: 2019/08/08 15:02:54 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-char	*ft_rmstr(char *str, int i, int j)
+char	*ft_free_rmstr(char *str, int i, int j)
 {
 	char	*tmp;
 	int		x;

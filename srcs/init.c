@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 20:04:25 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 18:51:22 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,23 +101,29 @@ char	*ft_init_content(t_form *new, va_list ap)
 		if (!(str = ft_conv_type(new, ap)))
 			return (NULL);
 	if (new->type == 'f')
-		str = double_to_str((double)va_arg(ap, double), new->preci);
+		if (!(str = double_to_str((double)va_arg(ap, double), new->preci)))
+			return (NULL);
 	if (new->type == 'c' || new->type == '%')
 		if (!(str = ft_conv_char(new, ap)))
 			return (NULL);
 	if (new->type == 's')
 	{
-		if (!(str = va_arg(ap, char *)))
+		if (!(str = ft_strdup(va_arg(ap, char *))))
+		{
+			free(str);
 			if (!(str = ft_strdup("(null)")))
 				return (NULL);
+		}
 	}
 	if (new->type == 'p')
-		str = ft_arg_point(ap);
-	if (new->preci == -1 && str[0] == '0')
+		if (!(str = ft_arg_point(ap, new->preci)))
+			return (NULL);
+	if (new->preci == -1 && str[0] == '0' && str[1] == '\0')
 	{
-		str = ft_strdup("");
-		if (new->type == 'p')
-			return (ft_strdup("0x"));
+		if (str)
+			free(str);
+		if (!(str = ft_strdup("")))
+			return (NULL);
 	}
 	return (str);
 }
@@ -130,11 +136,11 @@ int		ft_erorrcheck(t_env *env, int j, int i)
 		j = 0;
 		if ((ft_strsearch(INDIC, '0') == 1 && ft_strsearch("diouxX", TYPE) == 1
 			&& PRECI > 0) || (ft_strsearch(INDIC, '0') == 1 && WIDTH == 0))
-			INDIC = ft_rmchar(INDIC, '0');
-		if (ft_strsearch("diouxX", TYPE) == 1 && PRECI < 0 && RES[0] == '0')
-			RES = ft_strdup("\0");
+			if (!(INDIC = ft_free_rmchar(INDIC, '0')))
+				return (-1);
 		if (ft_strsearch("diucsp%", TYPE) == 1 && ft_strsearch(INDIC, '#') == 1)
-			INDIC = ft_rmchar(INDIC, '#');
+			if (!(INDIC = ft_free_rmchar(INDIC, '#')))
+				return (-1);
 		if (!NEXT)
 			break ;
 		env->form = NEXT;

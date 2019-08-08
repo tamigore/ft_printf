@@ -1,35 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rmstr.c                                         :+:      :+:    :+:   */
+/*   ft_free_rmchar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/08 15:02:21 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 15:02:37 by tamigore         ###   ########.fr       */
+/*   Created: 2019/08/08 14:39:00 by tamigore          #+#    #+#             */
+/*   Updated: 2019/08/08 14:39:34 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-char	*ft_rmstr(char *str, int i, int j)
+char	*ft_free_rmchar(char *str, char c)
 {
-	char	*tmp;
-	int		x;
-	int		y;
+	char	*new;
+	int		i;
+	int		j;
 
-	x = 0;
-	y = 0;
-	if (!(tmp = ft_strnew(ft_strlen(str) - i + j + 1)))
-		return (NULL);
-	while (str[x])
+	i = 0;
+	j = 0;
+	while (str[i + j])
 	{
-		if (x == i)
-			while (x <= j && str[x])
-				x++;
-		tmp[y++] = str[x++];
+		if (str[i + j] == c)
+			j++;
+		i++;
 	}
-	tmp[y] = '\0';
-	return (tmp);
+	if (!(new = ft_strnew(i)))
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			i++;
+		else
+			new[j++] = str[i++];
+	}
+	free(str);
+	return (new);
 }

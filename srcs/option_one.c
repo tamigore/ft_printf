@@ -6,13 +6,13 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:22:08 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 17:47:30 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 17:36:53 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	oposi(t_env *env, int width)
+int		oposi(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -22,16 +22,19 @@ void	oposi(t_env *env, int width)
 		width = ft_strlen(RES) + 1;
 	i = 0;
 	j = 0;
-	tmp = ft_strnew(width);
+	if (!(tmp = ft_strnew(width)))
+		return (0);
 	while (i < width - ft_strlen(RES) - 1)
 		tmp[i++] = ' ';
 	tmp[i++] = '+';
 	while (RES[j])
 		tmp[i++] = RES[j++];
+	free(RES);
 	RES = tmp;
+	return (1);
 }
 
-void	ohash(t_env *env, int width)
+int		ohash(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -40,11 +43,15 @@ void	ohash(t_env *env, int width)
 	i = 2;
 	j = 0;
 	if ((TYPE == 'x' || TYPE == 'X') && RES[0] == 0)
-		return ;
+		return (1);
 	if (width != 0)
-		tmp = ft_strnew(width);
+	{
+		if (!(tmp = ft_strnew(width)))
+			return (0);
+	}
 	else
-		tmp = ft_strnew(ft_strlen(RES) + 2);
+		if (!(tmp = ft_strnew(ft_strlen(RES) + 2)))
+			return (0);
 	tmp[0] = '0';
 	if (TYPE == 'o')
 		i--;
@@ -57,10 +64,12 @@ void	ohash(t_env *env, int width)
 	}
 	while (RES[j])
 		tmp[i++] = RES[j++];
+	free(RES);
 	RES = tmp;
+	return (1);
 }
 
-void	olzero(t_env *env, int width)
+int		olzero(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -72,7 +81,8 @@ void	olzero(t_env *env, int width)
 	i = 0;
 	j = 0;
 	neg = 0;
-	tmp = ft_strnew(width);
+	if (!(tmp = ft_strnew(width)))
+		return (0);
 	if (RES[j] == '-')
 	{
 		tmp[i++] = '-';
@@ -83,10 +93,12 @@ void	olzero(t_env *env, int width)
 		tmp[i++] = '0';
 	while (RES[j])
 		tmp[i++] = RES[j++];
+	free(RES);
 	RES = tmp;
+	return (1);
 }
 
-void	ospace(t_env *env, int width)
+int		ospace(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -96,15 +108,18 @@ void	ospace(t_env *env, int width)
 		width = (int)ft_strlen(RES) + 1;
 	i = 0;
 	j = 0;
-	tmp = ft_strnew(width);
+	if (!(tmp = ft_strnew(width)))
+		return (0);
 	while (i < (width - (int)ft_strlen(RES)))
 		tmp[i++] = ' ';
 	while (RES[j])
 		tmp[i++] = RES[j++];
+	free(RES);
 	RES = tmp;
+	return (1);
 }
 
-void	olalign(t_env *env, int width)
+int		olalign(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -114,10 +129,13 @@ void	olalign(t_env *env, int width)
 		width = ft_strlen(RES);
 	i = 0;
 	j = 0;
-	tmp = ft_strnew(width);
+	if (!(tmp = ft_strnew(width)))
+		return (0);
 	while (RES[j])
 		tmp[i++] = RES[j++];
 	while (i < width)
 		tmp[i++] = ' ';
+	free(RES);
 	RES = tmp;
+	return (1);
 }

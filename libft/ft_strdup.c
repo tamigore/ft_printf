@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 13:17:24 by tamigore          #+#    #+#             */
-/*   Updated: 2018/11/19 17:04:25 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 17:47:24 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *src)
 	char	*copy;
 	int		i;
 
+	if (!src)
+		return (NULL);
 	i = ft_strlen(src);
 	if (!(copy = (char *)malloc(i + 1)))
 		return (0);

@@ -6,13 +6,13 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:13:23 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 13:01:37 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 17:37:06 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	oposineg(t_env *env, int width)
+int		oposineg(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -22,17 +22,20 @@ void	oposineg(t_env *env, int width)
 		width = ft_strlen(RES) + (RES[0] == '-' ? 0 : 1);
 	i = 0;
 	j = 0;
-	tmp = ft_strnew(width);
+	if (!(tmp = ft_strnew(width)))
+		return (0);
 	if (RES[0] != '-')
 		tmp[i++] = '+';
 	while (RES[j])
 		tmp[i++] = RES[j++];
 	while (i < width)
 		tmp[i++] = ' ';
+	free(RES);
 	RES = tmp;
+	return (1);
 }
 
-void	oposizero(t_env *env, int width)
+int		oposizero(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -42,7 +45,8 @@ void	oposizero(t_env *env, int width)
 		width = ft_strlen(RES) + 1;
 	i = 0;
 	j = 0;
-	tmp = ft_strnew(width);
+	if (!(tmp = ft_strnew(width)))
+		return (0);
 	if (RES[0] != '-')
 		tmp[i++] = '+';
 	else
@@ -55,10 +59,12 @@ void	oposizero(t_env *env, int width)
 		tmp[i++] = '0';
 	while (RES[j])
 		tmp[i++] = RES[j++];
+	free(RES);
 	RES = tmp;
+	return (1);
 }
 
-void	onegspace(t_env *env, int width)
+int		onegspace(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -68,16 +74,19 @@ void	onegspace(t_env *env, int width)
 		width = ft_strlen(RES) + 1;
 	i = 0;
 	j = 0;
-	tmp = ft_strnew(width);
+	if (!(tmp = ft_strnew(width)))
+		return (0);
 	tmp[i++] = ' ';
 	while (RES[j])
 		tmp[i++] = RES[j++];
 	while (i < width)
 		tmp[i++] = ' ';
+	free(RES);
 	RES = tmp;
+	return (1);
 }
 
-void	ozerospace(t_env *env, int width)
+int		ozerospace(t_env *env, int width)
 {
 	int		i;
 	int		j;
@@ -87,11 +96,14 @@ void	ozerospace(t_env *env, int width)
 		width = ft_strlen(RES) + 1;
 	i = 0;
 	j = 0;
-	tmp = ft_strnew(width);
+	if (!(tmp = ft_strnew(width)))
+		return (0);
 	tmp[i++] = ' ';
 	while (i < (width - ft_strlen(RES)))
 		tmp[i++] = '0';
 	while (RES[j])
 		tmp[i++] = RES[j++];
+	free(RES);
 	RES = tmp;
+	return (1);
 }

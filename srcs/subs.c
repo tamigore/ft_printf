@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:21:51 by tamigore          #+#    #+#             */
-/*   Updated: 2019/06/04 17:22:29 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 14:30:42 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,22 @@ int		ft_subs_len(char *str, int i)
 		i++;
 	}
 	return (-1);
+}
+
+char	*ft_free_join(char *s1, char *s2, int x)
+{
+	char	*tmp;
+
+	if (!(tmp = ft_strjoin(s1, s2)))
+		return (NULL);
+	if (x == 1)
+		free(s1);
+	else if (x == 2)
+		free(s2);
+	else if (x == 3)
+	{
+		free(s1);
+		free(s2);
+	}
+	return (tmp);
 }

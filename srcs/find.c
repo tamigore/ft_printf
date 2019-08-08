@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 20:04:36 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 18:51:27 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,16 @@ char	*ft_find_modif(char *subs)
 	int		x;
 
 	i = 0;
+	x = 0;
 	while (subs[i] && subs[i] != 'h' && subs[i] != 'l' && subs[i] != 'L')
 		i++;
-	if ((subs[i] == subs[i + 1]) && (subs[i] == 'h' || subs[i] == 'l'))
-		x = 2;
-	else if (subs[i] == 'h' || subs[i] == 'l' || subs[i] == 'L')
-		x = 1;
-	else
-		x = 0;
+	if (subs[i])
+	{
+		if ((subs[i] == subs[i + 1]) && (subs[i] == 'h' || subs[i] == 'l'))
+			x = 2;
+		else if (subs[i] == 'h' || subs[i] == 'l' || subs[i] == 'L')
+			x = 1;
+	}
 	if (!(new = ft_strndup(&subs[i], x)))
 		return (NULL);
 	return (new);

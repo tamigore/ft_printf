@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 18:31:48 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 13:44:49 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 14:53:15 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void			ft_sorttab(char **tab);
 int				get_next_line(const int fd, char **line);
 int				ft_strsearch(char *str, char c);
 char			*ft_rmstr(char *str, int i, int j);
-char			*ft_rmchar(char	*str, char c);
+char			*ft_rmchar(char *str, char c);
+char			*ft_free_rmstr(char *str, int i, int j);
+char			*ft_free_rmchar(char *str, char c);
 
 #endif

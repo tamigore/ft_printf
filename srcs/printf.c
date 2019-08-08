@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/05 20:04:23 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/08 18:51:25 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ int		ft_printf(char *format, ...)
 	va_start(ap, format);
 	if (ft_strlen(format) == 0)
 		return (0);
-	if (!(env = ft_init_env(format, ap, 0)))
+	if (!(env = ft_init_env(format, ap, 0)) || ft_erorrcheck(env, 0, 0) < 0)
 		return (-1);
-	if (!env->form || ft_erorrcheck(env, 0, 0) < 0)
+	if (!env->form)
 		return (ft_strlen(env->str));
 	while (env->form->prev)
 		env->form = env->form->prev;
-	option(env, 1);
-	if (!ft_modif(env))
+	if (!option(env, 1) || !ft_modif(env))
 		return (-1);
 	while (env->form->prev)
 		env->form = env->form->prev;
+	if (!option(env, 2))
+		return (-1);
 	count = ft_print_all(env);
 	ft_freeall(env);
 	va_end(ap);
@@ -59,6 +60,7 @@ void	ft_freeall(t_env *env)
 		free(env->str);
 		while (env->subs[x])
 			free(env->subs[x++]);
+		free(env->subs);
 		free(env);
 	}
 }
@@ -76,9 +78,9 @@ int		ft_print_all(t_env *env)
 					ft_find_type(&env->str[x + 1])) == 1)
 		{
 			ft_putstr(RES);
+			if (TYPE == 'c' && CONTENT[0] == '\0')
+				count++;
 			count += SIZE;
-			if (ft_strcmp(CONTENT, "^@") == 0 && TYPE == 'c')
-				count--;
 			env->form = env->form->next;
 			x += ft_count_type(&(env->str[x + 1])) + 1;
 		}
