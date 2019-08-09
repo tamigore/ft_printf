@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:13:23 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 17:37:06 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/09 15:50:55 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		oposizero(t_env *env, int width)
 	int		j;
 	char	*tmp;
 
-	if (width == 0)
+	if (width <= ft_strlen(RES))
 		width = ft_strlen(RES) + 1;
 	i = 0;
 	j = 0;

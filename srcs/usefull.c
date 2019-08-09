@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 17:53:18 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/09 16:15:30 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,7 @@ int		ft_count_type(char *str)
 	}
 	return (x);
 }
-/*
-char	*ft_strcat_float(char *integer, char *decimal)
-{
-	char	*str;
-	int		x;
-	int		y;
 
-	x = 0;
-	y = 0;
-	if (!(str = (char *)malloc(ft_strlen(integer) + ft_strlen(decimal))))
-		return (NULL);
-	while (integer[x])
-	{
-		str[x] = integer[x];
-		x++;
-	}
-	str[x++] = '.';
-	while (decimal[y])
-		str[x++] = decimal[y++];
-	str[x] = '\0';
-	return (str);
-}
-*/
 char	*ft_pars_indic(char *str, char *subs)
 {
 	if (ft_strsearch(str, '+') == 1 && ft_strsearch(str, ' ') == 1)
@@ -65,21 +43,27 @@ char	*ft_pars_indic(char *str, char *subs)
 
 char	*ft_check_str(char *str)
 {
-	int	x;
+	int		x;
+	char	*tmp;
 
 	x = 0;
-	while (str[x])
+	if (!(tmp = ft_strdup(str)))
+		return (NULL);
+	while (tmp[x])
 	{
-		if (str[x] == '%')
+		if (tmp[x] == '%')
 		{
-			if (ft_strsearch("diouxXcspf%", ft_find_type(&str[x + 1])) != 1)
-				str = ft_free_rmstr(str, x, x + ft_count_type(&str[x + 1]));
+			if (ft_strsearch("diouxXcspf%", ft_find_type(&tmp[x + 1])) != 1)
+			{
+				if (!(tmp = ft_free_rmstr(tmp, x, x + ft_count_type(&tmp[x + 1]))))
+					return (NULL);
+			}
 			else
-				x += ft_count_type(&str[x + 1]);
+				x += ft_count_type(&tmp[x + 1]);
 		}
 		x++;
 	}
-	return (str);
+	return (tmp);
 }
 
 char	*ft_arg_point(va_list ap, int x)
@@ -98,7 +82,8 @@ char	*ft_arg_point(va_list ap, int x)
 		return (ft_strdup("0x0"));
 	}
 	else
-		str = ft_free_join("0x", str, 2);
+		if (!(str = ft_free_join("0x", str, 2)))
+			return (NULL);
 	while (str[i])
 	{
 		if (str[i] >= 'A' && str[i] <= 'Z')

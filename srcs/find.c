@@ -6,21 +6,26 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 18:51:27 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/09 16:10:17 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_find_indic(char *subs)
+char	*ft_find_indic(char *subs, int x, int i)
 {
 	char	*new;
-	int		x;
-	int		i;
 
-	i = 0;
-	x = 0;
-	new = ft_strnew(5);
+/*	while (subs[i])
+	{
+		if (ft_strsearch("- #+", subs[i]) == 1 && !ft_strnstr(subs, &subs[i], i - 1))
+			x++;
+		i++;
+	}
+*/	if (!(new = ft_strnew(5)))
+		return (NULL);
+//	i = 0;
+//	x = 0;
 	while (subs[i])
 	{
 		if (ft_strsearch("- #+", subs[i]) == 1 &&

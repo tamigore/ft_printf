@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 21:23:26 by artprevo          #+#    #+#             */
-/*   Updated: 2019/08/08 18:26:11 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/09 16:11:12 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 int		main()
 {
+//	printf("@main_ftprintf: %###-#0000 33...12..#0+0d\n", 256);
+//	ft_printf("@main_ftprintf: %###-#0000 33...12..#0+0d\n", 256);
 	ft_printf("\n");
 	ft_printf("%%\n");
 	ft_printf("%d\n", 42);
@@ -46,9 +48,7 @@ int		main()
 	ft_printf("%s%s\n", "test", "test");
 	ft_printf("%s%s%s\n", "test", "test", "test");
 	ft_printf("%C\n", 15000);
-/*
-	ft_printf("@main_ftprintf: %###-#0000 33...12..#0+0d\n", 256);
-	printf("@main_ftprintf: %###-#0000 33...12..#0+0d\n", 256);
+
 	printf("{%*d}\n", -5, 42);
 	ft_printf("{%*d}\n", -5, 42);
 	printf("{%f}{%lf}{%Lf}\n", 1.42, 1.42, 1.42l);
@@ -359,6 +359,6 @@ int		main()
 	ft_printf("@moulitest: %.5u\n", 42);
 
 	ft_printf("-------------------------------\n");
-*/
+
 	return (0);
 }

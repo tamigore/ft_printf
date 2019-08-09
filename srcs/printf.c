@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 18:51:25 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/09 15:20:01 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,21 @@ int		ft_printf(char *format, ...)
 	if (ft_strlen(format) == 0)
 		return (0);
 	if (!(env = ft_init_env(format, ap, 0)) || ft_erorrcheck(env, 0, 0) < 0)
-		return (-1);
+		ft_free_exit(env);
 	if (!env->form)
-		return (ft_strlen(env->str));
+	{
+		count = ft_strlen(env->str);
+		ft_freeall(env);
+		return (count);
+	}
 	while (env->form->prev)
 		env->form = env->form->prev;
 	if (!option(env, 1) || !ft_modif(env))
-		return (-1);
+		ft_free_exit(env);
 	while (env->form->prev)
 		env->form = env->form->prev;
 	if (!option(env, 2))
-		return (-1);
+		ft_free_exit(env);
 	count = ft_print_all(env);
 	ft_freeall(env);
 	va_end(ap);
@@ -44,18 +48,22 @@ void	ft_freeall(t_env *env)
 	t_form	*tmp;
 	int		x;
 
-	if (env->form)
+	if (env)
 	{
 		x = 0;
 		while (env->form)
 		{
-			free(INDIC);
-			free(MODIF);
-			free(CONTENT);
-			free(RES);
-			tmp = env->form->next;
-			free(env->form);
-			env->form = tmp;
+			if (INDIC)
+				free(INDIC);
+			if (MODIF)
+				free(MODIF);
+			if (CONTENT)
+				free(CONTENT);
+			if (RES)
+				free(RES);
+			tmp = env->form;
+			env->form = env->form->next;
+			free(tmp);
 		}
 		free(env->str);
 		while (env->subs[x])
@@ -63,6 +71,37 @@ void	ft_freeall(t_env *env)
 		free(env->subs);
 		free(env);
 	}
+}
+
+void	ft_free_exit(t_env *env)
+{
+	t_form	*tmp;
+	int		x;
+
+	if (env->form)
+	{
+		x = 0;
+		while (env->form)
+		{
+			if (INDIC)
+				free(INDIC);
+			if (MODIF)
+				free(MODIF);
+			if (CONTENT)
+				free(CONTENT);
+			if (RES)
+				free(RES);
+			tmp = env->form;
+			env->form = env->form->next;
+			free(tmp);
+		}
+		free(env->str);
+		while (env->subs[x])
+			free(env->subs[x++]);
+		free(env->subs);
+		free(env);
+	}
+	exit(0);
 }
 
 int		ft_print_all(t_env *env)
@@ -81,8 +120,9 @@ int		ft_print_all(t_env *env)
 			if (TYPE == 'c' && CONTENT[0] == '\0')
 				count++;
 			count += SIZE;
-			env->form = env->form->next;
 			x += ft_count_type(&(env->str[x + 1])) + 1;
+			if (NEXT)
+				env->form = env->form->next;
 		}
 		else
 		{
@@ -90,6 +130,8 @@ int		ft_print_all(t_env *env)
 			count++;
 		}
 	}
+	while (PREV)
+		env->form = PREV;
 	return (count);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 18:51:22 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/09 15:58:38 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_form	*ft_init_form(t_env *env, va_list ap, int x)
 	int		i;
 
 	if (!(new = (t_form *)malloc(sizeof(t_form))) ||
-		!(new->indic = ft_find_indic(env->subs[x])) ||
+		!(new->indic = ft_find_indic(env->subs[x], 0, 0)) ||
 		!(new->modif = ft_find_modif(env->subs[x])))
 		return (NULL);
 	i = ft_find_width(env->subs[x], ap);
@@ -56,7 +56,8 @@ t_form	*ft_init_form(t_env *env, va_list ap, int x)
 	if (!(new->content = ft_init_content(new, ap)))
 		return (NULL);
 	new->size = ft_strlen(new->content);
-	new->result = new->content;
+	if (!(new->result = ft_strdup(new->content)))
+		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
