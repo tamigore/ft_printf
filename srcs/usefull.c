@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/09 16:15:30 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/11 12:56:59 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_pars_indic(char *str, char *subs)
 	return (str);
 }
 
-char	*ft_check_str(char *str)
+char	*ft_check_str(char *str, t_env *env)
 {
 	int		x;
 	char	*tmp;
@@ -55,8 +55,9 @@ char	*ft_check_str(char *str)
 		{
 			if (ft_strsearch("diouxXcspf%", ft_find_type(&tmp[x + 1])) != 1)
 			{
-				if (!(tmp = ft_free_rmstr(tmp, x, x + ft_count_type(&tmp[x + 1]))))
-					return (NULL);
+				free(tmp);
+				free(env);
+				return (NULL);
 			}
 			else
 				x += ft_count_type(&tmp[x + 1]);

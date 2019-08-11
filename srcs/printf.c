@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/09 15:20:01 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/11 12:54:27 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,36 @@ int		ft_printf(char *format, ...)
 	if (ft_strlen(format) == 0)
 		return (0);
 	if (!(env = ft_init_env(format, ap, 0)) || ft_erorrcheck(env, 0, 0) < 0)
-		ft_free_exit(env);
+	{
+		ft_freeall(env, 0);
+		return (0);
+	}
 	if (!env->form)
 	{
 		count = ft_strlen(env->str);
-		ft_freeall(env);
+		ft_freeall(env, 0);
 		return (count);
 	}
 	while (env->form->prev)
 		env->form = env->form->prev;
 	if (!option(env, 1) || !ft_modif(env))
-		ft_free_exit(env);
+		ft_free_exit(env, 0);
 	while (env->form->prev)
 		env->form = env->form->prev;
 	if (!option(env, 2))
-		ft_free_exit(env);
-	count = ft_print_all(env);
-	ft_freeall(env);
+		ft_free_exit(env, 0);
+	count = ft_print_all(env, 0, 0);
+	ft_freeall(env, 0);
 	va_end(ap);
 	return (count);
 }
 
-void	ft_freeall(t_env *env)
+void	ft_freeall(t_env *env, int x)
 {
 	t_form	*tmp;
-	int		x;
 
 	if (env)
 	{
-		x = 0;
 		while (env->form)
 		{
 			if (INDIC)
@@ -73,14 +74,12 @@ void	ft_freeall(t_env *env)
 	}
 }
 
-void	ft_free_exit(t_env *env)
+void	ft_free_exit(t_env *env, int x)
 {
 	t_form	*tmp;
-	int		x;
 
 	if (env->form)
 	{
-		x = 0;
 		while (env->form)
 		{
 			if (INDIC)
@@ -104,13 +103,8 @@ void	ft_free_exit(t_env *env)
 	exit(0);
 }
 
-int		ft_print_all(t_env *env)
+int		ft_print_all(t_env *env, int x, int count)
 {
-	int count;
-	int x;
-
-	x = 0;
-	count = 0;
 	while (env->str[x])
 	{
 		if (env->str[x] == '%' && ft_strsearch("diouxXcspf%",

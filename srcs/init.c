@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/09 15:58:38 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/11 12:44:11 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_env	*ft_init_env(char *str, va_list ap, int x)
 
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
-	new->str = ft_check_str(str);
+	if (!(new->str = ft_check_str(str, new)))
+		return (NULL);
 	new->form = NULL;
 	if (!(new->subs = ft_init_subs(new->str)))
 		return (NULL);

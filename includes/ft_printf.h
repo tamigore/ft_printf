@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/09 15:58:22 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/11 12:43:46 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ typedef struct		s_env
 */
 
 int					ft_printf(char *format, ...);
-int					ft_print_all(t_env *env);
-void				ft_freeall(t_env *env);
-void				ft_free_exit(t_env *env);
+int					ft_print_all(t_env *env, int x, int count);
+void				ft_freeall(t_env *env, int x);
+void				ft_free_exit(t_env *env, int x);
 int					ft_err(char *str);
 
 /*
@@ -87,7 +87,7 @@ int					ft_erorrcheck(t_env *env, int i, int j);
 
 int					ft_count_type(char *str);
 char				*ft_pars_indic(char *str, char *subs);
-char				*ft_check_str(char *str);
+char				*ft_check_str(char *str, t_env *env);
 char				*ft_arg_point(va_list ap, int x);
 
 /*
