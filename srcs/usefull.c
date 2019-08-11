@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/11 12:56:59 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/11 14:59:36 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ft_count_type(char *str)
 	int					x;
 
 	x = 0;
-	while (ft_strsearch(" -+#0123456789diuoxXcsfphl.*%", str[x]) == 1)
+	while (ft_strsearch(" -+#0123456789diuoxXcsfphlL.*%", str[x]) == 1)
 	{
 		if (ft_strsearch("diuoxXcsfp%", str[x]) == 1)
 			return (x + 1);

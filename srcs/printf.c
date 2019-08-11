@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/11 12:54:27 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/11 16:30:04 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ int		ft_print_all(t_env *env, int x, int count)
 		{
 			ft_putstr(RES);
 			if (TYPE == 'c' && CONTENT[0] == '\0')
+			{
+				write(1, "\0", 1);
 				count++;
+			}
 			count += SIZE;
 			x += ft_count_type(&(env->str[x + 1])) + 1;
 			if (NEXT)

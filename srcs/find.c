@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/09 16:10:17 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/11 17:35:55 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,8 @@ char	*ft_find_indic(char *subs, int x, int i)
 {
 	char	*new;
 
-/*	while (subs[i])
-	{
-		if (ft_strsearch("- #+", subs[i]) == 1 && !ft_strnstr(subs, &subs[i], i - 1))
-			x++;
-		i++;
-	}
-*/	if (!(new = ft_strnew(5)))
+	if (!(new = ft_strnew(5)))
 		return (NULL);
-//	i = 0;
-//	x = 0;
 	while (subs[i])
 	{
 		if (ft_strsearch("- #+", subs[i]) == 1 &&
@@ -60,7 +52,6 @@ int		ft_find_preci(char *subs, va_list ap, int i, int x)
 					x *= 10;
 					x += subs[i++ + 1] - '0';
 				}
-				return (x);
 			}
 			else if (subs[i + 1] == '*')
 				return (va_arg(ap, int));
@@ -69,6 +60,11 @@ int		ft_find_preci(char *subs, va_list ap, int i, int x)
 		}
 		i++;
 	}
+	i = 0;
+	while (subs[i] && subs[i] != '.')
+		i++;
+	if (subs[i] != '.' && ft_find_type(subs) == 'f')
+		x = 6;
 	return (x);
 }
 
@@ -76,9 +72,11 @@ int		ft_find_width(char *subs, va_list ap)
 {
 	int	i;
 	int	x;
+	int	star;
 
 	i = 0;
 	x = 0;
+	star = 0;
 	while (subs[i])
 	{
 		if (subs[i] == '.')
@@ -93,9 +91,11 @@ int		ft_find_width(char *subs, va_list ap)
 			return (x);
 		}
 		else if (subs[i] == '*')
-			return (va_arg(ap, int));
+			star = va_arg(ap, int);
 		i++;
 	}
+	if (star > 0 && x == 0)
+		x = star;
 	return (x);
 }
 
@@ -126,7 +126,7 @@ char	ft_find_type(char *str)
 	int		x;
 
 	x = 0;
-	while (ft_strsearch(" -+#0123456789diuoxXcsfphl.*%", str[x]) == 1)
+	while (ft_strsearch(" -+#0123456789diuoxXcsfphlL.*%", str[x]) == 1)
 	{
 		if (ft_strsearch("diuoxXcsfp%", str[x]) == 1)
 			return (str[x]);

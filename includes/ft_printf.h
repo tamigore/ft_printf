@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/11 12:43:46 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/11 15:09:25 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,6 @@ char				*ft_itoa_long(long long val, int base, int len);
 */
 
 char				*double_to_str(double f, int len);
+char				*ft_conv_double(va_list ap, t_form *new);
 
 #endif
