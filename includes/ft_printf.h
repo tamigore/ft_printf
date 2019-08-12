@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/11 15:09:25 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/12 19:59:28 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,20 @@ typedef struct		s_env
 */
 
 int					ft_printf(char *format, ...);
+void				ft_apply(t_env *env);
 int					ft_print_all(t_env *env, int x, int count);
+int					ft_subs_len(char *str, int i);
+char				**ft_fill_tab(char **tab, char *str);
+
+/*
+** free.c
+*/
+
 void				ft_freeall(t_env *env, int x);
 void				ft_free_exit(t_env *env, int x);
 int					ft_err(char *str);
-
-/*
-** subs.c
-*/
-
-char				**ft_fill_tab(char **tab, char *str);
-int					ft_subs_len(char *str, int i);
 char				*ft_free_join(char *s1, char *s2, int x);
+int					ft_erorrcheck(t_env *env, int i, int j);
 
 /*
 ** init.c
@@ -79,7 +81,7 @@ t_env				*ft_init_env(char *str, va_list ap, int x);
 t_form				*ft_init_form(t_env *env, va_list ap, int x);
 char				**ft_init_subs(char *str);
 char				*ft_init_content(t_form *new, va_list ap);
-int					ft_erorrcheck(t_env *env, int i, int j);
+char				*ft_init_content_supp(t_form *new, va_list ap);
 
 /*
 ** usefull.c
@@ -96,7 +98,7 @@ char				*ft_arg_point(va_list ap, int x);
 
 char				*ft_find_indic(char *subs, int x, int i);
 int					ft_find_preci(char *subs, va_list ap, int i, int x);
-int					ft_find_width(char *subs, va_list ap);
+int					ft_find_width(char *subs, va_list ap, int i, int x);
 char				*ft_find_modif(char *subs);
 char				ft_find_type(char *str);
 
@@ -121,7 +123,7 @@ int				option(t_env *env, int x);
 */
 
 int					oposi(t_env *env, int width);
-int					ohash(t_env *env, int width);
+int					ohash(t_env *env, int width, int i, int j);
 int					olzero(t_env *env, int width);
 int					ospace(t_env *env, int width);
 int					olalign(t_env *env, int width);

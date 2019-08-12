@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/11 14:59:36 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/12 19:26:57 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,8 @@ char	*ft_arg_point(va_list ap, int x)
 			return (ft_strdup("0x"));
 		return (ft_strdup("0x0"));
 	}
-	else
-		if (!(str = ft_free_join("0x", str, 2)))
-			return (NULL);
+	else if (!(str = ft_free_join("0x", str, 2)))
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] >= 'A' && str[i] <= 'Z')

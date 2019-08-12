@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/11 17:36:08 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/12 18:16:32 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_form	*ft_init_form(t_env *env, va_list ap, int x)
 		!(new->indic = ft_find_indic(env->subs[x], 0, 0)) ||
 		!(new->modif = ft_find_modif(env->subs[x])))
 		return (NULL);
-	i = ft_find_width(env->subs[x], ap);
+	i = ft_find_width(env->subs[x], ap, 0, 0);
 	new->width = (i < -1 ? -i : i);
 	new->preci = ft_find_preci(env->subs[x], ap, 0, 0);
 	new->type = ft_find_type(env->subs[x]);
@@ -96,6 +96,9 @@ char	*ft_init_content(t_form *new, va_list ap)
 	char	*str;
 
 	str = NULL;
+	if (ft_strsearch("cps%", new->type) == 1)
+		if (!(str = ft_init_content_supp(new, ap)))
+			return (NULL);
 	if (new->type == 'd' || new->type == 'i')
 		if (!(str = ft_conv_type_d(new, ap)))
 			return (NULL);
@@ -105,6 +108,21 @@ char	*ft_init_content(t_form *new, va_list ap)
 	if (new->type == 'f')
 		if (!(str = ft_conv_double(ap, new)))
 			return (NULL);
+	if (new->preci == -1 && str[0] == '0' && str[1] == '\0')
+	{
+		if (str)
+			free(str);
+		if (!(str = ft_strdup("")))
+			return (NULL);
+	}
+	return (str);
+}
+
+char	*ft_init_content_supp(t_form *new, va_list ap)
+{
+	char	*str;
+
+	str = NULL;
 	if (new->type == 'c' || new->type == '%')
 		if (!(str = ft_conv_char(new, ap)))
 			return (NULL);
@@ -120,32 +138,5 @@ char	*ft_init_content(t_form *new, va_list ap)
 	if (new->type == 'p')
 		if (!(str = ft_arg_point(ap, new->preci)))
 			return (NULL);
-	if (new->preci == -1 && str[0] == '0' && str[1] == '\0')
-	{
-		if (str)
-			free(str);
-		if (!(str = ft_strdup("")))
-			return (NULL);
-	}
 	return (str);
-}
-
-int		ft_erorrcheck(t_env *env, int j, int i)
-{
-	while (env->form)
-	{
-		i = 0;
-		j = 0;
-		if ((ft_strsearch(INDIC, '0') == 1 && ft_strsearch("diouxX", TYPE) == 1
-			&& PRECI > 0) || (ft_strsearch(INDIC, '0') == 1 && WIDTH == 0))
-			if (!(INDIC = ft_free_rmchar(INDIC, '0')))
-				return (-1);
-		if (ft_strsearch("diucsp%", TYPE) == 1 && ft_strsearch(INDIC, '#') == 1)
-			if (!(INDIC = ft_free_rmchar(INDIC, '#')))
-				return (-1);
-		if (!NEXT)
-			break ;
-		env->form = NEXT;
-	}
-	return (0);
 }

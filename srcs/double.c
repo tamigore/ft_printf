@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/11 17:24:02 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/12 20:40:25 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,17 @@ char		*double_to_str(double f, int len)
 	return (res);
 }
 
-char	*ft_conv_double(va_list ap, t_form *new)
+char		*ft_conv_double(va_list ap, t_form *new)
 {
 	char	*str;
 
 	if (new->modif[0] == 'l' || new->modif[0] == 'L')
 	{
-		if (!(str = double_to_str((long double)va_arg(ap, long double), new->preci)))
+		if (!(str = double_to_str((double)va_arg(ap, double),
+						new->preci)))
 			return (NULL);
 	}
-	else
-		if (!(str = double_to_str((double)va_arg(ap, double), new->preci)))
-			return (NULL);
+	else if (!(str = double_to_str((double)va_arg(ap, double), new->preci)))
+		return (NULL);
 	return (str);
 }

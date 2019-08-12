@@ -6,7 +6,7 @@
 #    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 00:20:03 by artprevo          #+#    #+#              #
-#    Updated: 2019/08/04 14:12:08 by tamigore         ###   ########.fr        #
+#    Updated: 2019/08/12 18:46:10 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SOURCES = conv_nb.c		\
 		  option_one.c	\
 		  option_duo.c	\
 		  printf.c		\
-		  subs.c		\
+		  free.c		\
 		  usefull.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
