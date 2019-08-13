@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:55:01 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/12 19:24:36 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/13 20:32:07 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,24 +95,35 @@ char	*ft_modif_preci(t_env *env, char *str, int i, int j)
 	int		k;
 	char	*tmp;
 
-	k = ft_strlen(str) - ft_strsearch(INDIC, '+') - ft_strsearch(INDIC, ' ');
-	if (str[0] == '-')
-		PRECI = PRECI + 2;
+	k = ft_strlen(str);
+	if ((ft_strsearch(INDIC, ' ') == 1 || ft_strsearch(INDIC, '+') == 1) &&
+			ft_superatoi(str) >= 0)
+		k--;
+	if (ft_superatoi(str) < 0)
+		PRECI = PRECI + 1;
 	if (!(tmp = ft_strnew(PRECI + ft_strlen(str) - k)))
 		return (NULL);
-	if (ft_strsearch(INDIC, '+') == 1)
+	if (ft_strsearch(INDIC, '+') == 1 && ft_superatoi(str) >= 0)
 		tmp[i++] = '+';
-	if (ft_strsearch(INDIC, ' ') == 1)
+	if (ft_strsearch(INDIC, ' ') == 1 && ft_superatoi(str) >= 0)
 		tmp[i++] = ' ';
-	if (str[0] == '-')
+	if (ft_superatoi(str) < 0)
 	{
 		tmp[i++] = '-';
+		k--;
 		j++;
 	}
 	while (i < (PRECI - k))
 		tmp[i++] = '0';
 	while (str[j])
 		tmp[i++] = str[j++];
+	if (ft_strsearch(INDIC, '#') == 1)
+	{
+		if (TYPE == 'x')
+			tmp = ft_free_join("0x", tmp, 2);
+		else if (TYPE == 'X')
+			tmp = ft_free_join("0X", tmp, 2);
+	}	
 	free(RES);
 	SIZE = ft_strlen(tmp);
 	return (tmp);
@@ -125,7 +136,7 @@ int		ft_modif(t_env *env)
 		if (TYPE == 's' && (PRECI > 0 || PRECI == -1))
 			if (!(RES = ft_modif_str_preci(env, RES)))
 				return (0);
-		if (ft_strsearch("csp%", TYPE) == 0 &&
+		if (ft_strsearch("fcsp%", TYPE) == 0 &&
 				PRECI > SIZE - ft_strsearch(RES, '-'))
 			if (!(RES = ft_modif_preci(env, RES, 0, 0)))
 				return (0);
@@ -135,7 +146,7 @@ int		ft_modif(t_env *env)
 		if (WIDTH != 0 && WIDTH > PRECI)
 			if (!(RES = ft_modif_width(env, NULL, 0, 0)))
 				return (0);
-		if (WIDTH != 0 && TYPE == 's' && WIDTH < PRECI)
+		if (WIDTH != 0 && TYPE == 's' && WIDTH <= PRECI)
 			if (!(RES = ft_modif_width(env, NULL, 0, 0)))
 				return (0);
 		SIZE = ft_strlen(RES);

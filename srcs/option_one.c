@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:22:08 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/12 19:32:10 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/13 20:32:01 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		oposi(t_env *env, int width)
 		return (0);
 	while (i < width - ft_strlen(RES) - 1)
 		tmp[i++] = ' ';
-	tmp[i++] = '+';
+	if (ft_superatoi(RES) >= 0)
+		tmp[i++] = '+';
 	while (RES[j])
 		tmp[i++] = RES[j++];
 	free(RES);
@@ -76,13 +77,13 @@ int		olzero(t_env *env, int width)
 	neg = 0;
 	if (!(tmp = ft_strnew(width)))
 		return (0);
-	if (RES[j] == '-')
+	if (ft_superatoi(RES) < 0)
 	{
 		tmp[i++] = '-';
 		j++;
 		neg++;
 	}
-	while (i < (width - (int)ft_strlen(RES) + neg))
+	while (i < (width - ft_strlen(RES) + neg))
 		tmp[i++] = '0';
 	while (RES[j])
 		tmp[i++] = RES[j++];
@@ -97,13 +98,13 @@ int		ospace(t_env *env, int width)
 	int		j;
 	char	*tmp;
 
-	if (width == 0)
-		width = (int)ft_strlen(RES) + 1;
+	if (width <= ft_strlen(RES))
+		width = ft_strlen(RES) + (ft_superatoi(RES) < 0 ? 0 : 1);
 	i = 0;
 	j = 0;
 	if (!(tmp = ft_strnew(width)))
 		return (0);
-	while (i < (width - (int)ft_strlen(RES)))
+	while (i < width - ft_strlen(RES))
 		tmp[i++] = ' ';
 	while (RES[j])
 		tmp[i++] = RES[j++];

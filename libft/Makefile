@@ -6,7 +6,7 @@
 #    By: tamigore <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 15:04:29 by tamigore          #+#    #+#              #
-#    Updated: 2019/08/08 14:54:11 by tamigore         ###   ########.fr        #
+#    Updated: 2019/08/13 17:52:24 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC/M = ft_memset.c		\
 		ft_memdel.c
 
 SRC/O = ft_atoi.c		\
+		ft_superatoi.c	\
 		ft_bzero.c		\
 		ft_tolower.c	\
 		ft_toupper.c	\

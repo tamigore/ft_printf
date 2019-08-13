@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:11:54 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/12 19:30:45 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/13 20:31:59 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int		applyoption(t_env *env)
 {
 	if (ft_strsearch(INDIC, '+') == 1 && TYPE != 'u')
 	{
-		if (RES[0] != '-')
+		if (ft_superatoi(RES) >= 0)
 			if (!oposi(env, WIDTH))
 				return (0);
 	}
@@ -78,7 +78,7 @@ static int		applyoption(t_env *env)
 		if (!olzero(env, WIDTH))
 			return (0);
 	}
-	else if (ft_strsearch(INDIC, ' ') == 1 && TYPE != 'u' && RES[0] != '-')
+	else if (ft_strsearch(INDIC, ' ') == 1 && TYPE != 'u' && ft_superatoi(RES) >= 0)
 	{
 		if (!ospace(env, WIDTH))
 			return (0);
@@ -108,7 +108,7 @@ static int		option_all(t_env *env, int x, int err)
 		if (PRECI <= ft_strlen(RES))
 			applyoption_str(env);
 	}
-	if (x == 2 && ft_strsearch(INDIC, '#') == 1 &&
+	if (x == 2 && ft_strsearch(INDIC, '#') == 1 && CONTENT[0] != '\0' &&
 			(TYPE == 'x' || TYPE == 'X') && PRECI == ft_strlen(RES))
 		if (!(RES = ft_strjoin("0", ft_free_join(&TYPE, RES, 2))))
 			return (0);

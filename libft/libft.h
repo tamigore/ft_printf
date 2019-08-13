@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 18:31:48 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 14:53:15 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/13 17:51:03 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void			ft_memdel(void **ap);
 */
 
 int				ft_atoi(const char *str);
+long long int	ft_superatoi(char *str);
 void			ft_bzero(void *s, size_t n);
 int				ft_toupper(int c);
 int				ft_tolower(int c);

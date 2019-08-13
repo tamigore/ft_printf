@@ -6,7 +6,7 @@
 #    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 00:20:03 by artprevo          #+#    #+#              #
-#    Updated: 2019/08/12 18:46:10 by tamigore         ###   ########.fr        #
+#    Updated: 2019/08/13 19:17:59 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ C = clang
 
 NAME = libftprintf.a
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror #-Weverything
 
 LIBFT = libft
 
