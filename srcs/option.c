@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:11:54 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/13 20:31:59 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/15 20:43:53 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int		applyoption(t_env *env)
 			if (!oposi(env, WIDTH))
 				return (0);
 	}
-	else if (ft_strsearch(INDIC, '#') == 1 && RES[0] != '0')
+	else if (ft_strsearch(INDIC, '#') == 1 && RES[0] != '0' && ft_strsearch("xXo", TYPE) == 1)
 	{
 		if (!ohash(env, WIDTH, 2, 0))
 			return (0);
@@ -108,10 +108,6 @@ static int		option_all(t_env *env, int x, int err)
 		if (PRECI <= ft_strlen(RES))
 			applyoption_str(env);
 	}
-	if (x == 2 && ft_strsearch(INDIC, '#') == 1 && CONTENT[0] != '\0' &&
-			(TYPE == 'x' || TYPE == 'X') && PRECI == ft_strlen(RES))
-		if (!(RES = ft_strjoin("0", ft_free_join(&TYPE, RES, 2))))
-			return (0);
 	SIZE = ft_strlen(RES);
 	return (1);
 }

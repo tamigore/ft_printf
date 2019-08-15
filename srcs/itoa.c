@@ -6,12 +6,11 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:57:18 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/11 18:33:20 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/15 17:00:50 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <limits.h>
 
 double				ft_unit(double nb, int len)
 {

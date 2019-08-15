@@ -6,19 +6,25 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/13 20:32:09 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/15 21:02:03 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*strjoin_double(char *dest, char *int_part, char *float_part)
+static char	*strjoin_double(char *int_part, char *float_part)
 {
+	char	*dest;
 	int		i;
 
-	i = -1;
-	while (++i < ft_strlen(int_part))
+	i = 0;
+	if (!(dest = ft_strnew(ft_strlen(int_part) + ft_strlen(float_part) + 1)))
+		return (NULL);
+	while (i < ft_strlen(int_part))
+	{
 		dest[i] = int_part[i];
+		i++;
+	}
 	dest[i++] = '.';
 	i = -1;
 	while (++i < ft_strlen(float_part))
@@ -28,6 +34,51 @@ static char	*strjoin_double(char *dest, char *int_part, char *float_part)
 	return (dest);
 }
 
+static char	*ft_doubleitoa(long long x, int neg, int len, long long i)
+{
+	char	*str;
+
+	if (x == LLONG_MIN)
+		return (ft_strdup("-9223372036854775807"));
+	i = ABS(x);
+	if (x < 0)
+	{
+		neg = 1;
+		x *= -1;
+	}
+	while (i /= 10)
+		len++;
+	len += neg;
+	if (!(str = (char *)malloc(sizeof(char) * (len))))
+		return (NULL);
+	str[--len] = '\0';
+	while (len--)
+	{
+		str[len] = x % 10 + '0';
+		x = x / 10;
+	}
+	if (neg)
+		str[0] = '-';
+	return (str);
+}
+
+static char	*ft_addlen(char *str, int len)
+{
+	char	*res;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!(res = ft_strnew(len)))
+		return (NULL);
+	while(i < len - ft_strlen(str))
+		res[i++] = '0';
+	while(i < len)
+		res[i++] = str[j++];
+	return (res);
+}
+
 char		*double_to_str(long double f, int len)
 {
 	long double	fractional;
@@ -35,17 +86,24 @@ char		*double_to_str(long double f, int len)
 	char		*str_decimal;
 	char		*res;
 
-	fractional = (f - (int)f) * (f < 0 ? -1 : 1);
-	str_integer = ft_superitoa((int)f, 0, 2, 0);
-	if (!(res = malloc(sizeof(char) * (ft_strlen(str_integer) + len + 1))))
-		return (NULL);
-	ft_bzero(res, ft_strlen(str_integer) + len + 1);
-	fractional = fractional * ft_unit(10, len);
-	if (f > 0)
-		str_decimal = ft_superitoa((int)(fractional + 0.5), 0, 2, 0);
+	fractional = (long double)(f - (long long int)f);
+	if (f >= 0)
+		str_integer = ft_doubleitoa((long long)f, 0, 2, 0);
 	else
-		str_decimal = ft_superitoa((int)(fractional - 0.5), 0, 2, 0);
-	strjoin_double(res, str_integer, str_decimal);
+		str_integer = ft_doubleitoa(-1 * (long long)f, 0, 2, 0);
+	fractional *= ft_unit(10, len);
+	if (f > 0)
+		str_decimal = ft_doubleitoa((long long)(fractional + 0.5), 0, 2, 0);
+	else
+		str_decimal = ft_doubleitoa(-1 * (long long)(fractional - 0.5), 0, 2, 0);
+	if (ft_strlen(str_decimal) < len)
+		if (!(str_decimal = ft_addlen(str_decimal, len)))
+			return (NULL);
+	if (!(res = strjoin_double(str_integer, str_decimal)))
+		return (NULL);
+	if (f < 0)
+		if (!(res = ft_free_join("-", res, 2)))
+			return (NULL);
 	return (res);
 }
 
@@ -53,7 +111,7 @@ char		*ft_conv_double(va_list ap, t_form *new)
 {
 	char	*str;
 
-	if (new->modif[0] == 'l' || new->modif[0] == 'L')
+	if (ft_strsearch(new->modif, 'L') == 1)
 	{
 		if (!(str = double_to_str((long double)va_arg(ap, long double),
 						new->preci)))
@@ -75,6 +133,13 @@ char		*ft_modif_preci_double(char *str, int len)
 	x = 0;
 	while (str[x] && str[x] != '.')
 		x++;
+	if (len == 0)
+	{
+		if (!(tmp = ft_strndup(str, x)))
+			return (NULL);
+		free(str);
+		return (tmp);
+	}
 	if (!(tmp = ft_strnew(x + len + 1)))
 		return (NULL);
 	i = 0;

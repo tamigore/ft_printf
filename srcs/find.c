@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/13 19:14:23 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/15 20:58:43 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int		ft_find_preci(char *subs, va_list ap, int i, int x)
 		{
 			if (subs[i + 1] == '0')
 			{
+				if (ft_find_type(subs) == 'f')
+					return (0);
 				if (subs[i + 2] >= '1' && subs[i + 2] <= '9')
 					i++;
 				else

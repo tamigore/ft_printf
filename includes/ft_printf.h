@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/13 19:32:48 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/15 17:01:05 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <limits.h>
 # include "../libft/libft.h"
 
 # define ABS(X) 	(x > 0) ? x : -x

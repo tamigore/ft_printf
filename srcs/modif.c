@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:55:01 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/13 20:32:07 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/15 20:25:10 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*ft_modif_preci(t_env *env, char *str, int i, int j)
 		tmp[i++] = '0';
 	while (str[j])
 		tmp[i++] = str[j++];
-	if (ft_strsearch(INDIC, '#') == 1)
+	if (ft_strsearch(INDIC, '#') == 1 && CONTENT[0] != '0')
 	{
 		if (TYPE == 'x')
 			tmp = ft_free_join("0x", tmp, 2);
