@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:22:08 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/13 20:32:01 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/16 15:14:55 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ int		ohash(t_env *env, int width, int i, int j)
 {
 	char	*tmp;
 
+	if (TYPE == 'f')
+	{
+		if (ft_strsearch(RES, '.') == 0)
+			if (!(RES = ft_free_join(RES, ".", 1)))
+				return (0);
+		return (1);
+	}
 	if ((TYPE == 'x' || TYPE == 'X') && RES[0] == 0)
 		return (1);
 	if (width != 0)

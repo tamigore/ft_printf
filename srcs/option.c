@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:11:54 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/15 20:43:53 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/16 15:12:53 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int		applyoption(t_env *env)
 			if (!oposi(env, WIDTH))
 				return (0);
 	}
-	else if (ft_strsearch(INDIC, '#') == 1 && RES[0] != '0' && ft_strsearch("xXo", TYPE) == 1)
+	else if (ft_strsearch(INDIC, '#') == 1 && RES[0] != '0' && ft_strsearch("xXof", TYPE) == 1)
 	{
 		if (!ohash(env, WIDTH, 2, 0))
 			return (0);

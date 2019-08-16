@@ -6,18 +6,35 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/15 21:02:03 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/16 15:18:13 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*strjoin_double(char *int_part, char *float_part)
+static char	*strjoin_double(char *int_part, char *float_part, int len)
 {
 	char	*dest;
 	int		i;
 
 	i = 0;
+	if (len == -1)
+	{
+		while (int_part[i])
+			i++;
+		i--;
+		if (float_part[0] >= '5')
+		{
+			if (int_part[i] == '9')
+			{
+				int_part[i - 1] = '0';
+				int_part = ft_free_join("1", int_part, 2);
+			}
+			else
+				int_part[0]++;
+		}
+		return (ft_strdup(int_part));
+	}
 	if (!(dest = ft_strnew(ft_strlen(int_part) + ft_strlen(float_part) + 1)))
 		return (NULL);
 	while (i < ft_strlen(int_part))
@@ -99,7 +116,7 @@ char		*double_to_str(long double f, int len)
 	if (ft_strlen(str_decimal) < len)
 		if (!(str_decimal = ft_addlen(str_decimal, len)))
 			return (NULL);
-	if (!(res = strjoin_double(str_integer, str_decimal)))
+	if (!(res = strjoin_double(str_integer, str_decimal, len)))
 		return (NULL);
 	if (f < 0)
 		if (!(res = ft_free_join("-", res, 2)))
