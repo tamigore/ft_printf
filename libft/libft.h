@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 18:31:48 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/13 17:51:03 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/21 17:04:39 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 char			*ft_itoa(int n);
 void			ft_sorttab(char **tab);
+int				ft_nbrlen(long long	nbr);
 
 /*
 **	OPTION

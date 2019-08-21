@@ -6,13 +6,14 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 21:23:26 by artprevo          #+#    #+#             */
-/*   Updated: 2019/08/16 14:59:59 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/21 19:01:39 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 #include <limits.h>
+#include <float.h>
 
 int		main()
 {
@@ -48,20 +49,22 @@ int		main()
 	ft_printf("%s%s%s\n", "test", "test", "test");
 	ft_printf("%C\n", 15000);
 */
-	printf("%.0f\n", 573.924);
-	ft_printf("%.0f\n", 573.924);
-	printf("%.0f\n", -3.85);
-	ft_printf("%.0f\n", -3.85);
-	printf("%#.0f\n", 7.4);
-	ft_printf("%#.0f\n", 7.4);
-	printf("%#-5.3f\n", 7.3);
-	ft_printf("%#-5.3f\n", 7.3);
-	printf("%.0f\n", -958.125);
-	ft_printf("%.0f\n", -958.125);
-	printf("%.0f\n", -7.5);
-	ft_printf("%.0f\n", -7.5);
-	printf("%.0f\n", 7.5);
-	ft_printf("%.0f\n", 7.5);
+	printf("%f\n", -5.9999999);
+	ft_printf("%f\n", -5.9999999);
+	printf("%+05.3f\n", -7.3);
+	ft_printf("%+05.3f\n", -7.3);
+	printf("%+#-5.0f\n", 7.3);
+	ft_printf("%+#-5.0f\n", 7.3);
+	printf("%.0f\n", 0.00039);
+	ft_printf("%.0f\n", 0.00039);
+	printf("% #-5.0f\n", 7.3);
+	ft_printf("% #-5.0f\n", 7.3);
+	printf("%.0f\n", DBL_MIN);
+	ft_printf("%.0f\n", DBL_MIN);
+	printf("%Lf\n", 3.9999999l);
+	ft_printf("%Lf\n", 3.9999999l);
+	printf("%.0Lf\n", LDBL_MIN);
+	ft_printf("%.0Lf\n", LDBL_MIN);
 /*
 	ft_printf("\n\n-------------------------------\n");
 	ft_printf("EASY\n");

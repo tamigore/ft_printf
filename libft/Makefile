@@ -6,7 +6,7 @@
 #    By: tamigore <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 15:04:29 by tamigore          #+#    #+#              #
-#    Updated: 2019/08/13 17:52:24 by tamigore         ###   ########.fr        #
+#    Updated: 2019/08/21 17:05:06 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC/O = ft_atoi.c		\
         get_next_line.c	\
 		ft_rmstr.c		\
 		ft_rmchar.c		\
+		ft_nbrlen.c		\
 		ft_free_rmstr.c	\
 		ft_free_rmchar.c
 

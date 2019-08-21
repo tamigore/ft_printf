@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/16 15:18:13 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/21 17:15:57 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,9 @@ static char	*strjoin_double(char *int_part, char *float_part, int len)
 		i--;
 		if (float_part[0] >= '5')
 		{
-			if (int_part[i] == '9')
-			{
-				int_part[i - 1] = '0';
-				int_part = ft_free_join("1", int_part, 2);
-			}
-			else
-				int_part[0]++;
+			while (int_part[i] == '9')
+				int_part[i--] = '0';
+			int_part[i]++;
 		}
 		return (ft_strdup(int_part));
 	}
@@ -104,15 +100,26 @@ char		*double_to_str(long double f, int len)
 	char		*res;
 
 	fractional = (long double)(f - (long long int)f);
-	if (f >= 0)
-		str_integer = ft_doubleitoa((long long)f, 0, 2, 0);
-	else
-		str_integer = ft_doubleitoa(-1 * (long long)f, 0, 2, 0);
 	fractional *= ft_unit(10, len);
-	if (f > 0)
+	if (ft_nbrlen(fractional) < ft_nbrlen(fractional + 0.5) ||
+			ft_nbrlen(fractional) < ft_nbrlen(fractional - 0.5))
+	{
+		fractional = 0;
+		if (f < 0)
+			f--;
+		else
+			f++;
+	}
+	if (f >= 0)
+	{
+		str_integer = ft_doubleitoa((long long)f, 0, 2, 0);
 		str_decimal = ft_doubleitoa((long long)(fractional + 0.5), 0, 2, 0);
+	}
 	else
+	{
+		str_integer = ft_doubleitoa(-1 * (long long)f, 0, 2, 0);
 		str_decimal = ft_doubleitoa(-1 * (long long)(fractional - 0.5), 0, 2, 0);
+	}	
 	if (ft_strlen(str_decimal) < len)
 		if (!(str_decimal = ft_addlen(str_decimal, len)))
 			return (NULL);
