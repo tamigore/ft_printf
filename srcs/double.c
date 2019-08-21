@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/21 17:15:57 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/21 20:11:34 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ static char	*strjoin_double(char *int_part, char *float_part, int len)
 		i = ft_strlen(int_part) - 1;
 		if (float_part[0] >= '5')
 		{
-<<<<<<< HEAD
 			while (int_part[i] == '9')
 				int_part[i--] = '0';
 			int_part[i]++;
-=======
 			while (int_part[i] == '9' && i > 0)
 				int_part[i--] = '0';
 			if (i == 0 && int_part[i] == '9')
@@ -38,9 +36,9 @@ static char	*strjoin_double(char *int_part, char *float_part, int len)
 			}
 			else
 				int_part[i]++;
->>>>>>> 9caafce9abc259c5b0eccdf49d05dcb5d75fa8f9
 		}
-		return (ft_strdup(int_part));
+		free(float_part);
+		return (int_part);
 	}
 	if (!(dest = ft_strnew(ft_strlen(int_part) + ft_strlen(float_part) + 1)))
 		return (NULL);
@@ -155,7 +153,8 @@ char		*ft_conv_double(va_list ap, t_form *new)
 	else if (!(str = double_to_str((double)va_arg(ap, double), new->preci)))
 		return (NULL);
 	if (new->preci > ft_strlen(str))
-		str = ft_modif_preci_double(str, new->preci);
+		if (!(str = ft_modif_preci_double(str, new->preci)))
+			return (NULL);
 	return (str);
 }
 

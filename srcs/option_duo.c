@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:13:23 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/16 16:12:00 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/21 20:02:42 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int		oposizero(t_env *env, int width)
 	int		i;
 	int		j;
 	char	*tmp;
-
-	if (width <= ft_strlen(RES))
+	
+	if (width <= ft_strlen(RES) && TYPE != 'f')
 		width = ft_strlen(RES) + 1;
 	i = 0;
 	j = 0;

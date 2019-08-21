@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/12 18:16:32 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/08/21 20:12:35 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*ft_init_content(t_form *new, va_list ap)
 	if (new->type == 'f')
 		if (!(str = ft_conv_double(ap, new)))
 			return (NULL);
-	if (new->preci == -1 && str[0] == '0' && str[1] == '\0')
+	if (new->preci == -1 && str[0] == '0' && str[1] == '\0' && new->type != 'f')
 	{
 		if (str)
 			free(str);
