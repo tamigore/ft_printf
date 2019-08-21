@@ -20,18 +20,19 @@ static char	*strjoin_double(char *int_part, char *float_part, int len)
 	i = 0;
 	if (len == -1)
 	{
-		while (int_part[i])
-			i++;
-		i--;
+		i = ft_strlen(int_part) - 1;
 		if (float_part[0] >= '5')
 		{
-			if (int_part[i] == '9')
+			while (int_part[i] == '9' && i > 0)
+				int_part[i--] = '0';
+			if (i == 0 && int_part[i] == '9')
 			{
-				int_part[i - 1] = '0';
-				int_part = ft_free_join("1", int_part, 2);
+				int_part[i] = '0';
+				if (!(int_part = ft_free_join("1", int_part, 2)))
+					return (NULL);
 			}
 			else
-				int_part[0]++;
+				int_part[i]++;
 		}
 		return (ft_strdup(int_part));
 	}
