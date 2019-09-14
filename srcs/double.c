@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/21 20:11:34 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/14 20:17:58 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,14 @@ char		*double_to_str(long double f, int len)
 	char		*str_decimal;
 	char		*res;
 
+	if (f / 2 == f && f > 0)
+		return (ft_strdup("+inf"));
+	else if (f / 2 == f && f < 0)
+		return (ft_strdup("-inf"));
 	fractional = (long double)(f - (long long int)f);
 	fractional *= ft_unit(10, len);
 	if (ft_nbrlen(fractional) < ft_nbrlen(fractional + 0.5) ||
-			ft_nbrlen(fractional) < ft_nbrlen(fractional - 0.5))
+			ft_nbrlen(fractional) > ft_nbrlen(fractional - 0.5))
 	{
 		fractional = 0;
 		if (f < 0)
@@ -152,10 +156,10 @@ char		*ft_conv_double(va_list ap, t_form *new)
 	}
 	else if (!(str = double_to_str((double)va_arg(ap, double), new->preci)))
 		return (NULL);
-	if (new->preci > ft_strlen(str))
+/*	if (new->preci > ft_strlen(str))
 		if (!(str = ft_modif_preci_double(str, new->preci)))
 			return (NULL);
-	return (str);
+*/	return (str);
 }
 
 char		*ft_modif_preci_double(char *str, int len)
