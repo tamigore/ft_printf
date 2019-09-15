@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/14 20:17:58 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/15 22:53:33 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,15 +114,6 @@ char		*double_to_str(long double f, int len)
 		return (ft_strdup("-inf"));
 	fractional = (long double)(f - (long long int)f);
 	fractional *= ft_unit(10, len);
-	if (ft_nbrlen(fractional) < ft_nbrlen(fractional + 0.5) ||
-			ft_nbrlen(fractional) > ft_nbrlen(fractional - 0.5))
-	{
-		fractional = 0;
-		if (f < 0)
-			f--;
-		else
-			f++;
-	}
 	if (f >= 0)
 	{
 		str_integer = ft_doubleitoa((long long)f, 0, 2, 0);

@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 21:23:26 by artprevo          #+#    #+#             */
-/*   Updated: 2019/08/21 19:43:29 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/15 22:53:35 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,20 @@ int		main()
 	ft_printf("%f\n", -5.9999999);
 	printf("%f\n", 3.9999999);
 	ft_printf("%f\n", 3.9999999);
-	printf("%+05.3f\n", -7.3);
-	ft_printf("%+05.3f\n", -7.3);
-	printf("%+05f\n", -7.3);
-	ft_printf("%+05f\n", -7.3);
-	printf("%+#-5.0f\n", 7.3);
-	ft_printf("%+#-5.0f\n", 7.3);
 	printf("%.0f\n", 0.00039);
 	ft_printf("%.0f\n", 0.00039);
-	printf("% #-5.0f\n", 7.3);
-	ft_printf("% #-5.0f\n", 7.3);
 	printf("%.0f\n", DBL_MIN);
 	ft_printf("%.0f\n", DBL_MIN);
 	printf("%Lf\n", 3.9999999l);
 	ft_printf("%Lf\n", 3.9999999l);
 	printf("%.0Lf\n", LDBL_MIN);
 	ft_printf("%.0Lf\n", LDBL_MIN);
+	printf("%.8f\n", 9873.000001);
+	ft_printf("%.8f\n", 9873.000001);
+	printf("%.7f\n", 9873.000001);
+	ft_printf("%.7f\n", 9873.000001);
+	printf("this %.0f float\n", 1.6);
+	ft_printf("this %.0f float\n", 1.6);
 /*
 	ft_printf("\n\n-------------------------------\n");
 	ft_printf("EASY\n");

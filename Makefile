@@ -6,7 +6,7 @@
 #    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 00:20:03 by artprevo          #+#    #+#              #
-#    Updated: 2019/09/14 20:02:28 by tamigore         ###   ########.fr        #
+#    Updated: 2019/09/15 22:24:50 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,16 @@ $(NAME): $(OBJS)
 $(DIR_O)/%.o: $(DIR_S)/%.c $(HEADER)/ft_printf.h
 	mkdir -p objs
 	$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
+
+
+
+test: test.c
+	gcc test.c libftprintf.a $(FLAGS) -I $(HEADER) -o test
+
+
+
+
+
 
 norme:
 	norminette ./libft/
