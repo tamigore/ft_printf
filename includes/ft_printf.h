@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 14:47:29 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/19 19:37:22 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ char				*ft_conv_char(t_form *new, va_list ap);
 double				ft_unit(double nb, int len);
 unsigned long long	ft_doubleunit(unsigned long long nb, int unit);
 char				*ft_superitoa(int n, int neg, int len, int i);
-char				*ft_itoa_base(unsigned long long int nb, int base);
+char				*ft_itoa_base(unsigned long long nb, int base);
 char				*ft_itoa_long(long long val, int base, int len);
 
 /*

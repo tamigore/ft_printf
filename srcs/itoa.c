@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:57:18 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/15 17:00:50 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/19 18:05:42 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ char				*ft_superitoa(int x, int neg, int len, int i)
 	return (str);
 }
 
-char				*ft_itoa_base(unsigned long long int nb, int base)
+char				*ft_itoa_base(unsigned long long nb, int base)
 {
 	int		i;
 	char	*res;
 
-	i = (nb > 9) ? 2 : 1;
+	i = (nb >= (unsigned long long)base) ? 2 : 1;
 	if (nb == 0)
 		return (ft_strdup("0"));
 	while (ft_doubleunit(base, i) - 1 < nb)

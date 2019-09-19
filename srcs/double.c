@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 15:51:50 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/19 17:53:08 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ char		*double_to_str(long double f, int len)
 	{
 		str_integer = ft_doubleitoa((long long)f, 0, 2, 0);
 		str_decimal = ft_doubleitoa((long long)(fractional + 0.5), 0, 2, 0);
-		if (ft_strlen(ft_doubleitoa((long long)(fractional), 0, 2, 0)) < ft_strlen(str_decimal))
+		if (ft_strlen(ft_doubleitoa((long long)(fractional), 0, 2, 0)) < ft_strlen(str_decimal) &&
+				ft_strlen(str_decimal) == 7)
 		{
 			str_decimal = ft_strdup("0");
 			str_integer = ft_doubleitoa((long long)(f + 1), 0, 2, 0);
@@ -125,7 +126,8 @@ char		*double_to_str(long double f, int len)
 	{
 		str_integer = ft_doubleitoa(-1 * (long long)f, 0, 2, 0);
 		str_decimal = ft_doubleitoa(-1 * (long long)(fractional - 0.5), 0, 2, 0);
-		if (ft_strlen(ft_doubleitoa(-1 * (long long)(fractional), 0, 2, 0)) < ft_strlen(str_decimal))
+		if (ft_strlen(ft_doubleitoa(-1 * (long long)(fractional), 0, 2, 0)) < ft_strlen(str_decimal) &&
+				ft_strlen(str_decimal) == 7)
 		{
 			str_integer = ft_doubleitoa(-1 * (long long)(f - 1), 0, 2, 0);
 			str_decimal = ft_strdup("0");
