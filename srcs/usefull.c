@@ -6,13 +6,13 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/12 19:26:57 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/19 17:29:30 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_count_type(char *str)
+int			ft_count_type(char *str)
 {
 	int					x;
 
@@ -26,7 +26,7 @@ int		ft_count_type(char *str)
 	return (x);
 }
 
-char	*ft_pars_indic(char *str, char *subs)
+char		*ft_pars_indic(char *str, char *subs)
 {
 	if (ft_strsearch(str, '+') == 1 && ft_strsearch(str, ' ') == 1)
 		if (!(str = ft_rmchar(str, ' ')))
@@ -41,7 +41,7 @@ char	*ft_pars_indic(char *str, char *subs)
 	return (str);
 }
 
-char	*ft_check_str(char *str, t_env *env)
+char		*ft_check_str(char *str, t_env *env)
 {
 	int		x;
 	char	*tmp;
@@ -67,7 +67,7 @@ char	*ft_check_str(char *str, t_env *env)
 	return (tmp);
 }
 
-char	*ft_arg_point(va_list ap, int x)
+char		*ft_arg_point(va_list ap, int x)
 {
 	char	*str;
 	int		i;
@@ -91,4 +91,26 @@ char	*ft_arg_point(va_list ap, int x)
 		i++;
 	}
 	return (str);
+}
+
+unsigned long	ft_nblen(long double x)
+{
+	unsigned long long	u;
+	unsigned long		i;
+	long double			nb;
+
+	u = 10;
+	if (x < 0)
+	{
+		if (x != LLONG_MIN)
+			nb = -x;
+		else
+			nb = - x - 1;
+	}
+	else
+		nb = x;
+	i = (nb >= 10) ? 2 : 1;
+	while (ft_doubleunit(u, i) - 1 < nb)
+		i++;
+	return (i);
 }

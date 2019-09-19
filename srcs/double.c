@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/15 22:53:33 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/19 15:51:50 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ static char	*strjoin_double(char *int_part, char *float_part, int len)
 		i = ft_strlen(int_part) - 1;
 		if (float_part[0] >= '5')
 		{
-			while (int_part[i] == '9')
-				int_part[i--] = '0';
-			int_part[i]++;
 			while (int_part[i] == '9' && i > 0)
 				int_part[i--] = '0';
 			if (i == 0 && int_part[i] == '9')
@@ -109,7 +106,7 @@ char		*double_to_str(long double f, int len)
 	char		*res;
 
 	if (f / 2 == f && f > 0)
-		return (ft_strdup("+inf"));
+		return (ft_strdup("inf"));
 	else if (f / 2 == f && f < 0)
 		return (ft_strdup("-inf"));
 	fractional = (long double)(f - (long long int)f);
@@ -118,12 +115,22 @@ char		*double_to_str(long double f, int len)
 	{
 		str_integer = ft_doubleitoa((long long)f, 0, 2, 0);
 		str_decimal = ft_doubleitoa((long long)(fractional + 0.5), 0, 2, 0);
+		if (ft_strlen(ft_doubleitoa((long long)(fractional), 0, 2, 0)) < ft_strlen(str_decimal))
+		{
+			str_decimal = ft_strdup("0");
+			str_integer = ft_doubleitoa((long long)(f + 1), 0, 2, 0);
+		}
 	}
 	else
 	{
 		str_integer = ft_doubleitoa(-1 * (long long)f, 0, 2, 0);
 		str_decimal = ft_doubleitoa(-1 * (long long)(fractional - 0.5), 0, 2, 0);
-	}	
+		if (ft_strlen(ft_doubleitoa(-1 * (long long)(fractional), 0, 2, 0)) < ft_strlen(str_decimal))
+		{
+			str_integer = ft_doubleitoa(-1 * (long long)(f - 1), 0, 2, 0);
+			str_decimal = ft_strdup("0");
+		}
+	}
 	if (ft_strlen(str_decimal) < len)
 		if (!(str_decimal = ft_addlen(str_decimal, len)))
 			return (NULL);
@@ -147,10 +154,7 @@ char		*ft_conv_double(va_list ap, t_form *new)
 	}
 	else if (!(str = double_to_str((double)va_arg(ap, double), new->preci)))
 		return (NULL);
-/*	if (new->preci > ft_strlen(str))
-		if (!(str = ft_modif_preci_double(str, new->preci)))
-			return (NULL);
-*/	return (str);
+	return (str);
 }
 
 char		*ft_modif_preci_double(char *str, int len)

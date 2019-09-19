@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 21:23:26 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/15 22:53:35 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/19 14:09:01 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int		main()
 	ft_printf("%f\n", 3.9999999);
 	printf("%.0f\n", 0.00039);
 	ft_printf("%.0f\n", 0.00039);
-	printf("%.0f\n", DBL_MIN);
-	ft_printf("%.0f\n", DBL_MIN);
+	printf("%%o        == |%o|\n", '    ');
+	ft_printf("%%o        == |%o|\n", '    ');
 	printf("%Lf\n", 3.9999999l);
 	ft_printf("%Lf\n", 3.9999999l);
 	printf("%.0Lf\n", LDBL_MIN);
