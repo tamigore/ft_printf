@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 19:37:28 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:34:06 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ char	*ft_find_indic(char *subs, int x, int i)
 		return (NULL);
 	while (subs[i])
 	{
-		if (ft_strsearch("- #+", subs[i]) == 1 &&
-				ft_strsearch(new, subs[i]) == 0)
+		if (ft_search("- #+", subs[i]) == 1 &&
+				ft_search(new, subs[i]) == 0)
 			new[x++] = subs[i];
-		if (subs[i] == '0' && ft_strsearch(new, subs[i]) == 0)
+		if (subs[i] == '0' && ft_search(new, subs[i]) == 0)
 		{
-			if (i > 0 && ft_strsearch("1234567890.", subs[i - 1]) == 0)
+			if (i > 0 && ft_search("1234567890.", subs[i - 1]) == 0)
 				new[x++] = subs[i];
 			else if (i == 0)
 				new[x++] = subs[i];
@@ -51,17 +51,7 @@ int		ft_find_preci(char *subs, va_list ap, int i, int x)
 					return (-1);
 			}
 			if (subs[i + 1] >= '1' && subs[i + 1] <= '9')
-			{
-				if (subs[i + 1] == '0')
-					i++;
-				if (x < 0)
-					x = 0;
-				while (subs[i + 1] >= '0' && subs[i + 1] <= '9')
-				{
-					x *= 10;
-					x += subs[i++ + 1] - '0';
-				}
-			}
+				x = ft_find_preci_add(subs, i, x);
 			else if (subs[i + 1] == '*')
 				return (va_arg(ap, int));
 			else
@@ -69,7 +59,7 @@ int		ft_find_preci(char *subs, va_list ap, int i, int x)
 		}
 		i++;
 	}
-	if (ft_strsearch(subs, '.') == 0 && ft_find_type(subs) == 'f')
+	if (ft_search(subs, '.') == 0 && ft_find_type(subs) == 'f')
 		x = 6;
 	return (x);
 }
@@ -128,9 +118,9 @@ char	ft_find_type(char *str)
 	int		x;
 
 	x = 0;
-	while (ft_strsearch(" -+#0123456789diuoxXcsfphlL.*%", str[x]) == 1)
+	while (ft_search(" -+#0123456789diuoxXcsfphlL.*%", str[x]) == 1)
 	{
-		if (ft_strsearch("diuoxXcsfp%", str[x]) == 1)
+		if (ft_search("diuoxXcsfp%", str[x]) == 1)
 			return (str[x]);
 		x++;
 	}

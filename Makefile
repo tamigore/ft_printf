@@ -6,7 +6,7 @@
 #    By: tamigore <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/19 16:16:11 by tamigore          #+#    #+#              #
-#    Updated: 2019/09/19 16:16:20 by tamigore         ###   ########.fr        #
+#    Updated: 2019/09/25 21:03:45 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,9 @@ SOURCES = conv_nb.c		\
 		  option_duo.c	\
 		  printf.c		\
 		  free.c		\
-		  usefull.c
+		  usefull.c		\
+		  norm_add.c	\
+		  inte_deci.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
@@ -52,18 +54,6 @@ $(NAME): $(OBJS)
 $(DIR_O)/%.o: $(DIR_S)/%.c $(HEADER)/ft_printf.h
 	mkdir -p objs
 	$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
-
-
-
-test: test_printf/test.c test_printf/main.c $(NAME)
-	gcc test_printf/test.c libftprintf.a $(FLAGS) -I $(HEADER) -o test
-	gcc test_printf/main.c libftprintf.a $(FLAGS) -I $(HEADER) -o main
-
-tclean:
-	@rm -f test
-	@rm -f main
-	@rm -rf a.out.dSYM
-
 
 norme:
 	norminette ./libft/

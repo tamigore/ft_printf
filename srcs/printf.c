@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 19:37:26 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:36:10 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,11 @@ int		ft_print_all(t_env *env, int x, int count)
 {
 	while (env->str[x])
 	{
-		if (env->str[x] == '%' && ft_strsearch("diouxXcspf%",
+		if (env->str[x] == '%' && ft_search("diouxXcspf%",
 					ft_find_type(&env->str[x + 1])) == 1)
 		{
 			if (TYPE == 'c' && CONTENT[0] == '\0')
-			{
-				if (ft_strsearch(INDIC, '-') == 0)
-					ft_putstr(RES);
-				write(1, "\0", 1);
-				count++;
-				if (ft_strsearch(INDIC, '-') == 1)
-					ft_putstr(RES);
-			}
+				count = ft_print_all_add(env, count);
 			else
 				ft_putstr(RES);
 			count += SIZE;

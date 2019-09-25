@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 19:37:30 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:34:26 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**ft_init_subs(char *str)
 	{
 		if (str[x] == '%')
 		{
-			if (ft_strsearch("diouxXcspf%", ft_find_type(&str[x + 1])) == 1)
+			if (ft_search("diouxXcspf%", ft_find_type(&str[x + 1])) == 1)
 			{
 				count++;
 				x += ft_count_type(&str[x + 1]);
@@ -96,13 +96,13 @@ char	*ft_init_content(t_form *new, va_list ap)
 	char	*str;
 
 	str = NULL;
-	if (ft_strsearch("cps%", new->type) == 1)
+	if (ft_search("cps%", new->type) == 1)
 		if (!(str = ft_init_content_supp(new, ap)))
 			return (NULL);
 	if (new->type == 'd' || new->type == 'i')
 		if (!(str = ft_conv_type_d(new, ap)))
 			return (NULL);
-	if (ft_strsearch("ouxX", new->type) == 1)
+	if (ft_search("ouxX", new->type) == 1)
 		if (!(str = ft_conv_type(new, ap)))
 			return (NULL);
 	if (new->type == 'f')

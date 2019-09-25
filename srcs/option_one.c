@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:22:08 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/21 20:02:45 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:55:23 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ int		oposi(t_env *env, int width)
 	return (1);
 }
 
-int		ohash(t_env *env, int width, int i, int j)
+int		ohash(t_env *env, int width, int i)
 {
 	char	*tmp;
 
 	if (TYPE == 'f')
 	{
-		if (ft_strsearch(RES, '.') == 0)
+		if (ft_search(RES, '.') == 0)
 			if (!(RES = ft_free_join(RES, ".", 1)))
 				return (0);
 		return (1);
@@ -55,16 +55,7 @@ int		ohash(t_env *env, int width, int i, int j)
 	}
 	else if (!(tmp = ft_strnew(ft_strlen(RES) + 2)))
 		return (0);
-	tmp[0] = '0';
-	if (TYPE == 'o')
-		i--;
-	else
-		tmp[1] = TYPE;
-	if (ft_strsearch(INDIC, '0') == 1)
-		while (i < width - ft_strlen(RES))
-			tmp[i++] = '0';
-	while (RES[j])
-		tmp[i++] = RES[j++];
+	ohash_add(env, width, i, tmp);
 	free(RES);
 	RES = tmp;
 	return (1);

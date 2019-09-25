@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 19:37:22 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 20:57:41 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int					ft_count_type(char *str);
 char				*ft_pars_indic(char *str, char *subs);
 char				*ft_check_str(char *str, t_env *env);
 char				*ft_arg_point(va_list ap, int x);
-unsigned long		ft_nblen(long double x);
+char				*strjoin_double_add(char *inte, char *deci, int i);
 
 /*
 ** find.c
@@ -111,21 +111,21 @@ char				ft_find_type(char *str);
 char				*ft_modif_width(t_env *env, char *str, int i, int j);
 char				*ft_modif_str_preci(t_env *env, char *str);
 char				*ft_modif_p_preci(t_env *env, char *str);
-char				*ft_modif_preci(t_env *env, char *str, int i, int j);
+char				*ft_modif_preci(t_env *env, int i, int j, int k);
 int					ft_modif(t_env *env);
 
 /*
 ** option.c
 */
 
-int				option(t_env *env, int x);
+int					option(t_env *env, int x);
 
 /*
 ** option_one.c
 */
 
 int					oposi(t_env *env, int width);
-int					ohash(t_env *env, int width, int i, int j);
+int					ohash(t_env *env, int width, int i);
 int					olzero(t_env *env, int width);
 int					ospace(t_env *env, int width);
 int					olalign(t_env *env, int width);
@@ -164,6 +164,23 @@ char				*ft_itoa_long(long long val, int base, int len);
 
 char				*double_to_str(long double f, int len);
 char				*ft_conv_double(va_list ap, t_form *new);
-char				*ft_modif_preci_double(char *str, int len);
+char				*ft_doubleitoa(long long x, int neg, int len, long long i);
+
+/*
+** double.c
+*/
+
+char				*double_inte(long double f, long double frac);
+char				*double_deci(long double f, long double frac);
+
+/*
+** norm_add.c
+*/
+
+int					ft_find_preci_add(char *subs, int i, int x);
+int					ft_print_all_add(t_env *env, int count);
+char				*ft_modif_preci_add(t_env *env, int i, int j, char *tmp);
+int					option_all_add(t_env *env, int err);
+void				ohash_add(t_env *env, int width, int i, char *tmp);
 
 #endif

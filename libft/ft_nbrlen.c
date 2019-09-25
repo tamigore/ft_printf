@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 16:59:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/21 17:19:20 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 21:02:01 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_nbrlen(long long nbr)
 {
-	int 				i;
+	int					i;
 	unsigned long long	nb;
 
 	i = 0;

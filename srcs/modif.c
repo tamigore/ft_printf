@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:55:01 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/21 17:42:24 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:41:19 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_modif_width(t_env *env, char *str, int i, int j)
 	{
 		if (!(str = ft_strnew(WIDTH + 1)))
 			return (NULL);
-		if (ft_strsearch(INDIC, '-') == 1)
+		if (ft_search(INDIC, '-') == 1)
 		{
 			while (RES[j])
 				str[i++] = RES[j++];
@@ -90,24 +90,22 @@ char	*ft_modif_p_preci(t_env *env, char *str)
 	return (tmp);
 }
 
-char	*ft_modif_preci(t_env *env, char *str, int i, int j)
+char	*ft_modif_preci(t_env *env, int i, int j, int k)
 {
-	int		k;
 	char	*tmp;
 
-	k = ft_strlen(str);
-	if ((ft_strsearch(INDIC, ' ') == 1 || ft_strsearch(INDIC, '+') == 1) &&
-			ft_superatoi(str) >= 0)
+	if ((ft_search(INDIC, ' ') == 1 || ft_search(INDIC, '+') == 1) &&
+			ft_superatoi(RES) >= 0)
 		k--;
-	if (ft_superatoi(str) < 0)
+	if (ft_superatoi(RES) < 0)
 		PRECI = PRECI + 1;
-	if (!(tmp = ft_strnew(PRECI + ft_strlen(str) - k)))
+	if (!(tmp = ft_strnew(PRECI + ft_strlen(RES) - k)))
 		return (NULL);
-	if (ft_strsearch(INDIC, '+') == 1 && ft_superatoi(str) >= 0)
+	if (ft_search(INDIC, '+') == 1 && ft_superatoi(RES) >= 0)
 		tmp[i++] = '+';
-	if (ft_strsearch(INDIC, ' ') == 1 && ft_superatoi(str) >= 0)
+	if (ft_search(INDIC, ' ') == 1 && ft_superatoi(RES) >= 0)
 		tmp[i++] = ' ';
-	if (ft_superatoi(str) < 0)
+	if (ft_superatoi(RES) < 0)
 	{
 		tmp[i++] = '-';
 		k--;
@@ -115,17 +113,9 @@ char	*ft_modif_preci(t_env *env, char *str, int i, int j)
 	}
 	while (i < (PRECI - k))
 		tmp[i++] = '0';
-	while (str[j])
-		tmp[i++] = str[j++];
-	if (ft_strsearch(INDIC, '#') == 1 && CONTENT[0] != '0')
-	{
-		if (TYPE == 'x')
-			tmp = ft_free_join("0x", tmp, 2);
-		else if (TYPE == 'X')
-			tmp = ft_free_join("0X", tmp, 2);
-	}	
+	if (!(tmp = ft_modif_preci_add(env, i, j, tmp)))
+		return (NULL);
 	free(RES);
-	SIZE = ft_strlen(tmp);
 	return (tmp);
 }
 
@@ -136,9 +126,9 @@ int		ft_modif(t_env *env)
 		if (TYPE == 's' && (PRECI > 0 || PRECI == -1))
 			if (!(RES = ft_modif_str_preci(env, RES)))
 				return (0);
-		if (ft_strsearch("fcsp%", TYPE) == 0 &&
-				PRECI > SIZE - ft_strsearch(RES, '-'))
-			if (!(RES = ft_modif_preci(env, RES, 0, 0)))
+		if (ft_search("fcsp%", TYPE) == 0 &&
+				PRECI > SIZE - ft_search(RES, '-'))
+			if (!(RES = ft_modif_preci(env, 0, 0, ft_strlen(RES))))
 				return (0);
 		if (TYPE == 'p' && PRECI > ft_strlen(RES) - 2)
 			if (!(RES = ft_modif_p_preci(env, RES)))

@@ -6,7 +6,7 @@
 #    By: tamigore <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 15:04:29 by tamigore          #+#    #+#              #
-#    Updated: 2019/08/21 17:05:06 by tamigore         ###   ########.fr        #
+#    Updated: 2019/09/25 18:31:54 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ SRC/S = ft_strlen.c		\
 		ft_strtrim.c	\
 		ft_strsplit.c	\
 		ft_strrev.c		\
-		ft_strsearch.c
+		ft_search.c
 
 SRC/L = ft_lstnew.c		\
 		ft_lstdelone.c	\

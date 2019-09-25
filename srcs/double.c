@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 17:53:08 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 20:56:31 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,8 @@ static char	*strjoin_double(char *int_part, char *float_part, int len)
 	i = 0;
 	if (len == -1)
 	{
-		i = ft_strlen(int_part) - 1;
-		if (float_part[0] >= '5')
-		{
-			while (int_part[i] == '9' && i > 0)
-				int_part[i--] = '0';
-			if (i == 0 && int_part[i] == '9')
-			{
-				int_part[i] = '0';
-				if (!(int_part = ft_free_join("1", int_part, 2)))
-					return (NULL);
-			}
-			else
-				int_part[i]++;
-		}
-		free(float_part);
+		if (!(int_part = strjoin_double_add(int_part, float_part, i)))
+			return (NULL);
 		return (int_part);
 	}
 	if (!(dest = ft_strnew(ft_strlen(int_part) + ft_strlen(float_part) + 1)))
@@ -53,7 +40,7 @@ static char	*strjoin_double(char *int_part, char *float_part, int len)
 	return (dest);
 }
 
-static char	*ft_doubleitoa(long long x, int neg, int len, long long i)
+char		*ft_doubleitoa(long long x, int neg, int len, long long i)
 {
 	char	*str;
 
@@ -91,52 +78,34 @@ static char	*ft_addlen(char *str, int len)
 	j = 0;
 	if (!(res = ft_strnew(len)))
 		return (NULL);
-	while(i < len - ft_strlen(str))
+	while (i < len - ft_strlen(str))
 		res[i++] = '0';
-	while(i < len)
+	while (i < len)
 		res[i++] = str[j++];
 	return (res);
 }
 
 char		*double_to_str(long double f, int len)
 {
-	long double	fractional;
-	char		*str_integer;
-	char		*str_decimal;
+	long double	frac;
+	char		*inte;
+	char		*deci;
 	char		*res;
 
 	if (f / 2 == f && f > 0)
 		return (ft_strdup("inf"));
 	else if (f / 2 == f && f < 0)
 		return (ft_strdup("-inf"));
-	fractional = (long double)(f - (long long int)f);
-	fractional *= ft_unit(10, len);
-	if (f >= 0)
-	{
-		str_integer = ft_doubleitoa((long long)f, 0, 2, 0);
-		str_decimal = ft_doubleitoa((long long)(fractional + 0.5), 0, 2, 0);
-		if (ft_strlen(ft_doubleitoa((long long)(fractional), 0, 2, 0)) < ft_strlen(str_decimal) &&
-				ft_strlen(str_decimal) == 7)
-		{
-			str_decimal = ft_strdup("0");
-			str_integer = ft_doubleitoa((long long)(f + 1), 0, 2, 0);
-		}
-	}
-	else
-	{
-		str_integer = ft_doubleitoa(-1 * (long long)f, 0, 2, 0);
-		str_decimal = ft_doubleitoa(-1 * (long long)(fractional - 0.5), 0, 2, 0);
-		if (ft_strlen(ft_doubleitoa(-1 * (long long)(fractional), 0, 2, 0)) < ft_strlen(str_decimal) &&
-				ft_strlen(str_decimal) == 7)
-		{
-			str_integer = ft_doubleitoa(-1 * (long long)(f - 1), 0, 2, 0);
-			str_decimal = ft_strdup("0");
-		}
-	}
-	if (ft_strlen(str_decimal) < len)
-		if (!(str_decimal = ft_addlen(str_decimal, len)))
+	frac = (long double)(f - (long long int)f);
+	frac *= ft_unit(10, len);
+	if (!(inte = double_inte(f, frac)))
+		return (NULL);
+	if (!(deci = double_deci(f, frac)))
+		return (NULL);
+	if (ft_strlen(deci) < len)
+		if (!(deci = ft_addlen(deci, len)))
 			return (NULL);
-	if (!(res = strjoin_double(str_integer, str_decimal, len)))
+	if (!(res = strjoin_double(inte, deci, len)))
 		return (NULL);
 	if (f < 0)
 		if (!(res = ft_free_join("-", res, 2)))
@@ -148,7 +117,7 @@ char		*ft_conv_double(va_list ap, t_form *new)
 {
 	char	*str;
 
-	if (ft_strsearch(new->modif, 'L') == 1)
+	if (ft_search(new->modif, 'L') == 1)
 	{
 		if (!(str = double_to_str((long double)va_arg(ap, long double),
 						new->preci)))
@@ -157,34 +126,4 @@ char		*ft_conv_double(va_list ap, t_form *new)
 	else if (!(str = double_to_str((double)va_arg(ap, double), new->preci)))
 		return (NULL);
 	return (str);
-}
-
-char		*ft_modif_preci_double(char *str, int len)
-{
-	char	*tmp;
-	int		i;
-	int		x;
-
-	x = 0;
-	while (str[x] && str[x] != '.')
-		x++;
-	if (len == 0)
-	{
-		if (!(tmp = ft_strndup(str, x)))
-			return (NULL);
-		free(str);
-		return (tmp);
-	}
-	if (!(tmp = ft_strnew(x + len + 1)))
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		tmp[i] = str[i];
-		i++;
-	}
-	while (i < len + x + 1)
-		tmp[i++] = '0';
-	free(str);
-	return (tmp);
 }

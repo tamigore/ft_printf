@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 18:02:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/12 18:02:58 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:36:25 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		ft_err(char *str)
 	{
 		if (str[i] == '%')
 		{
-			if (ft_strsearch("diouxXcpsf%", ft_find_type(&str[i + 1])) == 0)
+			if (ft_search("diouxXcpsf%", ft_find_type(&str[i + 1])) == 0)
 				return (ft_find_type(&str[i + 1]));
 			i += ft_count_type(&str[i + 1]) + 1;
 		}
@@ -111,11 +111,11 @@ int		ft_erorrcheck(t_env *env, int j, int i)
 	{
 		i = 0;
 		j = 0;
-		if ((ft_strsearch(INDIC, '0') == 1 && ft_strsearch("diouxX", TYPE) == 1
-			&& PRECI > 0) || (ft_strsearch(INDIC, '0') == 1 && WIDTH == 0))
+		if ((ft_search(INDIC, '0') == 1 && ft_search("diouxX", TYPE) == 1
+			&& PRECI > 0) || (ft_search(INDIC, '0') == 1 && WIDTH == 0))
 			if (!(INDIC = ft_free_rmchar(INDIC, '0')))
 				return (-1);
-		if (ft_strsearch("diucsp%", TYPE) == 1 && ft_strsearch(INDIC, '#') == 1)
+		if (ft_search("diucsp%", TYPE) == 1 && ft_search(INDIC, '#') == 1)
 			if (!(INDIC = ft_free_rmchar(INDIC, '#')))
 				return (-1);
 		if (!NEXT)

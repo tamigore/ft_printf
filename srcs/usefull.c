@@ -6,42 +6,42 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:25:11 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 17:29:30 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 20:52:59 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_count_type(char *str)
+int				ft_count_type(char *str)
 {
 	int					x;
 
 	x = 0;
-	while (ft_strsearch(" -+#0123456789diuoxXcsfphlL.*%", str[x]) == 1)
+	while (ft_search(" -+#0123456789diuoxXcsfphlL.*%", str[x]) == 1)
 	{
-		if (ft_strsearch("diuoxXcsfp%", str[x]) == 1)
+		if (ft_search("diuoxXcsfp%", str[x]) == 1)
 			return (x + 1);
 		x++;
 	}
 	return (x);
 }
 
-char		*ft_pars_indic(char *str, char *subs)
+char			*ft_pars_indic(char *str, char *subs)
 {
-	if (ft_strsearch(str, '+') == 1 && ft_strsearch(str, ' ') == 1)
+	if (ft_search(str, '+') == 1 && ft_search(str, ' ') == 1)
 		if (!(str = ft_rmchar(str, ' ')))
 			return (NULL);
-	if (ft_strsearch(str, '0') == 1 && ft_strsearch(str, '-') == 1)
+	if (ft_search(str, '0') == 1 && ft_search(str, '-') == 1)
 		if (!(str = ft_rmchar(str, '0')))
 			return (NULL);
-	if (ft_strsearch("diucsp%", ft_find_type(subs)) == 1 &&
-			ft_strsearch(str, '#') == 1)
+	if (ft_search("diucsp%", ft_find_type(subs)) == 1 &&
+			ft_search(str, '#') == 1)
 		if (!(str = ft_rmchar(str, '#')))
 			return (NULL);
 	return (str);
 }
 
-char		*ft_check_str(char *str, t_env *env)
+char			*ft_check_str(char *str, t_env *env)
 {
 	int		x;
 	char	*tmp;
@@ -53,7 +53,7 @@ char		*ft_check_str(char *str, t_env *env)
 	{
 		if (tmp[x] == '%')
 		{
-			if (ft_strsearch("diouxXcspf%", ft_find_type(&tmp[x + 1])) != 1)
+			if (ft_search("diouxXcspf%", ft_find_type(&tmp[x + 1])) != 1)
 			{
 				free(tmp);
 				free(env);
@@ -67,7 +67,7 @@ char		*ft_check_str(char *str, t_env *env)
 	return (tmp);
 }
 
-char		*ft_arg_point(va_list ap, int x)
+char			*ft_arg_point(va_list ap, int x)
 {
 	char	*str;
 	int		i;
@@ -93,24 +93,22 @@ char		*ft_arg_point(va_list ap, int x)
 	return (str);
 }
 
-unsigned long	ft_nblen(long double x)
+char			*strjoin_double_add(char *inte, char *deci, int i)
 {
-	unsigned long long	u;
-	unsigned long		i;
-	long double			nb;
-
-	u = 10;
-	if (x < 0)
+	i = ft_strlen(inte) - 1;
+	if (deci[0] >= '5')
 	{
-		if (x != LLONG_MIN)
-			nb = -x;
+		while (inte[i] == '9' && i > 0)
+			inte[i--] = '0';
+		if (i == 0 && inte[i] == '9')
+		{
+			inte[i] = '0';
+			if (!(inte = ft_free_join("1", inte, 2)))
+				return (NULL);
+		}
 		else
-			nb = - x - 1;
+			inte[i]++;
 	}
-	else
-		nb = x;
-	i = (nb >= 10) ? 2 : 1;
-	while (ft_doubleunit(u, i) - 1 < nb)
-		i++;
-	return (i);
+	free(deci);
+	return (inte);
 }

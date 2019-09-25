@@ -6,13 +6,13 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 17:55:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/07/30 17:56:17 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:30:56 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strsearch(char *str, char c)
+int		ft_search(char *str, char c)
 {
 	int i;
 
