@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 18:34:26 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 21:51:33 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,15 @@ t_form	*ft_init_form(t_env *env, va_list ap, int x)
 		!(new->indic = ft_find_indic(env->subs[x], 0, 0)) ||
 		!(new->modif = ft_find_modif(env->subs[x])))
 		return (NULL);
-	i = ft_find_width(env->subs[x], ap, 0, 0);
-	new->width = (i < -1 ? -i : i);
+	if ((i = ft_find_width(env->subs[x], ap, 0, 0)) < 0 &&
+			!ft_search(new->indic, '-'))
+		if (!(new->indic = ft_free_join(new->indic, "-", 1)))
+			return (NULL);
+	new->width = (i < 0 ? -i : i);
 	new->preci = ft_find_preci(env->subs[x], ap, 0, 0);
 	new->type = ft_find_type(env->subs[x]);
+	if (!ft_search(env->subs[x], '.') && new->type == 'f')
+		new->preci = 6;
 	if (!(new->content = ft_init_content(new, ap)))
 		return (NULL);
 	new->size = ft_strlen(new->content);

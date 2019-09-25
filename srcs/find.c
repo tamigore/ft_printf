@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 18:34:06 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/09/25 21:51:31 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,16 @@ int		ft_find_preci(char *subs, va_list ap, int i, int x)
 			if (subs[i + 1] >= '1' && subs[i + 1] <= '9')
 				x = ft_find_preci_add(subs, i, x);
 			else if (subs[i + 1] == '*')
-				return (va_arg(ap, int));
+			{
+				if ((x = va_arg(ap, int)) == 0)
+					return (-1);
+				return (x);
+			}
 			else
 				x = -1;
 		}
 		i++;
 	}
-	if (ft_search(subs, '.') == 0 && ft_find_type(subs) == 'f')
-		x = 6;
 	return (x);
 }
 
@@ -86,9 +88,7 @@ int		ft_find_width(char *subs, va_list ap, int i, int x)
 			star = va_arg(ap, int);
 		i++;
 	}
-	if (star > 0 && x == 0)
-		x = star;
-	return (x);
+	return (star);
 }
 
 char	*ft_find_modif(char *subs)
