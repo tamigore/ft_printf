@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 14:44:27 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/06 15:06:20 by tamigore         ###   ########.fr       */
+/*   Created: 2019/11/04 13:49:53 by tamigore          #+#    #+#             */
+/*   Updated: 2019/11/11 20:12:50 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int	i;
+	char	*str;
+	size_t	i;
 
-	if (!dst && !src)
+	i = 0;
+	if (!s)
 		return (NULL);
-	i = (int)len - 1;
-	if ((unsigned char *)dst < (unsigned char *)src)
-		ft_memcpy(dst, src, len);
-	else
-	{
-		while (i >= 0)
-		{
-			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-			i--;
-		}
-	}
-	return (dst);
+	if (len < start)
+		return (ft_strdup(""));
+	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+		return (0);
+	while (i < len)
+		str[i++] = s[start++];
+	str[i] = '\0';
+	return (str);
 }

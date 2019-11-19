@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:55:01 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 18:41:19 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/19 14:05:29 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_modif_width(t_env *env, char *str, int i, int j)
 {
 	if (TYPE == 'c')
 		WIDTH -= (CONTENT[0] == '\0' ? 1 : 0);
-	if (WIDTH > ft_strlen(RES))
+	if (WIDTH > (int)ft_strlen(RES))
 	{
 		if (!(str = ft_strnew(WIDTH + 1)))
 			return (NULL);
@@ -29,7 +29,7 @@ char	*ft_modif_width(t_env *env, char *str, int i, int j)
 		}
 		else
 		{
-			while (i < (WIDTH - ft_strlen(RES)))
+			while (i < (WIDTH - (int)ft_strlen(RES)))
 				str[i++] = ' ';
 			while (RES[j])
 				str[i++] = RES[j++];
@@ -55,7 +55,7 @@ char	*ft_modif_str_preci(t_env *env, char *str)
 	}
 	if (!(tmp = ft_strnew(PRECI)))
 		return (NULL);
-	if (PRECI > ft_strlen(str))
+	if (PRECI > (int)ft_strlen(str))
 	{
 		while (str[j])
 			tmp[i++] = str[j++];
@@ -81,7 +81,7 @@ char	*ft_modif_p_preci(t_env *env, char *str)
 		return (NULL);
 	tmp[0] = '0';
 	tmp[1] = 'x';
-	while (i < (PRECI - ft_strlen(str) + 4))
+	while (i < (PRECI - (int)ft_strlen(str) + 4))
 		tmp[i++] = '0';
 	while (str[j])
 		tmp[i++] = str[j++];
@@ -99,7 +99,7 @@ char	*ft_modif_preci(t_env *env, int i, int j, int k)
 		k--;
 	if (ft_superatoi(RES) < 0)
 		PRECI = PRECI + 1;
-	if (!(tmp = ft_strnew(PRECI + ft_strlen(RES) - k)))
+	if (!(tmp = ft_strnew(PRECI + (int)ft_strlen(RES) - k)))
 		return (NULL);
 	if (ft_search(INDIC, '+') == 1 && ft_superatoi(RES) >= 0)
 		tmp[i++] = '+';
@@ -130,7 +130,7 @@ int		ft_modif(t_env *env)
 				PRECI > SIZE - ft_search(RES, '-'))
 			if (!(RES = ft_modif_preci(env, 0, 0, ft_strlen(RES))))
 				return (0);
-		if (TYPE == 'p' && PRECI > ft_strlen(RES) - 2)
+		if (TYPE == 'p' && PRECI > (int)ft_strlen(RES) - 2)
 			if (!(RES = ft_modif_p_preci(env, RES)))
 				return (0);
 		if (WIDTH != 0 && WIDTH > PRECI)

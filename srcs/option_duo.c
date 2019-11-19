@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:13:23 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 17:44:11 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/19 14:09:31 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		oposizero(t_env *env, int width)
 	int		j;
 	char	*tmp;
 
-	if (width <= ft_strlen(RES) && TYPE != 'f')
+	if (width <= (int)ft_strlen(RES) && TYPE != 'f')
 		width = ft_strlen(RES) + 1;
 	i = 0;
 	j = 0;
@@ -55,7 +55,7 @@ int		oposizero(t_env *env, int width)
 		j++;
 		width++;
 	}
-	while (i < width - ft_strlen(RES))
+	while (i < width - (int)ft_strlen(RES))
 		tmp[i++] = '0';
 	while (RES[j])
 		tmp[i++] = RES[j++];
@@ -107,7 +107,7 @@ int		ozerospace(t_env *env, int width)
 		j++;
 		width++;
 	}
-	while (i < (width - ft_strlen(RES)))
+	while (i < (width - (int)ft_strlen(RES)))
 		tmp[i++] = '0';
 	while (RES[j])
 		tmp[i++] = RES[j++];

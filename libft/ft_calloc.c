@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/16 17:12:12 by tamigore          #+#    #+#             */
-/*   Updated: 2018/11/19 16:57:02 by tamigore         ###   ########.fr       */
+/*   Created: 2019/11/04 13:38:32 by tamigore          #+#    #+#             */
+/*   Updated: 2019/11/06 15:02:45 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+void	*ft_calloc(size_t count, size_t size)
 {
-	t_list	*p;
+	void	*ptr;
 
-	while (*alst != NULL)
-	{
-		p = (*alst)->next;
-		ft_lstdelone(alst, del);
-		*alst = p;
-	}
-	free(p);
+	if (!(ptr = (void *)malloc(sizeof(void) * size * count)))
+		return (NULL);
+	if (!(ptr = ft_memset(ptr, 0, count * size)))
+		return (NULL);
+	return (ptr);
 }

@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 18:28:00 by tamigore          #+#    #+#             */
-/*   Updated: 2018/11/19 17:08:29 by tamigore         ###   ########.fr       */
+/*   Created: 2019/11/04 13:56:52 by tamigore          #+#    #+#             */
+/*   Updated: 2019/11/11 21:02:38 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-static	char	**ft_malloctab(char **tab, const char *s, char c)
+static	void	ft_free_all(char **tab, int x)
+{
+	int	i;
+
+	i = 0;
+	while (i < x)
+		free(tab[i++]);
+	free(tab);
+}
+
+static	char	**ft_malloctab(char **tab, const char *s, char c, int x)
 {
 	int		j;
 	int		i;
-	int		x;
 
 	i = 0;
-	x = 0;
 	while (s[i])
 	{
 		j = 0;
@@ -32,7 +39,10 @@ static	char	**ft_malloctab(char **tab, const char *s, char c)
 		if (j != 0)
 		{
 			if (!(tab[x] = (char *)malloc(j + 1)))
+			{
+				ft_free_all(tab, x);
 				return (NULL);
+			}
 			x++;
 		}
 		if (s[i])
@@ -64,7 +74,7 @@ static	void	ft_filtab(char **tab, const char *s, char c)
 	tab[x] = NULL;
 }
 
-char			**ft_strsplit(char const *s, char c)
+char			**ft_split(char const *s, char c)
 {
 	int		i;
 	int		j;
@@ -82,7 +92,7 @@ char			**ft_strsplit(char const *s, char c)
 	}
 	if (!(tab = (char **)malloc(sizeof(char *) * (j + 1))))
 		return (NULL);
-	if (!(tab = ft_malloctab(tab, s, c)))
+	if (!(tab = ft_malloctab(tab, s, c, 0)))
 		return (NULL);
 	ft_filtab(tab, s, c);
 	return (tab);

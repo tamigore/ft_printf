@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:11:54 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 18:58:47 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/19 14:06:43 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static int		option_all(t_env *env, int x, int err)
 {
 	if (ft_search("csp%", TYPE) == 0 && x == 1)
 	{
-		if (PRECI <= ft_strlen(RES))
+		if (PRECI <= (int)ft_strlen(RES))
 		{
 			err = applydoubleoption(env);
 			if (err == -1)
@@ -105,7 +105,7 @@ static int		option_all(t_env *env, int x, int err)
 	}
 	if (ft_search("csp%", TYPE) == 1 && x == 2)
 	{
-		if (PRECI <= ft_strlen(RES))
+		if (PRECI <= (int)ft_strlen(RES))
 			applyoption_str(env);
 	}
 	if (TYPE == 'f' && x == 2 && ft_search(INDIC, '#') == 1 &&

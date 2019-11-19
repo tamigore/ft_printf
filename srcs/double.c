@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 20:56:31 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/19 14:03:28 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ static char	*strjoin_double(char *int_part, char *float_part, int len)
 	}
 	if (!(dest = ft_strnew(ft_strlen(int_part) + ft_strlen(float_part) + 1)))
 		return (NULL);
-	while (i < ft_strlen(int_part))
+	while (i < (int)ft_strlen(int_part))
 	{
 		dest[i] = int_part[i];
 		i++;
 	}
 	dest[i++] = '.';
 	i = -1;
-	while (++i < ft_strlen(float_part))
+	while (++i < (int)ft_strlen(float_part))
 		dest[i + ft_strlen(int_part) + 1] = float_part[i];
 	free(int_part);
 	free(float_part);
@@ -78,7 +78,7 @@ static char	*ft_addlen(char *str, int len)
 	j = 0;
 	if (!(res = ft_strnew(len)))
 		return (NULL);
-	while (i < len - ft_strlen(str))
+	while (i < len - (int)ft_strlen(str))
 		res[i++] = '0';
 	while (i < len)
 		res[i++] = str[j++];
@@ -102,7 +102,7 @@ char		*double_to_str(long double f, int len)
 		return (NULL);
 	if (!(deci = double_deci(f, frac)))
 		return (NULL);
-	if (ft_strlen(deci) < len)
+	if ((int)ft_strlen(deci) < len)
 		if (!(deci = ft_addlen(deci, len)))
 			return (NULL);
 	if (!(res = strjoin_double(inte, deci, len)))

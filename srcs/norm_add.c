@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 17:57:14 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 18:56:17 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/19 14:10:16 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ohash_add(t_env *env, int width, int i, char *tmp)
 	else
 		tmp[1] = TYPE;
 	if (ft_search(INDIC, '0') == 1)
-		while (i < width - ft_strlen(RES))
+		while (i < width - (int)ft_strlen(RES))
 			tmp[i++] = '0';
 	while (RES[j])
 		tmp[i++] = RES[j++];

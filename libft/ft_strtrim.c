@@ -6,38 +6,33 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:13:32 by tamigore          #+#    #+#             */
-/*   Updated: 2018/11/19 17:07:46 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/19 13:39:17 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_strtrim(char const *s)
+char		*ft_strtrim(char const *s1, char const *set)
 {
-	char	*p;
-	int		i;
-	int		j;
-	int		n;
+	char	*str;
+	size_t	i;
+	size_t	j;
+	size_t	n;
 
 	i = 0;
-	n = 0;
-	if (!s)
+	if (!s1)
 		return (NULL);
-	j = ft_strlen(s) - 1;
-	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
-		i++;
-	while (s[j] == ' ' || s[j] == '\t' || s[j] == '\n')
+	if ((j = ft_strlen(s1)) > 0)
 		j--;
-	if (j < i)
-	{
-		i = 1;
-		j = 0;
-	}
-	if (!(p = (char *)malloc(j - i + 2)))
+	while (ft_search((char *)set, s1[i]))
+		i++;
+	while (ft_search((char *)set, s1[j]) && j >= i)
+		j--;
+	if (!(str = (char *)malloc(sizeof(char) * (j - i + 2))))
 		return (NULL);
+	n = 0;
 	while (i <= j)
-		p[n++] = s[i++];
-	p[n] = '\0';
-	return (p);
+		str[n++] = s1[i++];
+	str[n] = '\0';
+	return (str);
 }

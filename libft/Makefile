@@ -6,7 +6,7 @@
 #    By: tamigore <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 15:04:29 by tamigore          #+#    #+#              #
-#    Updated: 2019/09/25 18:31:54 by tamigore         ###   ########.fr        #
+#    Updated: 2019/11/19 13:55:56 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,13 +30,15 @@ SRC/O = ft_atoi.c		\
 		ft_toupper.c	\
 		ft_itoa.c		\
 		ft_swap.c		\
-		ft_sorttab.c    \
-        get_next_line.c	\
+		ft_sorttab.c	\
+		get_next_line.c	\
 		ft_rmstr.c		\
 		ft_rmchar.c		\
 		ft_nbrlen.c		\
+		ft_free_join.c	\
 		ft_free_rmstr.c	\
-		ft_free_rmchar.c
+		ft_free_rmchar.c\
+		ft_calloc.c
 
 SRC/I = ft_isalnum.c	\
 		ft_isalpha.c	\
@@ -59,6 +61,7 @@ SRC/S = ft_strlen.c		\
 		ft_strndup.c	\
 		ft_strcpy.c		\
 		ft_strncpy.c	\
+		ft_strlcpy.c	\
 		ft_strcat.c		\
 		ft_strncat.c	\
 		ft_strlcat.c	\
@@ -77,19 +80,22 @@ SRC/S = ft_strlen.c		\
 		ft_strnew.c		\
 		ft_strdel.c		\
 		ft_strclr.c		\
-		ft_strsub.c		\
+		ft_substr.c		\
 		ft_strjoin.c	\
 		ft_strtrim.c	\
-		ft_strsplit.c	\
+		ft_split.c		\
 		ft_strrev.c		\
 		ft_search.c
 
-SRC/L = ft_lstnew.c		\
-		ft_lstdelone.c	\
-		ft_lstadd.c		\
-		ft_lstiter.c	\
-		ft_lstdel.c		\
-		ft_lstmap.c
+SRC/L = ft_lstnew.c			\
+		ft_lstdelone.c		\
+		ft_lstadd_back.c	\
+		ft_lstadd_front.c	\
+		ft_lstiter.c		\
+		ft_lstmap.c			\
+		ft_lstclear.c		\
+		ft_lstlast.c		\
+		ft_lstsize.c
 
 INC = libft.h
 SRC = $(SRC/P) $(SRC/O) $(SRC/I) $(SRC/S) $(SRC/M) $(SRC/L)

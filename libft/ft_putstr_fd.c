@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 10:26:29 by tamigore          #+#    #+#             */
-/*   Updated: 2018/11/19 17:01:39 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/11 21:15:56 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	ft_putstr_fd(char const *s, int fd)
 {
-	if (!s)
+	if (!s || fd < 0)
 		return ;
 	write(fd, s, ft_strlen(s));
 }

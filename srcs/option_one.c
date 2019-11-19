@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:22:08 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 18:55:23 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/19 14:08:47 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		oposi(t_env *env, int width)
 	j = 0;
 	if (!(tmp = ft_strnew(width)))
 		return (0);
-	while (i < width - ft_strlen(RES) - 1)
+	while (i < width - (int)ft_strlen(RES) - 1)
 		tmp[i++] = ' ';
 	if (ft_superatoi(RES) >= 0)
 		tmp[i++] = '+';
@@ -81,7 +81,7 @@ int		olzero(t_env *env, int width)
 		j++;
 		neg++;
 	}
-	while (i < (width - ft_strlen(RES) + neg))
+	while (i < (width - (int)ft_strlen(RES) + neg))
 		tmp[i++] = '0';
 	while (RES[j])
 		tmp[i++] = RES[j++];
@@ -96,13 +96,13 @@ int		ospace(t_env *env, int width)
 	int		j;
 	char	*tmp;
 
-	if (width <= ft_strlen(RES))
+	if (width <= (int)ft_strlen(RES))
 		width = ft_strlen(RES) + (ft_superatoi(RES) < 0 ? 0 : 1);
 	i = 0;
 	j = 0;
 	if (!(tmp = ft_strnew(width)))
 		return (0);
-	while (i < width - ft_strlen(RES))
+	while (i < width - (int)ft_strlen(RES))
 		tmp[i++] = ' ';
 	while (RES[j])
 		tmp[i++] = RES[j++];
@@ -117,7 +117,7 @@ int		olalign(t_env *env, int width)
 	int		j;
 	char	*tmp;
 
-	if (width == 0 || width < ft_strlen(RES))
+	if (width == 0 || width < (int)ft_strlen(RES))
 		width = ft_strlen(RES);
 	i = 0;
 	j = 0;
