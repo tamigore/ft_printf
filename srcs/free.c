@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 18:02:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 18:36:25 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:44:53 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,13 @@ int		ft_erorrcheck(t_env *env, int j, int i)
 		if ((ft_search(INDIC, '0') == 1 && ft_search("diouxX", TYPE) == 1
 			&& PRECI > 0) || (ft_search(INDIC, '0') == 1 && WIDTH == 0))
 			if (!(INDIC = ft_free_rmchar(INDIC, '0')))
-				return (-1);
+				return (0);
 		if (ft_search("diucsp%", TYPE) == 1 && ft_search(INDIC, '#') == 1)
 			if (!(INDIC = ft_free_rmchar(INDIC, '#')))
-				return (-1);
+				return (0);
 		if (!NEXT)
 			break ;
 		env->form = NEXT;
 	}
-	return (0);
+	return (1);
 }

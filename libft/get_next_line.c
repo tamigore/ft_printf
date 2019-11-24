@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 14:14:16 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/19 13:49:31 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:18:20 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_lst	*ft_file(t_lst **file, int fd)
 	tmp = *file;
 	while (tmp)
 	{
-		if ((int)tmp->fd == fd)
+		if (tmp->fd == fd)
 			return (tmp);
 		tmp = tmp->next;
 	}
@@ -68,7 +68,7 @@ static int		ft_strcncat(char **content, char *str)
 	return (i);
 }
 
-static char		*ft_free(char *content, int r)
+static char		*ft_free(char *content, int r, char *buf)
 {
 	char	*tmp;
 
@@ -76,6 +76,7 @@ static char		*ft_free(char *content, int r)
 	if (!(content = ft_strdup(content + r)))
 		return (NULL);
 	free(tmp);
+	free(buf);
 	return (content);
 }
 
@@ -85,11 +86,11 @@ int				get_next_line(int fd, char **line)
 	t_lst			*list;
 	int				r;
 	int				i;
-	char			buf[BUFFER_SIZE + 1];
+	char			*buf;
 
-	if (fd < 0 || line == NULL || read(fd, buf, 0) == -1)
+	if (fd < 0 || !(buf = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1)))
+		|| read(fd, buf, 0) == -1 || !(list = ft_file(&file, fd)) || !line)
 		return (-1);
-	list = ft_file(&file, fd);
 	while ((r = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[r] = '\0';
@@ -100,11 +101,8 @@ int				get_next_line(int fd, char **line)
 	}
 	if ((i = ft_strcncat(line, list->content)) == -1)
 		return (-1);
-	if (r < BUFFER_SIZE && !(ft_strchr(list->content, '\n')))
-	{
-		list->content = ft_free(list->content, ft_strlen(list->content));
-		return (0);
-	}
-	list->content = ft_free(list->content, i + 1);
-	return (1);
+	r = (r < BUFFER_SIZE && !(ft_strchr(list->content, '\n'))) ? 0 : 1;
+	if (!(list->content = ft_free(list->content, i + 1, buf)))
+		return (-1);
+	return (r);
 }

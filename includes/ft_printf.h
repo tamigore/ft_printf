@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 20:57:41 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:44:34 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ typedef struct		s_env
 ** printf.c
 */
 
-int					ft_printf(char *format, ...);
+int					ft_printf(char *format, ...)
+ __attribute__((format(printf,1,2)));
 void				ft_apply(t_env *env);
 int					ft_print_all(t_env *env, int x, int count);
 int					ft_subs_len(char *str, int i);

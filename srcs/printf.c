@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printf.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:12:02 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 18:36:10 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/24 17:48:42 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int		ft_printf(char *format, ...)
 	t_env		*env;
 
 	va_start(ap, format);
-	if (ft_strlen(format) == 0)
+	if (!ft_strlen(format))
 		return (0);
-	if (!(env = ft_init_env(format, ap, 0)) || ft_erorrcheck(env, 0, 0) < 0)
+	if (!(env = ft_init_env(format, ap, 0)) || !ft_erorrcheck(env, 0, 0))
 	{
 		ft_freeall(env, 0);
 		return (0);

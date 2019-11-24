@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   option_one.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 11:22:08 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/19 14:08:47 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/24 17:48:43 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,9 @@ int		ohash(t_env *env, int width, int i)
 	}
 	if ((TYPE == 'x' || TYPE == 'X') && RES[0] == 0)
 		return (1);
-	if (width != 0)
-	{
-		if (!(tmp = ft_strnew(width)))
-			return (0);
-	}
-	else if (!(tmp = ft_strnew(ft_strlen(RES) + 2)))
+	if (width < (int)ft_strlen(RES))
+		width = ft_strlen(RES);
+	if (!(tmp = ft_strnew(width + 2)))
 		return (0);
 	ohash_add(env, width, i, tmp);
 	free(RES);

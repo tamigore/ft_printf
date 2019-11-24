@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 21:51:31 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/24 18:29:52 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,10 @@ int		ft_find_preci(char *subs, va_list ap, int i, int x)
 
 int		ft_find_width(char *subs, va_list ap, int i, int x)
 {
-	int	star;
-
-	star = 0;
 	while (subs[i])
 	{
 		if (subs[i] == '.')
-			return (0);
+			return (x);
 		else if (subs[i] >= '1' && subs[i] <= '9')
 		{
 			while (subs[i] >= '0' && subs[i] <= '9')
@@ -85,10 +82,10 @@ int		ft_find_width(char *subs, va_list ap, int i, int x)
 			return (x);
 		}
 		else if (subs[i] == '*')
-			star = va_arg(ap, int);
+			x = va_arg(ap, int);
 		i++;
 	}
-	return (star);
+	return (x);
 }
 
 char	*ft_find_modif(char *subs)

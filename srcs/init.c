@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/25 21:51:33 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/24 18:32:44 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_form	*ft_init_form(t_env *env, va_list ap, int x)
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
+	printf("width :%d\npreci :%d\n", new->width, new->preci);
 	return (new);
 }
 
@@ -102,8 +103,10 @@ char	*ft_init_content(t_form *new, va_list ap)
 
 	str = NULL;
 	if (ft_search("cps%", new->type) == 1)
+	{
 		if (!(str = ft_init_content_supp(new, ap)))
 			return (NULL);
+	}
 	if (new->type == 'd' || new->type == 'i')
 		if (!(str = ft_conv_type_d(new, ap)))
 			return (NULL);
@@ -133,9 +136,8 @@ char	*ft_init_content_supp(t_form *new, va_list ap)
 			return (NULL);
 	if (new->type == 's')
 	{
-		if (!(str = ft_strdup(va_arg(ap, char *))))
+		if (!(str = ft_strdup((char *)va_arg(ap, char *))))
 		{
-			free(str);
 			if (!(str = ft_strdup("(null)")))
 				return (NULL);
 		}

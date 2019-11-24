@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 18:31:48 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/19 13:58:50 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/11/22 16:53:55 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*));
 typedef	struct	s_lst
 {
 	void			*content;
-	size_t			fd;
+	int				fd;
 	struct s_lst	*next;
 }				t_lst;
 
