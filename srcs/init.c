@@ -6,7 +6,7 @@
 /*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/24 18:32:44 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/12/08 17:16:34 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_form	*ft_init_form(t_env *env, va_list ap, int x)
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
-	printf("width :%d\npreci :%d\n", new->width, new->preci);
 	return (new);
 }
 
