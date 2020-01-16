@@ -6,7 +6,7 @@
 /*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:18:10 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/24 18:29:52 by tamigore         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:36:37 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		ft_find_width(char *subs, va_list ap, int i, int x)
 			return (x);
 		else if (subs[i] >= '1' && subs[i] <= '9')
 		{
+			x = 0;
 			while (subs[i] >= '0' && subs[i] <= '9')
 			{
 				x *= 10;

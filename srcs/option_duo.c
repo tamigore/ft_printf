@@ -19,19 +19,19 @@ int		oposineg(t_env *env, int width)
 	char	*tmp;
 
 	if (width == 0)
-		width = ft_strlen(RES) + (RES[0] == '-' ? 0 : 1);
+		width = ft_strlen((env->f->r)) + ((env->f->r)[0] == '-' ? 0 : 1);
 	i = 0;
 	j = 0;
 	if (!(tmp = ft_strnew(width)))
 		return (0);
-	if (ft_superatoi(RES) >= 0)
+	if (ft_superatoi((env->f->r)) >= 0)
 		tmp[i++] = '+';
-	while (RES[j])
-		tmp[i++] = RES[j++];
+	while ((env->f->r)[j])
+		tmp[i++] = (env->f->r)[j++];
 	while (i < width)
 		tmp[i++] = ' ';
-	free(RES);
-	RES = tmp;
+	free((env->f->r));
+	(env->f->r) = tmp;
 	return (1);
 }
 
@@ -41,13 +41,13 @@ int		oposizero(t_env *env, int width)
 	int		j;
 	char	*tmp;
 
-	if (width <= (int)ft_strlen(RES) && TYPE != 'f')
-		width = ft_strlen(RES) + 1;
+	if (width <= (int)ft_strlen((env->f->r)) && (env->f->t) != 'f')
+		width = ft_strlen((env->f->r)) + 1;
 	i = 0;
 	j = 0;
 	if (!(tmp = ft_strnew(width)))
 		return (0);
-	if (ft_superatoi(RES) >= 0)
+	if (ft_superatoi((env->f->r)) >= 0)
 		tmp[i++] = '+';
 	else
 	{
@@ -55,12 +55,12 @@ int		oposizero(t_env *env, int width)
 		j++;
 		width++;
 	}
-	while (i < width - (int)ft_strlen(RES))
+	while (i < width - (int)ft_strlen((env->f->r)))
 		tmp[i++] = '0';
-	while (RES[j])
-		tmp[i++] = RES[j++];
-	free(RES);
-	RES = tmp;
+	while ((env->f->r)[j])
+		tmp[i++] = (env->f->r)[j++];
+	free((env->f->r));
+	(env->f->r) = tmp;
 	return (1);
 }
 
@@ -71,19 +71,19 @@ int		onegspace(t_env *env, int width)
 	char	*tmp;
 
 	if (width == 0)
-		width = ft_strlen(RES) + 1;
+		width = ft_strlen((env->f->r)) + 1;
 	i = 0;
 	j = 0;
 	if (!(tmp = ft_strnew(width)))
 		return (0);
-	if (ft_superatoi(RES) >= 0)
+	if (ft_superatoi((env->f->r)) >= 0)
 		tmp[i++] = ' ';
-	while (RES[j])
-		tmp[i++] = RES[j++];
+	while ((env->f->r)[j])
+		tmp[i++] = (env->f->r)[j++];
 	while (i < width)
 		tmp[i++] = ' ';
-	free(RES);
-	RES = tmp;
+	free((env->f->r));
+	(env->f->r) = tmp;
 	return (1);
 }
 
@@ -94,12 +94,12 @@ int		ozerospace(t_env *env, int width)
 	char	*tmp;
 
 	if (width == 0)
-		width = ft_strlen(RES) + 1;
+		width = ft_strlen((env->f->r)) + 1;
 	i = 0;
 	j = 0;
 	if (!(tmp = ft_strnew(width)))
 		return (0);
-	if (ft_superatoi(RES) >= 0)
+	if (ft_superatoi((env->f->r)) >= 0)
 		tmp[i++] = ' ';
 	else
 	{
@@ -107,11 +107,11 @@ int		ozerospace(t_env *env, int width)
 		j++;
 		width++;
 	}
-	while (i < (width - (int)ft_strlen(RES)))
+	while (i < (width - (int)ft_strlen((env->f->r))))
 		tmp[i++] = '0';
-	while (RES[j])
-		tmp[i++] = RES[j++];
-	free(RES);
-	RES = tmp;
+	while ((env->f->r)[j])
+		tmp[i++] = (env->f->r)[j++];
+	free((env->f->r));
+	(env->f->r) = tmp;
 	return (1);
 }

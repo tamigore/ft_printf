@@ -24,13 +24,13 @@ int			ft_find_base(char c)
 
 char		*ft_conv_type_d(t_form *new, va_list ap)
 {
-	if (ft_strcmp(new->modif, "l") == 0)
+	if (ft_strcmp(new->m, "l") == 0)
 		return (ft_itoa_long((long)va_arg(ap, long int), 10, 1));
-	else if (ft_strcmp(new->modif, "ll") == 0)
+	else if (ft_strcmp(new->m, "ll") == 0)
 		return (ft_itoa_long((long long)va_arg(ap, long long int), 10, 1));
-	else if (ft_strcmp(new->modif, "h") == 0)
+	else if (ft_strcmp(new->m, "h") == 0)
 		return (ft_superitoa((short)va_arg(ap, int), 0, 2, 0));
-	else if (ft_strcmp(new->modif, "hh") == 0)
+	else if (ft_strcmp(new->m, "hh") == 0)
 		return (ft_superitoa((char)va_arg(ap, int), 0, 2, 0));
 	else
 		return (ft_superitoa((int)va_arg(ap, int), 0, 2, 0));
@@ -41,7 +41,7 @@ static char	*ft_conv(char *str, t_form *new)
 	int	i;
 
 	i = 0;
-	if (str && new->type == 'X')
+	if (str && new->t == 'X')
 	{
 		while (str[i])
 		{
@@ -66,21 +66,21 @@ char		*ft_conv_type(t_form *new, va_list ap)
 {
 	char	*str;
 
-	if (ft_strcmp(new->modif, "l") == 0)
+	if (ft_strcmp(new->m, "l") == 0)
 		str = (ft_itoa_base((unsigned long int)va_arg(ap, unsigned long int),
-					ft_find_base(new->type)));
-	else if (ft_strcmp(new->modif, "ll") == 0)
+					ft_find_base(new->t)));
+	else if (ft_strcmp(new->m, "ll") == 0)
 		str = (ft_itoa_base((unsigned long long int)va_arg(ap,
-						unsigned long long int), ft_find_base(new->type)));
-	else if (ft_strcmp(new->modif, "h") == 0)
+						unsigned long long int), ft_find_base(new->t)));
+	else if (ft_strcmp(new->m, "h") == 0)
 		str = (ft_itoa_base((unsigned short int)va_arg(ap, unsigned int),
-					ft_find_base(new->type)));
-	else if (ft_strcmp(new->modif, "hh") == 0)
+					ft_find_base(new->t)));
+	else if (ft_strcmp(new->m, "hh") == 0)
 		str = (ft_itoa_base((unsigned char)va_arg(ap, unsigned int),
-					ft_find_base(new->type)));
+					ft_find_base(new->t)));
 	else
 		str = (ft_itoa_base((unsigned int)va_arg(ap, unsigned int),
-					ft_find_base(new->type)));
+					ft_find_base(new->t)));
 	if (!str)
 		return (NULL);
 	if (!(str = ft_conv(str, new)))
@@ -93,7 +93,7 @@ char		*ft_conv_char(t_form *new, va_list ap)
 	char	*str;
 	char	c;
 
-	if (new->type == 'c')
+	if (new->t == 'c')
 		c = (char)va_arg(ap, int);
 	else
 		c = '%';

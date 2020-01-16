@@ -26,7 +26,7 @@ int		ft_printf(char *format, ...)
 		ft_freeall(env, 0);
 		return (0);
 	}
-	if (!env->form)
+	if (!env->f)
 	{
 		count = ft_strlen(env->str);
 		ft_freeall(env, 0);
@@ -41,12 +41,12 @@ int		ft_printf(char *format, ...)
 
 void	ft_apply(t_env *env)
 {
-	while (PREV)
-		env->form = PREV;
+	while ((env->f->b))
+		env->f = (env->f->b);
 	if (!option(env, 1) || !ft_modif(env))
 		ft_free_exit(env, 0);
-	while (env->form->prev)
-		env->form = env->form->prev;
+	while (env->f->b)
+		env->f = env->f->b;
 	if (!option(env, 2))
 		ft_free_exit(env, 0);
 }
@@ -58,14 +58,14 @@ int		ft_print_all(t_env *env, int x, int count)
 		if (env->str[x] == '%' && ft_search("diouxXcspf%",
 					ft_find_type(&env->str[x + 1])) == 1)
 		{
-			if (TYPE == 'c' && CONTENT[0] == '\0')
+			if ((env->f->t) == 'c' && (env->f->c)[0] == '\0')
 				count = ft_print_all_add(env, count);
 			else
-				ft_putstr(RES);
-			count += SIZE;
+				ft_putstr((env->f->r));
+			count += (env->f->s);
 			x += ft_count_type(&(env->str[x + 1])) + 1;
-			if (NEXT)
-				env->form = env->form->next;
+			if ((env->f->n))
+				env->f = env->f->n;
 		}
 		else
 		{
@@ -73,8 +73,8 @@ int		ft_print_all(t_env *env, int x, int count)
 			count++;
 		}
 	}
-	while (PREV)
-		env->form = PREV;
+	while ((env->f->b))
+		env->f = (env->f->b);
 	return (count);
 }
 

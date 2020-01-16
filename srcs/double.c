@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/19 14:03:28 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/12/08 18:21:05 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char		*ft_doubleitoa(long long x, int neg, int len, long long i)
 
 	if (x == LLONG_MIN)
 		return (ft_strdup("-9223372036854775807"));
-	i = ABS(x);
+	i = (x > 0) ? x : -x;
 	if (x < 0)
 	{
 		neg = 1;
@@ -117,13 +117,13 @@ char		*ft_conv_double(va_list ap, t_form *new)
 {
 	char	*str;
 
-	if (ft_search(new->modif, 'L') == 1)
+	if (ft_search(new->m, 'L') == 1)
 	{
 		if (!(str = double_to_str((long double)va_arg(ap, long double),
-						new->preci)))
+						new->p)))
 			return (NULL);
 	}
-	else if (!(str = double_to_str((double)va_arg(ap, double), new->preci)))
+	else if (!(str = double_to_str((double)va_arg(ap, double), new->p)))
 		return (NULL);
 	return (str);
 }

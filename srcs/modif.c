@@ -6,7 +6,7 @@
 /*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 17:55:01 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/24 17:40:20 by tamigore         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:23:30 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 char	*ft_modif_width(t_env *env, char *str, int i, int j)
 {
-	if (TYPE == 'c')
-		WIDTH -= (CONTENT[0] == '\0' ? 1 : 0);
-	if (WIDTH > (int)ft_strlen(RES))
+	if ((env->f->t) == 'c')
+		(env->f->w) -= ((env->f->c)[0] == '\0' ? 1 : 0);
+	if ((env->f->w) > (int)ft_strlen((env->f->r)))
 	{
-		if (!(str = ft_strnew(WIDTH + 1)))
+		if (!(str = ft_strnew((env->f->w) + 1)))
 			return (NULL);
-		if (ft_search(INDIC, '-') == 1)
+		if (ft_search((env->f->i), '-') == 1)
 		{
-			while (RES[j])
-				str[i++] = RES[j++];
-			while (i <= (WIDTH - 1))
+			while ((env->f->r)[j])
+				str[i++] = (env->f->r)[j++];
+			while (i <= ((env->f->w) - 1))
 				str[i++] = ' ';
 		}
 		else
 		{
-			while (i < (WIDTH - (int)ft_strlen(RES)))
+			while (i < ((env->f->w) - (int)ft_strlen((env->f->r))))
 				str[i++] = ' ';
-			while (RES[j])
-				str[i++] = RES[j++];
+			while ((env->f->r)[j])
+				str[i++] = (env->f->r)[j++];
 		}
-		free(RES);
+		free((env->f->r));
 		return (str);
 	}
-	return (RES);
+	return ((env->f->r));
 }
 
 char	*ft_modif_str_preci(t_env *env, char *str)
@@ -48,23 +48,23 @@ char	*ft_modif_str_preci(t_env *env, char *str)
 
 	i = 0;
 	j = 0;
-	if (PRECI == -1)
+	if ((env->f->p) == -1)
 	{
-		free(RES);
+		free((env->f->r));
 		return (ft_strdup(""));
 	}
-	if (!(tmp = ft_strnew(PRECI)))
+	if (!(tmp = ft_strnew((env->f->p))))
 		return (NULL);
-	if (PRECI > (int)ft_strlen(str))
+	if ((env->f->p) > (int)ft_strlen(str))
 	{
 		while (str[j])
 			tmp[i++] = str[j++];
 	}
 	else
-		while (i < PRECI)
+		while (i < (env->f->p))
 			tmp[i++] = str[j++];
-	free(RES);
-	SIZE = ft_strlen(tmp);
+	free((env->f->r));
+	(env->f->s) = ft_strlen(tmp);
 	return (tmp);
 }
 
@@ -77,16 +77,16 @@ char	*ft_modif_p_preci(t_env *env, char *str)
 	tmp = NULL;
 	i = 2;
 	j = 2;
-	if (!(tmp = ft_strnew(PRECI + 3)))
+	if (!(tmp = ft_strnew((env->f->p) + 3)))
 		return (NULL);
 	tmp[0] = '0';
 	tmp[1] = 'x';
-	while (i < (PRECI - (int)ft_strlen(str) + 4))
+	while (i < ((env->f->p) - (int)ft_strlen(str) + 4))
 		tmp[i++] = '0';
 	while (str[j])
 		tmp[i++] = str[j++];
-	free(RES);
-	SIZE = ft_strlen(tmp);
+	free((env->f->r));
+	(env->f->s) = ft_strlen(tmp);
 	return (tmp);
 }
 
@@ -94,55 +94,55 @@ char	*ft_modif_preci(t_env *env, int i, int j, int k)
 {
 	char	*tmp;
 
-	if ((ft_search(INDIC, ' ') == 1 || ft_search(INDIC, '+') == 1) &&
-			ft_superatoi(RES) >= 0)
+	if ((ft_search(env->f->i, ' ') || ft_search(env->f->i, '+')) &&
+			ft_superatoi(env->f->r) >= 0)
 		k--;
-	if (ft_superatoi(RES) < 0)
-		PRECI = PRECI + 1;
-	if (!(tmp = ft_strnew(PRECI + (int)ft_strlen(RES) - k)))
+	if (ft_superatoi(env->f->r) < 0)
+		(env->f->p) = (env->f->p) + 1;
+	if (!(tmp = ft_strnew((env->f->p) + (int)ft_strlen(env->f->r) - k)))
 		return (NULL);
-	if (ft_search(INDIC, '+') == 1 && ft_superatoi(RES) >= 0)
+	if (ft_search(env->f->i, '+') == 1 && ft_superatoi(env->f->r) >= 0)
 		tmp[i++] = '+';
-	if (ft_search(INDIC, ' ') == 1 && ft_superatoi(RES) >= 0)
+	if (ft_search(env->f->i, ' ') == 1 && ft_superatoi(env->f->r) >= 0)
 		tmp[i++] = ' ';
-	if (ft_superatoi(RES) < 0)
+	if (ft_superatoi(env->f->r) < 0)
 	{
 		tmp[i++] = '-';
 		k--;
 		j++;
 	}
-	while (i < (PRECI - k))
+	while (i < ((env->f->p) - k))
 		tmp[i++] = '0';
 	if (!(tmp = ft_modif_preci_add(env, i, j, tmp)))
 		return (NULL);
-	free(RES);
+	free((env->f->r));
 	return (tmp);
 }
 
 int		ft_modif(t_env *env)
 {
-	while (env->form)
+	while (env->f)
 	{
-		if (TYPE == 's' && (PRECI > 0 || PRECI == -1))
-			if (!(RES = ft_modif_str_preci(env, RES)))
+		if ((env->f->t) == 's' && ((env->f->p) > 0 || (env->f->p) == -1))
+			if (!((env->f->r) = ft_modif_str_preci(env, env->f->r)))
 				return (0);
-		if (ft_search("fcsp%", TYPE) == 0 &&
-				PRECI > SIZE - ft_search(RES, '-'))
-			if (!(RES = ft_modif_preci(env, 0, 0, ft_strlen(RES))))
+		if (ft_search("fcsp%", (env->f->t)) == 0 &&
+				(env->f->p) > (env->f->s) - ft_search(env->f->r, '-'))
+			if (!(env->f->r = ft_modif_preci(env, 0, 0, ft_strlen(env->f->r))))
 				return (0);
-		if (TYPE == 'p' && PRECI > (int)ft_strlen(RES) - 2)
-			if (!(RES = ft_modif_p_preci(env, RES)))
+		if ((env->f->t) == 'p' && (env->f->p) > (int)ft_strlen((env->f->r)) - 2)
+			if (!((env->f->r) = ft_modif_p_preci(env, (env->f->r))))
 				return (0);
-		if (WIDTH != 0 && WIDTH > PRECI)
-			if (!(RES = ft_modif_width(env, NULL, 0, 0)))
+		if ((env->f->w) != 0 && (env->f->w) > (env->f->p))
+			if (!((env->f->r) = ft_modif_width(env, NULL, 0, 0)))
 				return (0);
-		if (WIDTH != 0 && TYPE == 's' && WIDTH <= PRECI)
-			if (!(RES = ft_modif_width(env, NULL, 0, 0)))
+		if ((env->f->w != 0) && (env->f->t == 's') && (env->f->w <= env->f->p))
+			if (!(env->f->r = ft_modif_width(env, NULL, 0, 0)))
 				return (0);
-		SIZE = ft_strlen(RES);
-		if (!(NEXT))
+		(env->f->s) = ft_strlen(env->f->r);
+		if (!(env->f->n))
 			break ;
-		env->form = NEXT;
+		env->f = env->f->n;
 	}
 	return (1);
 }

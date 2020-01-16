@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:57:18 by tamigore          #+#    #+#             */
-/*   Updated: 2019/09/19 18:05:42 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/12/08 18:21:20 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char				*ft_superitoa(int x, int neg, int len, int i)
 
 	if (x == -2147483648)
 		return (ft_strdup("-2147483648"));
-	i = ABS(x);
+	i = (x > 0) ? x : -x;
 	if (x < 0)
 	{
 		neg = 1;

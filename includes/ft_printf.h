@@ -6,7 +6,7 @@
 /*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/22 17:44:34 by tamigore         ###   ########.fr       */
+/*   Updated: 2019/12/08 18:28:31 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,25 @@
 # include <limits.h>
 # include "../libft/libft.h"
 
-# define ABS(X) 	(x > 0) ? x : -x
-# define UPORDOW(X)	(x % 10 > 5) ? (x / 10 + 1) : (x / 10)
-# define SIZE		(env->form->size)
-# define INDIC		(env->form->indic)
-# define WIDTH		(env->form->width)
-# define PRECI		(env->form->preci)
-# define MODIF		(env->form->modif)
-# define TYPE		(env->form->type)
-# define CONTENT	(env->form->content)
-# define RES		(env->form->result)
-# define NEXT		(env->form->next)
-# define PREV		(env->form->prev)
-
 typedef struct		s_form
 {
-	int				size;
-	char			*indic;
-	int				preci;
-	int				width;
-	char			*modif;
-	char			type;
-	char			*content;
-	char			*result;
-	struct s_form	*next;
-	struct s_form	*prev;
+	int				s;
+	char			*i;
+	int				p;
+	int				w;
+	char			*m;
+	char			t;
+	char			*c;
+	char			*r;
+	struct s_form	*n;
+	struct s_form	*b;
 }					t_form;
 
 typedef struct		s_env
 {
 	char			*str;
 	char			**subs;
-	struct s_form	*form;
+	struct s_form	*f;
 }					t_env;
 
 /*

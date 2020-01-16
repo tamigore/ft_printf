@@ -6,7 +6,7 @@
 /*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 18:02:55 by tamigore          #+#    #+#             */
-/*   Updated: 2019/11/22 17:44:53 by tamigore         ###   ########.fr       */
+/*   Updated: 2020/01/14 17:28:43 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ void	ft_freeall(t_env *env, int x)
 
 	if (env)
 	{
-		while (env->form)
+		while (env->f)
 		{
-			if (INDIC)
-				free(INDIC);
-			if (MODIF)
-				free(MODIF);
-			if (CONTENT)
-				free(CONTENT);
-			if (RES)
-				free(RES);
-			tmp = env->form;
-			env->form = env->form->next;
+			if ((env->f->i))
+				free((env->f->i));
+			if ((env->f->m))
+				free((env->f->m));
+			if ((env->f->c))
+				free((env->f->c));
+			if ((env->f->r))
+				free((env->f->r));
+			tmp = env->f;
+			env->f = env->f->n;
 			free(tmp);
 		}
 		free(env->str);
@@ -44,20 +44,20 @@ void	ft_free_exit(t_env *env, int x)
 {
 	t_form	*tmp;
 
-	if (env->form)
+	if (env->f)
 	{
-		while (env->form)
+		while (env->f)
 		{
-			if (INDIC)
-				free(INDIC);
-			if (MODIF)
-				free(MODIF);
-			if (CONTENT)
-				free(CONTENT);
-			if (RES)
-				free(RES);
-			tmp = env->form;
-			env->form = env->form->next;
+			if ((env->f->i))
+				free((env->f->i));
+			if ((env->f->m))
+				free((env->f->m));
+			if ((env->f->c))
+				free((env->f->c));
+			if ((env->f->r))
+				free((env->f->r));
+			tmp = env->f;
+			env->f = env->f->n;
 			free(tmp);
 		}
 		free(env->str);
@@ -107,20 +107,20 @@ char	*ft_free_join(char *s1, char *s2, int x)
 
 int		ft_erorrcheck(t_env *env, int j, int i)
 {
-	while (env->form)
+	while (env->f)
 	{
 		i = 0;
 		j = 0;
-		if ((ft_search(INDIC, '0') == 1 && ft_search("diouxX", TYPE) == 1
-			&& PRECI > 0) || (ft_search(INDIC, '0') == 1 && WIDTH == 0))
-			if (!(INDIC = ft_free_rmchar(INDIC, '0')))
+		if ((ft_search((env->f->i), '0') && ft_search("diouxX", (env->f->t)) &&
+			(env->f->p) > 0) || (ft_search((env->f->i), '0') && !(env->f->w)))
+			if (!((env->f->i) = ft_free_rmchar((env->f->i), '0')))
 				return (0);
-		if (ft_search("diucsp%", TYPE) == 1 && ft_search(INDIC, '#') == 1)
-			if (!(INDIC = ft_free_rmchar(INDIC, '#')))
+		if (ft_search("diucsp%", (env->f->t)) && ft_search((env->f->i), '#'))
+			if (!((env->f->i) = ft_free_rmchar((env->f->i), '#')))
 				return (0);
-		if (!NEXT)
+		if (!(env->f->n))
 			break ;
-		env->form = NEXT;
+		env->f = (env->f->n);
 	}
 	return (1);
 }
