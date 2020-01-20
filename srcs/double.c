@@ -6,7 +6,7 @@
 /*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 10:45:25 by tamigore          #+#    #+#             */
-/*   Updated: 2019/12/08 18:21:05 by tamigore         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:52:51 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static char	*ft_addlen(char *str, int len)
 		res[i++] = '0';
 	while (i < len)
 		res[i++] = str[j++];
+	free(str);
 	return (res);
 }
 
@@ -98,9 +99,9 @@ char		*double_to_str(long double f, int len)
 		return (ft_strdup("-inf"));
 	frac = (long double)(f - (long long int)f);
 	frac *= ft_unit(10, len);
-	if (!(inte = double_inte(f, frac)))
+	if (!(inte = double_inte(f, frac, len)))
 		return (NULL);
-	if (!(deci = double_deci(f, frac)))
+	if (!(deci = double_deci(f, frac, len)))
 		return (NULL);
 	if ((int)ft_strlen(deci) < len)
 		if (!(deci = ft_addlen(deci, len)))

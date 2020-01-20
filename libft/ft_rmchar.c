@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 17:37:13 by tamigore          #+#    #+#             */
-/*   Updated: 2019/08/08 14:39:36 by tamigore         ###   ########.fr       */
+/*   Updated: 2020/01/16 19:13:49 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ char	*ft_rmchar(char *str, char c)
 		else
 			new[j++] = str[i++];
 	}
+	free(str);
 	return (new);
 }

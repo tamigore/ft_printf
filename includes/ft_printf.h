@@ -6,7 +6,7 @@
 /*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:24:43 by tamigore          #+#    #+#             */
-/*   Updated: 2019/12/08 18:28:31 by tamigore         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:56:50 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,12 @@ char				*ft_conv_double(va_list ap, t_form *new);
 char				*ft_doubleitoa(long long x, int neg, int len, long long i);
 
 /*
-** double.c
+** inte_deci.c
 */
 
-char				*double_inte(long double f, long double frac);
-char				*double_deci(long double f, long double frac);
+int					double_len(long double f);
+char				*double_inte(long double f, long double frac, int len);
+char				*double_deci(long double f, long double frac, int len);
 
 /*
 ** norm_add.c
